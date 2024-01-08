@@ -5,6 +5,7 @@ import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import { RootState } from '../../store/configureStore';
 import { Gender } from '../../api/GenderEnum';
+import { VStack } from '@gluestack-ui/themed';
 
 export default function ProfileScreen() {
   
@@ -63,7 +64,10 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
+      <VStack space='2xl'>
+
       {content}
+      </VStack>
       {/* <Button minW={200} my={5} variant="outline" onPress={toggleColorMode}>{`Включить ${useColorModeValue('тёмную', 'светлую')} тему`}</Button>
       <Fab
         position="absolute"
