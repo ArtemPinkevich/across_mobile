@@ -3,9 +3,9 @@ import { RootState } from '../configureStore';
 
 const initialState = {
     id: 1,
-    name: 'ИМЯПРОФИЛЯ',
-    surname: undefined,
-    patronymic: undefined,
+    name: 'ИмяИзСтора',
+    surname: 'ФамилияИзСтора',
+    patronymic: 'ОтчествоИзСтора',
     birthDate: undefined, // Строка ISO
     gender: undefined,
     phoneNumber: undefined,
