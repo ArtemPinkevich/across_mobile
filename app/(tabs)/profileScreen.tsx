@@ -10,6 +10,7 @@ import { View } from '../../components/Themed';
 import { RootState } from '../../store/configureStore';
 import { Gender } from '../../api/GenderEnum';
 import { TitleValueItem } from '../../components/screenItems/TitleValueItem';
+import moment from 'moment';
 
 export default function ProfileScreen() {
   
@@ -37,8 +38,8 @@ export default function ProfileScreen() {
       </View>
     )
 
-    // const birthdayMoment = moment(profile.birthDate);
-    // const isBirthdayValid = profile.birthDate && birthdayMoment.isValid();
+    const birthdayMoment = moment(profile.birthDate);
+    const isBirthdayValid = profile.birthDate && birthdayMoment.isValid();
 
     content = (
       <View style={{ width: '90%' }}>
@@ -53,7 +54,7 @@ export default function ProfileScreen() {
             </VStack>
           </HStack>
           <TitleValueItem title={"Номер телефона"} value={!phoneNumber || phoneNumber === '' ? 'Не указано' : phoneNumber}/>
-          {/* {Platform.OS === 'web' ? null : <TitleValueItem title={"Дата рождения"} value={isBirthdayValid ? birthdayMoment.format('DD MMMM YYYY') : 'Не указано'}/> } */}
+          {Platform.OS === 'web' ? null : <TitleValueItem title={"Дата рождения"} value={isBirthdayValid ? birthdayMoment.format('DD MMMM YYYY') : 'Не указано'}/> }
           <TitleValueItem title={"Пол"} value={genderValue}/>
         </VStack>
       </View>

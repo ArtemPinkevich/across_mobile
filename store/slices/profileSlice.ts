@@ -6,7 +6,7 @@ const initialState = {
     name: 'ИмяИзСтора',
     surname: 'ФамилияИзСтора',
     patronymic: 'ОтчествоИзСтора',
-    birthDate: undefined, // Строка ISO
+    birthDate: '21.03.1992', // Строка ISO
     gender: undefined,
     phoneNumber: undefined,
 };
