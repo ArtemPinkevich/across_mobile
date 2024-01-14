@@ -1,16 +1,14 @@
 import { Platform, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
-import { router } from 'expo-router';
-import { Text, Center, HStack, VStack, Icon, Fab, FabIcon, EditIcon, FabLabel } from '@gluestack-ui/themed';
+import { Link, router } from 'expo-router';
+import { Text, Center, HStack, VStack, Fab, FabIcon, EditIcon } from '@gluestack-ui/themed';
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
-
-import EditScreenInfo from '../../components/EditScreenInfo';
+import moment from 'moment';
 import { View } from '../../components/Themed';
 import { RootState } from '../../store/configureStore';
 import { Gender } from '../../api/GenderEnum';
 import { TitleValueItem } from '../../components/screenItems/TitleValueItem';
-import moment from 'moment';
 
 export default function ProfileScreen() {
   
@@ -19,24 +17,10 @@ export default function ProfileScreen() {
   let profile = useSelector((state: RootState) => state.profile);
   const phoneNumber = profile.phoneNumber;
   
-  const editOnPressHandler = () => {
-    router.push('/modal');
-  }
-
-
   if (profile) {
     let genderValue = 'Не указано';
     if (profile.gender === Gender.Woman) genderValue = 'Женский';
     if (profile.gender === Gender.Man) genderValue = 'Мужской';
-
-    content = (
-      <View>
-        <Text
-          style={styles.centredText}>
-          {profile.name}
-        </Text>
-      </View>
-    )
 
     const birthdayMoment = moment(profile.birthDate);
     const isBirthdayValid = profile.birthDate && birthdayMoment.isValid();
@@ -64,8 +48,7 @@ export default function ProfileScreen() {
   if (!profile) {
     content = (
       <Center flex={1} alignItems='center'>
-        <Text
-          style={styles.centredText}>
+        <Text fontSize={17}>
           Данные ещё не заполнены
         </Text>
       </Center>
@@ -76,14 +59,11 @@ export default function ProfileScreen() {
     <View style={styles.container}>
       {content}
       {/* <Button minW={200} my={5} variant="outline" onPress={toggleColorMode}>{`Включить ${useColorModeValue('тёмную', 'светлую')} тему`}</Button> */}
-      <Fab
-        position="absolute"
-        placement='bottom right'
-        size="lg"
-        onPress={editOnPressHandler}
-      >
-        <FabIcon as={EditIcon} />
-      </Fab>
+      <Link href="/EditProfileModal" asChild>
+        <Fab position="absolute" placement='bottom right' size="lg">
+          <FabIcon as={EditIcon} />
+        </Fab>
+      </Link>
     </View>
   );
 }
@@ -92,14 +72,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-  },
-  centredText: {
-    fontSize: 17,
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  imgWrap: {
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

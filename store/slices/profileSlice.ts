@@ -1,14 +1,25 @@
 import {createSlice} from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
+import { Gender } from '../../api/GenderEnum';
 
-const initialState = {
-    id: 1,
+export interface IProfileSettings {
+  id: string,
+  name: string,
+  surname: string,
+  patronymic: string,
+  birthDate: string, // Строка ISO
+  gender: Gender,
+  phoneNumber: string,
+}
+
+const initialState: IProfileSettings = {
+    id: '1',
     name: 'ИмяИзСтора',
     surname: 'ФамилияИзСтора',
     patronymic: 'ОтчествоИзСтора',
     birthDate: '21.03.1992', // Строка ISO
-    gender: undefined,
-    phoneNumber: undefined,
+    gender: Gender.None,
+    phoneNumber: '',
 };
 
 // Setting up user slice (redux-toolkit)
@@ -18,13 +29,19 @@ export const profileSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    setUserId: (state, action) => {
-      state.id = action.payload;
+    setProfileSettings: (state, action) => {
+      const { name, surname, patronymic, birthDate, gender, phoneNumber } = action.payload;
+      state.name = name;
+      state.surname = surname;
+      state.patronymic = patronymic;
+      state.birthDate = birthDate;
+      state.gender = gender;
+      state.phoneNumber = phoneNumber;
     },
   },
 });
 
-export const {setUserId} = profileSlice.actions;
+export const { setProfileSettings } = profileSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the stateSelectors can also be defined inline where they're used instead of
