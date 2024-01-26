@@ -1,7 +1,7 @@
 import { Platform, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Link, router } from 'expo-router';
-import { Text, Center, HStack, VStack, Fab, FabIcon, EditIcon } from '@gluestack-ui/themed';
+import { Link } from 'expo-router';
+import { Text, Center, HStack, VStack, Fab, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import moment from 'moment';
@@ -27,19 +27,18 @@ export default function ProfileScreen() {
 
     content = (
       <View style={{ width: '90%' }}>
-        <VStack space="md">
-          <HStack space="2xl" my="$3">
+        <VStack space={3}>
+          <HStack space={5} my={3}>
             <Center>
               <MaterialIcons name="account-circle" size={24} color="black" />
             </Center>
             <VStack>
-              <Text size="xl">{profile.name} {profile.surname}</Text>
+              <Text fontSize="xl">{profile.name} {profile.surname}</Text>
               <Text>{profile.patronymic}</Text>
             </VStack>
           </HStack>
           <TitleValueItem title={"Номер телефона"} value={!phoneNumber || phoneNumber === '' ? 'Не указано' : phoneNumber}/>
           {Platform.OS === 'web' ? null : <TitleValueItem title={"Дата рождения"} value={isBirthdayValid ? birthdayMoment.format('DD MMMM YYYY') : 'Не указано'}/> }
-          <TitleValueItem title={"Пол"} value={genderValue}/>
         </VStack>
       </View>
     )
@@ -58,11 +57,13 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       {content}
-      {/* <Button minW={200} my={5} variant="outline" onPress={toggleColorMode}>{`Включить ${useColorModeValue('тёмную', 'светлую')} тему`}</Button> */}
       <Link href="/EditProfileModal" asChild>
-        <Fab position="absolute" placement='bottom right' size="lg">
-          <FabIcon as={EditIcon} />
-        </Fab>
+        <Fab
+          position="absolute"
+          placement='bottom-right'
+          icon={<Icon color="white" as={<MaterialIcons name="edit"/>} size="sm" />}
+          renderInPortal={false}
+        />
       </Link>
     </View>
   );

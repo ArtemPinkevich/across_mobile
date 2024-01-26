@@ -4,8 +4,7 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
-import { GluestackUIProvider } from "@gluestack-ui/themed"
-import { config } from "@gluestack-ui/config"
+import { NativeBaseProvider } from 'native-base';
 import { Provider } from 'react-redux';
 import { store } from '../store/configureStore';
 
@@ -51,15 +50,15 @@ function RootLayoutNav() {
 
   return (
     <Provider store={store}>
-      <GluestackUIProvider config={config}>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-            <Stack.Screen name="EditProfileModal" options={{ presentation: 'modal' }} />
-          </Stack>
-        </ThemeProvider>
-      </GluestackUIProvider>
+      <NativeBaseProvider>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="EditProfileModal" options={{ presentation: 'modal' }} />
+            </Stack>
+          </ThemeProvider>
+        </NativeBaseProvider>
     </Provider>
   );
 }

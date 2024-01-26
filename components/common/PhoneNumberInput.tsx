@@ -1,4 +1,4 @@
-import { Input, InputField, InputSlot, Text } from '@gluestack-ui/themed';
+import { Input, Text } from 'native-base';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 
@@ -33,11 +33,13 @@ export default function PhoneNumberInput(props: PhoneNumberInputProps) {
     }
 
     return (
-        <Input variant="underlined" size="md">
-            <InputSlot pl="$3">
-                <Text>+7</Text>
-            </InputSlot>
-            <InputField placeholder="Номер телефона" value={phoneNumber} onChangeText={onPhoneChange} keyboardType="number-pad" />
-        </Input>
+        <Input 
+            InputLeftElement={<Text>+7</Text>}
+            variant="underlined"
+            size="md"
+            placeholder="Номер телефона"
+            value={phoneNumber}
+            onChangeText={onPhoneChange}
+            keyboardType="number-pad"/>
     );
 }

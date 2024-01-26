@@ -14,9 +14,6 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
-    "@gluestack-style/react": "^1.0.37",
-    "@gluestack-ui/config": "^1.0.11",
-    "@gluestack-ui/themed": "^1.0.35",
     "@react-native-community/datetimepicker": "^7.6.2",
     "@react-navigation/native": "^6.0.2",
     "@reduxjs/toolkit": "^2.0.1",
@@ -29,6 +26,8 @@
     "expo-system-ui": "~2.9.1",
     "expo-web-browser": "~12.8.0",
     "moment": "^2.30.1",
+    "native-base": "^3.4.28",
+    "normalize-css-color": "^1.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.73.2",
