@@ -3,6 +3,7 @@ import { Link, Tabs } from 'expo-router';
 import { Pressable, useColorScheme } from 'react-native';
 
 import Colors from '../../constants/Colors';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -44,10 +45,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="garage/index"
         options={{
-          title: 'Tab Two 2',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Гараж',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="garage-variant" size={30} color={color} />,
         }}
       />
       <Tabs.Screen

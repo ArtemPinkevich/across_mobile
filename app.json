@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "y",
-    "slug": "y",
+    "slug": "across",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.pinkevichav.y"
+      "package": "com.pinkevichav.across"
     },
     "web": {
       "bundler": "metro",
@@ -41,8 +41,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "c9c034a1-b338-46d1-a0a2-2236133f9ca7"
+        "projectId": "09a63335-036d-40de-b094-f6bdbbfeecc2"
       }
-    }
+    },
+    "owner": "pinkevichav"
   }
 }

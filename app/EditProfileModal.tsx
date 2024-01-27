@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import { Button, Center, ScrollView, Input, VStack, Pressable } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -10,6 +10,7 @@ import PhoneNumberInput from '../components/common/PhoneNumberInput';
 import { RootState } from '../store/configureStore';
 import { Gender } from '../api/GenderEnum';
 import { IProfileSettings, setProfileSettings } from '../store/slices/profileSlice';
+import { View } from '../components/Themed';
 
 export default function EditProfileModal() {
     
@@ -46,7 +47,8 @@ export default function EditProfileModal() {
   const isBirthdayValid = birthday && moment(birthday).isValid();
 
   return (
-		<ScrollView bg={"white"}>
+	<View style={styles.container}>
+		<ScrollView>
 			<VStack mx={"4"}>
 				<Input variant="underlined" size="md" placeholder="Имя" value={name} onChangeText={setName} />
 				<Input variant="underlined" size="md" placeholder="Фамилия" value={surname} onChangeText={setSurname} />
@@ -76,5 +78,13 @@ export default function EditProfileModal() {
 				</Center>
 			</VStack>
 		</ScrollView>
+	</View>
 	);
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+});
