@@ -10,7 +10,7 @@ import { RootState } from '../../store/configureStore';
 import { Gender } from '../../api/GenderEnum';
 import { TitleValueItem } from '../../components/screenItems/TitleValueItem';
 
-export default function ProfileScreen() {
+export default function ProfileTab() {
   
   let content = undefined;
   

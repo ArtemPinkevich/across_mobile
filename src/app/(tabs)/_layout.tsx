@@ -45,14 +45,14 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="garage/index"
+        name="GarageTab"
         options={{
           title: 'Гараж',
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="garage-variant" size={30} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="profileScreen"
+        name="ProfileTab"
         options={{
           title: 'Профиль',
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
