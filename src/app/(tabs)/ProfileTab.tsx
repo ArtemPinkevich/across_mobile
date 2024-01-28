@@ -12,7 +12,13 @@ import { TitleValueItem } from '../../components/screenItems/TitleValueItem';
 
 export default function ProfileTab() {
   
-  let content = undefined;
+  let content = (
+    <Center flex={1} alignItems='center'>
+      <Text fontSize={17}>
+        Данные ещё не заполнены
+      </Text>
+    </Center>
+  )
   
   let profile = useSelector((state: RootState) => state.profile);
   const phoneNumber = profile.phoneNumber;
@@ -41,16 +47,6 @@ export default function ProfileTab() {
           {Platform.OS === 'web' ? null : <TitleValueItem title={"Дата рождения"} value={isBirthdayValid ? birthdayMoment.format('DD MMMM YYYY') : 'Не указано'}/> }
         </VStack>
       </View>
-    )
-  }
-  
-  if (!profile) {
-    content = (
-      <Center flex={1} alignItems='center'>
-        <Text fontSize={17}>
-          Данные ещё не заполнены
-        </Text>
-      </Center>
     )
   }
 

@@ -2,14 +2,14 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { router } from 'expo-router';
-import { ScrollView, Center, Button, CheckIcon, FormControl, Select } from 'native-base';
+import { ScrollView, Center, Button, CheckIcon, FormControl, Select, Pressable } from 'native-base';
 import { addCar } from '../store/slices/garageSlice';
 import { CarBodyType } from '../api/truck/CarBodyType';
-import CarBodySelect from '../components/garage/CarBodySelect';
 import { TrailerType } from '../api/truck/TrailerType';
 import { LoadingType } from '../api/truck/LoadingType';
 import LoadTypeSelect from '../components/garage/LoadTypeSelect';
 import { ITruck } from '../api/truck/Truck';
+import { LeftAlignedSection } from '../components/screenItems/LeftAlignedSection';
 
 export default function EditCarModal() {
     
@@ -66,6 +66,10 @@ export default function EditCarModal() {
     router.back();
   }
   
+  const carWashSectionOnPress = () => {
+    router.push('/SelectCarBodyModal')
+  }
+
   return (
     <ScrollView mx={"2"}>
 
@@ -83,11 +87,10 @@ export default function EditCarModal() {
       </FormControl>
 
       
-      <FormControl isRequired my={"4"}>
-        <FormControl.Label>Тип кузова</FormControl.Label>
-        <CarBodySelect value={carBodyType?.toString()} onChange={arg => setCarBodyType(+arg)}/>
-      </FormControl>
-
+      <Pressable onPress={carWashSectionOnPress}>
+          <LeftAlignedSection title={"Тип кузова"} value={carBodyType?.toString() ?? 'Не выбрано'}/>
+      </Pressable>
+        
       <FormControl isRequired my={"4"}>
         <FormControl.Label>Тип загрузки</FormControl.Label>
         <LoadTypeSelect value={loadingType?.toString()} onChange={arg => setLoadingType(+arg)}/>
