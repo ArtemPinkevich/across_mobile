@@ -57,7 +57,8 @@ function RootLayoutNav() {
               <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
               <Stack.Screen name="EditProfileModal" options={{ title: 'Редактирование профиля', presentation: 'modal' }} />
               <Stack.Screen name="EditCarModal" options={{ title: 'Информация о грузовике', presentation: 'modal' }} />
-              <Stack.Screen name="SelectCarBodyModal" options={{ title: 'Выбор типа кузова', presentation: 'modal' }} />
+              <Stack.Screen name="(garage)/CarBodySelectListModal" options={{ title: 'Выбор типа кузова', presentation: 'modal' }} />
+              <Stack.Screen name="(garage)/LoadingTypeSelectListModal" options={{ title: 'Выбор типа загрузки', presentation: 'modal' }} />
             </Stack>
           </ThemeProvider>
         </NativeBaseProvider>

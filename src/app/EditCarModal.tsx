@@ -7,7 +7,6 @@ import { addCar } from '../store/slices/garageSlice';
 import { CarBodyType } from '../api/truck/CarBodyType';
 import { TrailerType } from '../api/truck/TrailerType';
 import { LoadingType } from '../api/truck/LoadingType';
-import LoadTypeSelect from '../components/garage/LoadTypeSelect';
 import { ITruck } from '../api/truck/Truck';
 import { LeftAlignedSection } from '../components/screenItems/LeftAlignedSection';
 
@@ -67,14 +66,18 @@ export default function EditCarModal() {
   }
   
   const carWashSectionOnPress = () => {
-    router.push('/SelectCarBodyModal')
+    router.push('/CarBodySelectListModal')
   }
 
+  const loadingTypeSectionOnPress = () => {
+    router.push('/LoadingTypeSelectListModal')
+  }
+  
   return (
     <ScrollView mx={"2"}>
 
       {/* По хорошему заменить бы на RadioButtons */}
-      <FormControl isRequired mb={"2"}>
+      <FormControl isRequired mb={1}>
         <FormControl.Label>Тип прицепа</FormControl.Label>
         <Select minWidth="200" accessibilityLabel="TrailerType" onValueChange={arg => setTrailerType(+arg)} _selectedItem={{
           bg: "teal.600",
@@ -85,16 +88,14 @@ export default function EditCarModal() {
           <Select.Item label="Сцепка" value={TrailerType.Semitrailer.toString()} />
         </Select>
       </FormControl>
-
       
-      <Pressable onPress={carWashSectionOnPress}>
-          <LeftAlignedSection title={"Тип кузова"} value={carBodyType?.toString() ?? 'Не выбрано'}/>
+      <Pressable onPress={carWashSectionOnPress} my={1}>
+        <LeftAlignedSection title={"Тип кузова"} value={carBodyType?.toString() ?? 'Не выбрано'}/>
       </Pressable>
         
-      <FormControl isRequired my={"4"}>
-        <FormControl.Label>Тип загрузки</FormControl.Label>
-        <LoadTypeSelect value={loadingType?.toString()} onChange={arg => setLoadingType(+arg)}/>
-      </FormControl>
+      <Pressable onPress={loadingTypeSectionOnPress} my={1}>
+          <LeftAlignedSection title={"Тип загрузки"} value={loadingType?.toString() ?? 'Не выбрано'} />
+      </Pressable>
 
       <Center mt={8}>
         <Button minW={200} size={"lg"} variant="outline" onPress={saveHandler}>
