@@ -1,22 +1,23 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { router } from 'expo-router';
 import { ScrollView, Center, Button, CheckIcon, FormControl, Select, Pressable } from 'native-base';
 import { addCar } from '../store/slices/garageSlice';
-import { CarBodyType } from '../api/truck/CarBodyType';
 import { TrailerType } from '../api/truck/TrailerType';
-import { LoadingType } from '../api/truck/LoadingType';
 import { ITruck } from '../api/truck/Truck';
 import { LeftAlignedSection } from '../components/screenItems/LeftAlignedSection';
+import { RootState } from '../store/configureStore';
+import { CARBODY_DISPLAYNAME_MAP } from '../components/common/selectList/CarBodySelectItemArray';
 
 export default function EditCarModal() {
     
   const dispatch = useDispatch()
   
-  const [trailerType, setTrailerType] = useState<TrailerType>()
-  const [carBodyType, setCarBodyType] = useState<CarBodyType>()
-  const [loadingType, setLoadingType] = useState<LoadingType>()
+  const [trailerType, setTrailerType] = useState<TrailerType | undefined>()
+  
+  const editingTruсk = useSelector((state: RootState) => state.garage.editingTruсk)
+  const carBodyDisplayName = editingTruсk?.carBody ? CARBODY_DISPLAYNAME_MAP.get(editingTruсk.carBody) : 'Не выбрано';
   
   const saveHandler = () => {
     if (!trailerType){
@@ -24,12 +25,12 @@ export default function EditCarModal() {
       return
     }
 
-    if (!carBodyType){
+    if (!editingTruсk.carBody){
       alert('Необходимо указать тип кузова')
       return
     }
 
-    if (!loadingType){
+    if (!editingTruсk.loadingType){
       alert('Необходимо указать тип загрузки')
       return
     }
@@ -37,9 +38,9 @@ export default function EditCarModal() {
     const truck: ITruck = {
       createdId: new Date().toJSON(),
       trailerType: TrailerType.Truck,
-      carBody: carBodyType,
+      carBody: editingTruсk.carBody,
       regNumber: '',
-      loadingType: loadingType,
+      loadingType: editingTruсk.loadingType,
       hasLTL: false,
       hasLiftgate: false,
       hasStanchionTrailer: false,
@@ -90,11 +91,11 @@ export default function EditCarModal() {
       </FormControl>
       
       <Pressable onPress={carWashSectionOnPress} my={1}>
-        <LeftAlignedSection title={"Тип кузова"} value={carBodyType?.toString() ?? 'Не выбрано'}/>
+        <LeftAlignedSection title={"Тип кузова"} value={carBodyDisplayName ?? 'Не выбрано'}/>
       </Pressable>
         
       <Pressable onPress={loadingTypeSectionOnPress} my={1}>
-          <LeftAlignedSection title={"Тип загрузки"} value={loadingType?.toString() ?? 'Не выбрано'} />
+          <LeftAlignedSection title={"Тип загрузки"} value={editingTruсk?.loadingType?.toString() ?? 'Не выбрано'} />
       </Pressable>
 
       <Center mt={8}>
