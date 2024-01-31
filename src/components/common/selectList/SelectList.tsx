@@ -26,11 +26,11 @@ export default function SelectList(props: SelectListProps) {
         }
         
         let items: ISelectItem[] = [];
-        if (selectedItems.find(o => o === item) === undefined){
+        if (selectedItems.findIndex(o => o.value === item.value) === -1){
             items = [...selectedItems, item]
         }
         else{
-            items = selectedItems.filter(o => o !== item)
+            items = selectedItems.filter(o => o.value !== item.value)
         }
 
         setSelectedItems(items);

@@ -18,7 +18,8 @@ export default function EditCarModal() {
   const [trailerType, setTrailerType] = useState<TrailerType | undefined>()
   
   const editingTruсk = useSelector((state: RootState) => state.garage.editingTruсk)
-  const carBodyDisplayName = editingTruсk?.carBody ? CARBODY_DISPLAY_NAME_MAP.get(editingTruсk.carBody) ?? 'Не выбрано' : 'Не выбрано';
+  
+  const carBodyDisplayName = editingTruсk?.carBody || editingTruсk?.carBody === 0 ? CARBODY_DISPLAY_NAME_MAP.get(editingTruсk.carBody) ?? 'Не выбрано' : 'Не выбрано';
 
   const loadingTypeDisplayName = editingTruсk?.loadingType && editingTruсk?.loadingType?.length > 0 
     ? editingTruсk.loadingType.map(o => LOADING_TYPE_DISPLAY_NAME_MAP.get(o)).join(', ')
