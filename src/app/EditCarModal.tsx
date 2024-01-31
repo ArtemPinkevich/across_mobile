@@ -8,7 +8,8 @@ import { TrailerType } from '../api/truck/TrailerType';
 import { ITruck } from '../api/truck/Truck';
 import { LeftAlignedSection } from '../components/screenItems/LeftAlignedSection';
 import { RootState } from '../store/configureStore';
-import { CARBODY_DISPLAYNAME_MAP } from '../components/common/selectList/CarBodySelectItemArray';
+import { CARBODY_DISPLAY_NAME_MAP } from '../components/common/selectList/CarBodyToDisplayNameMap';
+import { LOADING_TYPE_DISPLAY_NAME_MAP } from '../components/common/selectList/LoadingTypeToDisplayNameMap';
 
 export default function EditCarModal() {
     
@@ -17,7 +18,11 @@ export default function EditCarModal() {
   const [trailerType, setTrailerType] = useState<TrailerType | undefined>()
   
   const editingTruсk = useSelector((state: RootState) => state.garage.editingTruсk)
-  const carBodyDisplayName = editingTruсk?.carBody ? CARBODY_DISPLAYNAME_MAP.get(editingTruсk.carBody) : 'Не выбрано';
+  const carBodyDisplayName = editingTruсk?.carBody ? CARBODY_DISPLAY_NAME_MAP.get(editingTruсk.carBody) ?? 'Не выбрано' : 'Не выбрано';
+
+  const loadingTypeDisplayName = editingTruсk?.loadingType && editingTruсk?.loadingType?.length > 0 
+    ? editingTruсk.loadingType.map(o => LOADING_TYPE_DISPLAY_NAME_MAP.get(o)).join(', ')
+    : 'Не выбрано';
   
   const saveHandler = () => {
     if (!trailerType){
@@ -91,11 +96,11 @@ export default function EditCarModal() {
       </FormControl>
       
       <Pressable onPress={carWashSectionOnPress} my={1}>
-        <LeftAlignedSection title={"Тип кузова"} value={carBodyDisplayName ?? 'Не выбрано'}/>
+        <LeftAlignedSection title={"Тип кузова"} value={carBodyDisplayName}/>
       </Pressable>
         
       <Pressable onPress={loadingTypeSectionOnPress} my={1}>
-          <LeftAlignedSection title={"Тип загрузки"} value={editingTruсk?.loadingType?.toString() ?? 'Не выбрано'} />
+          <LeftAlignedSection title={"Тип загрузки"} value={loadingTypeDisplayName} />
       </Pressable>
 
       <Center mt={8}>

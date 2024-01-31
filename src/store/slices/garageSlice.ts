@@ -55,10 +55,13 @@ export const garageSlice = createSlice({
     setCarBody: (state, action) => {
       state.editingTruсk = { ...state.editingTruсk, carBody: action.payload };
     },
+    setLoadingType: (state, action) => {
+      state.editingTruсk = { ...state.editingTruсk, loadingType: action.payload };
+    },
   },
 });
 
-export const { addCar, removeCar, setCarBody } = garageSlice.actions;
+export const { addCar, removeCar, setCarBody, setLoadingType } = garageSlice.actions;
 
 export const selectCars = (state: RootState) => state.garage.cars;
 export const selectFavariteCar = (state: RootState) => state.garage.favariteCar

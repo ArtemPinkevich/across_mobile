@@ -6,9 +6,9 @@ export interface ITruck {
     createdId: string,  // Нужно ли ???
     regNumber: string,  // Нужно ли ???
 
-    trailerType?: TrailerType,       // Тип прицепа
-    carBody?: CarBodyType,           // Кузов
-    loadingType?: LoadingType,       // Тип загрузки
+    trailerType?: TrailerType,      // Тип прицепа
+    carBody?: CarBodyType,          // Кузов
+    loadingType?: LoadingType[],    // Тип загрузки
     hasLTL: boolean,                // догруз
     hasLiftgate: boolean,           // Гидролифт
     hasStanchionTrailer: boolean,   // коники

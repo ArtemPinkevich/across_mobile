@@ -1,6 +1,6 @@
 import { CarBodyType } from "../../../api/truck/CarBodyType";
 
-export const CARBODY_DISPLAYNAME_MAP = new Map<Object, string>([
+export const CARBODY_DISPLAY_NAME_MAP = new Map<Object, string>([
     [ CarBodyType.tentTruck, "Тентованный" ],
     [ CarBodyType.container, "Контейнер" ],
     [ CarBodyType.van, "Фугон" ],
@@ -63,4 +63,4 @@ export const CARBODY_DISPLAYNAME_MAP = new Map<Object, string>([
     [ CarBodyType.slidingSemiTrailer2040, "Раздвижной полуприцеп 20'/40'" ],
 ])
 
-export const CARBODY_DISPLAYNAME_ARRAY = Array.from(CARBODY_DISPLAYNAME_MAP, ([value, displayName]) => ({ value, displayName }));
+export const CARBODY_DISPLAY_NAME_ARRAY = Array.from(CARBODY_DISPLAY_NAME_MAP, ([value, displayName]) => ({ value, displayName }));

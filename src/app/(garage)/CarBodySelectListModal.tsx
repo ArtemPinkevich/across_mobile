@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CARBODY_DISPLAYNAME_ARRAY } from '../../components/common/selectList/CarBodySelectItemArray';
+import { CARBODY_DISPLAY_NAME_ARRAY } from '../../components/common/selectList/CarBodyToDisplayNameMap';
 import SelectList from '../../components/common/selectList/SelectList';
 import { useDispatch } from 'react-redux';
 import { setCarBody } from '../../store/slices/garageSlice';
@@ -14,5 +14,5 @@ export default function CarBodySelectListModal() {
         }
     };
 
-    return (<SelectList data={CARBODY_DISPLAYNAME_ARRAY} onChanged={onChangedHandler} />);
+    return (<SelectList data={CARBODY_DISPLAY_NAME_ARRAY} onChanged={onChangedHandler} />);
 }

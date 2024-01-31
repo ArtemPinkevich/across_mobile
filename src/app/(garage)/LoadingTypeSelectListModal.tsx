@@ -1,12 +1,19 @@
 import * as React from 'react';
 import SelectList from '../../components/common/selectList/SelectList';
-import { LOADING_TYPE_SELECT_ITEM_ARRAY } from '../../components/common/selectList/LoadingTypeSelectItemArray';
+import { LOADING_TYPE_DISPLAY_NAME_ARRAY } from '../../components/common/selectList/LoadingTypeToDisplayNameMap';
+import { useDispatch } from 'react-redux';
+import { ISelectItem } from '../../components/common/selectList/SelectItem';
+import { setLoadingType } from '../../store/slices/garageSlice';
 
 export default function LoadingTypeSelectListModal() {
-    const onChangedHandler = (item: Object) => {
-        alert('LOADING_TYPE onSavedHandler')
-        //dispatch(setAdditionServicesForBooking(services))
+    
+    const dispatch = useDispatch()
+    
+    const onChangedHandler = (items: ISelectItem[]) => {
+        if (items){
+            dispatch(setLoadingType(items.map(o => o.value)))
+        }
     };
 
-    return (<SelectList isMultiselect data={LOADING_TYPE_SELECT_ITEM_ARRAY} onChanged={onChangedHandler} />);
+    return (<SelectList isMultiselect data={LOADING_TYPE_DISPLAY_NAME_ARRAY} onChanged={onChangedHandler} />);
 }
