@@ -10,6 +10,7 @@ import { LeftAlignedSection } from '../components/screenItems/LeftAlignedSection
 import { RootState } from '../store/configureStore';
 import { CARBODY_DISPLAY_NAME_MAP } from '../components/common/selectList/CarBodyToDisplayNameMap';
 import { LOADING_TYPE_DISPLAY_NAME_MAP } from '../components/common/selectList/LoadingTypeToDisplayNameMap';
+import { LeftAlignedWithChipsSection } from '../components/screenItems/LeftAlignedWithChipsSection';
 
 export default function EditCarModal() {
     
@@ -21,9 +22,15 @@ export default function EditCarModal() {
   
   const carBodyDisplayName = editingTruсk?.carBody || editingTruсk?.carBody === 0 ? CARBODY_DISPLAY_NAME_MAP.get(editingTruсk.carBody) ?? 'Не выбрано' : 'Не выбрано';
 
-  const loadingTypeDisplayName = editingTruсk?.loadingType && editingTruсk?.loadingType?.length > 0 
-    ? editingTruсk.loadingType.map(o => LOADING_TYPE_DISPLAY_NAME_MAP.get(o)).join(', ')
-    : 'Не выбрано';
+  let loadingTypeDisplayNames: string[] = [];
+  if (editingTruсk?.loadingType){
+    editingTruсk.loadingType.forEach(loadingType => {
+      const loadingTypeDisplayName = LOADING_TYPE_DISPLAY_NAME_MAP.get(loadingType);
+      if (loadingTypeDisplayName){
+        loadingTypeDisplayNames.push(loadingTypeDisplayName);
+      }
+    });
+  }
   
   const saveHandler = () => {
     if (!trailerType){
@@ -101,7 +108,11 @@ export default function EditCarModal() {
       </Pressable>
         
       <Pressable onPress={loadingTypeSectionOnPress} my={1}>
-          <LeftAlignedSection title={"Тип загрузки"} value={loadingTypeDisplayName} />
+        {
+          loadingTypeDisplayNames && loadingTypeDisplayNames?.length > 0
+            ? <LeftAlignedWithChipsSection title={"Тип загрузки"} values={loadingTypeDisplayNames} />
+            : <LeftAlignedSection title={"Тип загрузки"} value='Не выбрано'/>
+        }
       </Pressable>
 
       <Center mt={8}>
