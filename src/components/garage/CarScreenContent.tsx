@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Text, FlatList, View, Fab, Icon, Pressable } from 'native-base';
+import { Text, FlatList, Fab, Icon, Pressable } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 
+import { View } from '../../components/Themed';
 import { CarView } from './CarView';
 import { RootState } from '../../store/configureStore';
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 import { ITruck } from '../../api/truck/Truck';
+import { resetEditingTruсk } from '../../store/slices/garageSlice';
 
 type CarScreenContentProps = {
     isSelectionMode: boolean;
@@ -24,6 +26,11 @@ export default function CarScreenContent(props: CarScreenContentProps) {
     if (isSelectionMode){
       router.back();
     }
+  };
+  
+  const addPressHandler = () => {
+    dispatch(resetEditingTruсk())
+    router.push('/EditCarModal')
   };
   
   const renderItem = ({ item }: any) => (
@@ -51,14 +58,13 @@ export default function CarScreenContent(props: CarScreenContentProps) {
   return (
     <View style={styles.container} >
       {content}
-      <Link href="/EditCarModal" asChild>
         <Fab
           position="absolute"
           placement='bottom-right'
           icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
           renderInPortal={false}
+          onPress={addPressHandler}
         />
-      </Link>
     </View>
   );
 }
@@ -89,4 +95,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#ddd'
   },
 });
-

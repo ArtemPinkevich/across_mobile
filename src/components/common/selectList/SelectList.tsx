@@ -1,10 +1,11 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { Box, FlatList, HStack, Pressable, View, Text, Icon, Center, Button } from 'native-base';
+import { Box, FlatList, HStack, Pressable, Text, Icon, Center, Button } from 'native-base';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { router } from 'expo-router';
 import { ISelectItem } from './SelectItem';
+import { View } from '../../Themed';
 
 type SelectListProps = {
     data: ISelectItem[];
