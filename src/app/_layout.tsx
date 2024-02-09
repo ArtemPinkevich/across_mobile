@@ -7,6 +7,7 @@ import { useColorScheme } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
 import { Provider } from 'react-redux';
 import { store } from '../store/configureStore';
+import { SessionProvider } from '../auth/ctx';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -41,7 +42,7 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
-
+  
   return <RootLayoutNav />;
 }
 
@@ -52,14 +53,14 @@ function RootLayoutNav() {
     <Provider store={store}>
       <NativeBaseProvider>
           <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-              <Stack.Screen name="EditProfileModal" options={{ title: 'Редактирование профиля', presentation: 'modal' }} />
-              <Stack.Screen name="EditCarModal" options={{ title: 'Информация о грузовике', presentation: 'modal' }} />
-              <Stack.Screen name="(garage)/CarBodySelectListModal" options={{ title: 'Выбор типа кузова', presentation: 'modal' }} />
-              <Stack.Screen name="(garage)/LoadingTypeSelectListModal" options={{ title: 'Выбор типа загрузки', presentation: 'modal' }} />
-            </Stack>
+            <SessionProvider>
+              <Stack>
+                  <Stack.Screen name="(app)" options={{ headerShown: false }} />
+                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+                  <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+              </Stack>
+            </SessionProvider>
           </ThemeProvider>
         </NativeBaseProvider>
     </Provider>
