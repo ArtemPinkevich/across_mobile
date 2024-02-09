@@ -5,10 +5,10 @@ import { Text, Center, HStack, VStack, Fab, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import moment from 'moment';
-import { View } from '../../components/Themed';
-import { RootState } from '../../store/configureStore';
-import { Gender } from '../../api/GenderEnum';
-import { TitleValueItem } from '../../components/screenItems/TitleValueItem';
+import { View } from '../../../components/Themed';
+import { RootState } from '../../../store/configureStore';
+import { Gender } from '../../../api/GenderEnum';
+import { TitleValueItem } from '../../../components/screenItems/TitleValueItem';
 
 export default function ProfileTab() {
   

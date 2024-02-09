@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
-import { useSession } from '../../auth/ctx';
+import EditScreenInfo from '../../../components/EditScreenInfo';
+import { Text, View } from '../../../components/Themed';
+import { useSession } from '../../../auth/ctx';
 import { router } from 'expo-router';
 
 export default function TabOneScreen() {
@@ -24,8 +24,7 @@ export default function TabOneScreen() {
           Sign Out
         </Text>
       </View>
-
-
+      
     </View>
   );
 }

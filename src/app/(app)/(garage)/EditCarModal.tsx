@@ -4,15 +4,15 @@ import { StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { router } from 'expo-router';
 import { ScrollView, Center, Button, CheckIcon, FormControl, Select, Pressable, Checkbox, Input } from 'native-base';
-import { addCar } from '../store/slices/garageSlice';
-import { TrailerType } from '../api/truck/TrailerType';
-import { ITruck } from '../api/truck/Truck';
-import { LeftAlignedSection } from '../components/screenItems/LeftAlignedSection';
-import { RootState } from '../store/configureStore';
-import { CARBODY_DISPLAY_NAME_MAP } from '../components/common/selectList/CarBodyToDisplayNameMap';
-import { LOADING_TYPE_DISPLAY_NAME_MAP } from '../components/common/selectList/LoadingTypeToDisplayNameMap';
-import { LeftAlignedWithChipsSection } from '../components/screenItems/LeftAlignedWithChipsSection';
-import { View } from '../components/Themed';
+import { addCar } from '../../../store/slices/garageSlice';
+import { TrailerType } from '../../../api/truck/TrailerType';
+import { ITruck } from '../../../api/truck/Truck';
+import { LeftAlignedSection } from '../../../components/screenItems/LeftAlignedSection';
+import { RootState } from '../../../store/configureStore';
+import { CARBODY_DISPLAY_NAME_MAP } from '../../../components/common/selectList/CarBodyToDisplayNameMap';
+import { LOADING_TYPE_DISPLAY_NAME_MAP } from '../../../components/common/selectList/LoadingTypeToDisplayNameMap';
+import { LeftAlignedWithChipsSection } from '../../../components/screenItems/LeftAlignedWithChipsSection';
+import { View } from '../../../components/Themed';
 
 export default function EditCarModal() {
     

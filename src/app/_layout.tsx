@@ -56,7 +56,6 @@ function RootLayoutNav() {
             <SessionProvider>
               <Stack>
                   <Stack.Screen name="(app)" options={{ headerShown: false }} />
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                   <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
                   <Stack.Screen name="sign-in" options={{ headerShown: false }} />
               </Stack>

@@ -6,11 +6,11 @@ import { router } from 'expo-router';
 import { Button, Center, ScrollView, Input, VStack, Pressable } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import PhoneNumberInput from '../components/common/PhoneNumberInput';
-import { RootState } from '../store/configureStore';
-import { Gender } from '../api/GenderEnum';
-import { IProfileSettings, setProfileSettings } from '../store/slices/profileSlice';
-import { View } from '../components/Themed';
+import PhoneNumberInput from '../../../components/common/PhoneNumberInput';
+import { RootState } from '../../../store/configureStore';
+import { Gender } from '../../../api/GenderEnum';
+import { IProfileSettings, setProfileSettings } from '../../../store/slices/profileSlice';
+import { View } from '../../../components/Themed';
 
 export default function EditProfileModal() {
     

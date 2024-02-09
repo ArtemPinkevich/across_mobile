@@ -2,7 +2,6 @@ import { router } from 'expo-router';
 import { Text, View } from 'react-native';
 import { useSession } from '../auth/ctx';
 
-
 export default function SignIn() {
   const { signIn } = useSession();
   return (
@@ -12,7 +11,7 @@ export default function SignIn() {
           signIn();
           // Navigate after signing in. You may want to tweak this to ensure sign-in is
           // successful before navigating.
-          router.replace('/(tabs)');
+          router.replace('/(app)/(tabs)');
         }}>
         Sign In
       </Text>
