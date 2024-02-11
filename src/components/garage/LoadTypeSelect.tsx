@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { LoadingType } from '../../api/truck/LoadingType';
-import { Select } from 'native-base';
+import * as React from "react";
+import { LoadingType } from "../../api/truck/LoadingType";
+import { Select } from "native-base";
 
 export interface LoadTypeSelectProps {
     onChange: (value: string) => void;
@@ -9,12 +9,12 @@ export interface LoadTypeSelectProps {
 
 export default function LoadTypeSelect(props: LoadTypeSelectProps) {
     const { value, onChange } = props;
-    
+
     return (
         <Select selectedValue={value} variant="underlined" onValueChange={onChange}>
             <Select.Item label="Верхняя" value={LoadingType.top.toString()} />
             <Select.Item label="Боковая" value={LoadingType.side.toString()} />
-            <Select.Item label="Задняя" value={LoadingType.rear.toString()}/>
+            <Select.Item label="Задняя" value={LoadingType.rear.toString()} />
             <Select.Item label="С полной растентовкой" value={LoadingType.full.toString()} />
             <Select.Item label="Со снятием поперечных перекладин" value={LoadingType.withSlidingRoof.toString()} />
             <Select.Item label="Со снятием стоек" value={LoadingType.withRemovablePillars.toString()} />

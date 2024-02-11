@@ -1,3 +1,4 @@
+// prettier-ignore
 export enum CarBodyType {
     // все закр.+изотерм
     tentTruck,              // тентованный

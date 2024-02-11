@@ -1,3 +1,4 @@
+// prettier-ignore
 export enum LoadingType {
     top,                    // верхняя
     side,                   // боковая

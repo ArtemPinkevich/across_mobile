@@ -2,6 +2,7 @@ import { CarBodyType } from "./CarBodyType";
 import { LoadingType } from "./LoadingType";
 import { TrailerType } from "./TrailerType";
 
+// prettier-ignore
 export interface ITruck {
     createdId: string,  // Нужно ли ???
     regNumber: string,  // Нужно ли ???

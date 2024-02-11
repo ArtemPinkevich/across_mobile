@@ -14,11 +14,10 @@ export async function authorizeAsync(login: string, password: string) {
             console.error(`Ошибка авторизации: ${response.status}`);
             return undefined;
         }
-        
+
         const authorizeResponse: IAuthorizeResponse = await response.json();
         return authorizeResponse;
-    } 
-    catch (error) {
-        console.log('---------- authorizeAsync Fetch error: ', error);
+    } catch (error) {
+        console.log("---------- authorizeAsync Fetch error: ", error);
     }
 }
