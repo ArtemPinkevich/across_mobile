@@ -43,6 +43,13 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
+                name="LoadTab"
+                options={{
+                    title: "Груз",
+                    tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
+                }}
+            />
+            <Tabs.Screen
                 name="GarageTab"
                 options={{
                     title: "Гараж",

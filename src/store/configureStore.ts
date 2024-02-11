@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { profileSlice } from "./slices/profileSlice";
 import { garageSlice } from "./slices/garageSlice";
+import { loadSlice } from "./slices/loadSlice";
 
 export const store = configureStore({
     reducer: {
         profile: profileSlice.reducer,
         garage: garageSlice.reducer,
+        load: loadSlice.reducer,
     },
 });
 
