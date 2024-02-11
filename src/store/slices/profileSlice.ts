@@ -38,10 +38,13 @@ export const profileSlice = createSlice({
       state.gender = gender;
       state.phoneNumber = phoneNumber;
     },
+    setProfilePhoneNumber: (state, action) => {
+      state.phoneNumber = action.payload;
+    },
   },
 });
 
-export const { setProfileSettings } = profileSlice.actions;
+export const { setProfileSettings, setProfilePhoneNumber } = profileSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the stateSelectors can also be defined inline where they're used instead of
