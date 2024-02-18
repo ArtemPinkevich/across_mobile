@@ -13,6 +13,7 @@ import { CARBODY_DISPLAY_NAME_MAP } from "../../../components/common/selectList/
 import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../../../components/common/selectList/LoadingTypeToDisplayNameMap";
 import { LeftAlignedWithChipsSection } from "../../../components/screenItems/LeftAlignedWithChipsSection";
 import { View } from "../../../components/Themed";
+import { addOrUpdateTruckRequestAsync } from "../../../api/truck/GarageApi";
 
 export default function EditCarModal() {
     const dispatch = useDispatch();
@@ -53,7 +54,7 @@ export default function EditCarModal() {
         });
     }
 
-    const saveHandler = () => {
+    const saveHandler = async () => {
         if (trailerType === undefined) {
             alert("Необходимо указать тип прицепа");
             return;
@@ -71,7 +72,7 @@ export default function EditCarModal() {
 
         const truck: ITruck = {
             createdId: new Date().toJSON(),
-            trailerType: TrailerType.Truck,
+            trailerType: trailerType,
             carBody: editingTruсk.carBody,
             regNumber: "",
             loadingType: editingTruсk.loadingType,
@@ -96,8 +97,14 @@ export default function EditCarModal() {
             ekmt: ekmt,
         };
 
-        dispatch(addCar(truck));
-        router.back();
+        const responce = await addOrUpdateTruckRequestAsync(truck);
+        if (responce) {
+            dispatch(addCar(truck));
+            router.back();
+        } else {
+            alert("Не удалось сохранить информацию в базе. Попробуйте снова или позже");
+            return;
+        }
     };
 
     const carBodySectionOnPress = () => {
@@ -123,9 +130,9 @@ export default function EditCarModal() {
                             endIcon: <CheckIcon size={5} />,
                         }}
                     >
-                        <Select.Item label="Полуприцеп" value={TrailerType.Truck.toString()} />
-                        <Select.Item label="Грузовик" value={TrailerType.Trailer.toString()} />
-                        <Select.Item label="Сцепка" value={TrailerType.Semitrailer.toString()} />
+                        <Select.Item label="Грузовик" value={TrailerType.Truck.toString()} />
+                        <Select.Item label="Прицеп" value={TrailerType.Trailer.toString()} />
+                        <Select.Item label="Полуприцеп" value={TrailerType.Semitrailer.toString()} />
                     </Select>
                 </FormControl>
 
@@ -246,13 +253,12 @@ export default function EditCarModal() {
                         ADR-9, Вещества с низкой опасностью
                     </Checkbox>
                 </FormControl>
-
-                <Center my={2}>
-                    <Button minW={200} size={"lg"} variant="outline" onPress={saveHandler}>
-                        Сохранить
-                    </Button>
-                </Center>
             </ScrollView>
+            <Center my={2}>
+                <Button minW={200} size={"lg"} variant="outline" onPress={saveHandler}>
+                    Сохранить
+                </Button>
+            </Center>
         </View>
     );
 }
