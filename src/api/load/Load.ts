@@ -1,4 +1,13 @@
+import { CarBodyType } from "../truck/CarBodyType";
+import { LoadingType } from "../truck/LoadingType";
+import { IDangerousGoods, ITruckBase } from "../truck/Truck";
 import { PackagingType } from "./PackagingType";
+
+export interface ITruckRequirementsForLoad extends ITruckBase, IDangerousGoods {
+    carBodies: CarBodyType[]; // Кузов
+    loadingType: LoadingType[]; // Тип загрузки
+    unloadingTypes: LoadingType[]; // Тип выгрузки
+}
 
 // prettier-ignore
 export interface ILoad {
@@ -15,4 +24,6 @@ export interface ILoad {
     height?: number,
 
     diameter?: number,
+
+    truckRequirements?: ITruckRequirementsForLoad
 }

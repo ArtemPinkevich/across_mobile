@@ -61,7 +61,7 @@ export default function EditLoadModal() {
         };
 
         dispatch(addLoad(load));
-        router.back();
+        router.push("/TruckRequirementsModal");
     };
 
     const PackagingTypeSectionOnPress = () => {
@@ -163,13 +163,12 @@ export default function EditLoadModal() {
                         onChangeText={(o) => setDiameter(+o)}
                     />
                 </FormControl>
-
-                <Center my={2}>
-                    <Button minW={200} size={"lg"} variant="outline" onPress={saveHandler}>
-                        Сохранить
-                    </Button>
-                </Center>
             </ScrollView>
+            <Center my={2}>
+                <Button minW={200} size={"lg"} variant="outline" onPress={saveHandler}>
+                    Далее
+                </Button>
+            </Center>
         </View>
     );
 }
