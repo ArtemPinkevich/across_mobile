@@ -70,7 +70,7 @@ export default function EditLoadModal() {
 
     return (
         <View style={styles.container}>
-            <ScrollView mx={4}>
+            <ScrollView px={4}>
                 <FormControl isRequired mb={1}>
                     <FormControl.Label>Название</FormControl.Label>
                     <Input maxLength={200} variant="filled" size="md" placeholder="Название" value={name} onChangeText={setName} />

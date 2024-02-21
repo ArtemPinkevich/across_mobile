@@ -117,7 +117,7 @@ export default function EditCarModal() {
 
     return (
         <View style={styles.container}>
-            <ScrollView mx={"2"}>
+            <ScrollView px={4}>
                 {/* По хорошему заменить бы на RadioButtons */}
                 <FormControl isRequired mb={1}>
                     <FormControl.Label>Тип прицепа</FormControl.Label>

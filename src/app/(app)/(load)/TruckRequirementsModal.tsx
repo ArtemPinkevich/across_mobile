@@ -92,7 +92,7 @@ export default function TruckRequirementsModal() {
 
     return (
         <View style={styles.container}>
-            <ScrollView mx={"2"}>
+            <ScrollView px={4}>
                 <Pressable onPress={() => router.push("/CarBodiesSelectListModal")} my={1}>
                     {carBodiesDisplayName && carBodiesDisplayName?.length > 0 ? (
                         <LeftAlignedWithChipsSection title={"Тип кузова"} values={carBodiesDisplayName} />

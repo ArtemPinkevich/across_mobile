@@ -47,7 +47,7 @@ export default function EditProfileModal() {
 
     return (
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView px={4}>
                 <VStack mx={"4"}>
                     <Input variant="underlined" size="md" placeholder="Имя" value={name} onChangeText={setName} />
                     <Input variant="underlined" size="md" placeholder="Фамилия" value={surname} onChangeText={setSurname} />
