@@ -60,7 +60,6 @@ export default function EditLoadModal() {
             diameter: diameter,
         };
 
-        dispatch(addLoad(load));
         router.push("/TruckRequirementsModal");
     };
 

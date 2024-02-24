@@ -87,7 +87,7 @@ export default function TruckRequirementsModal() {
         };
 
         dispatch(setTruckRequirements(truckRequirements));
-        //router.back();
+        router.push("/PublishLoadModal");
     };
 
     return (

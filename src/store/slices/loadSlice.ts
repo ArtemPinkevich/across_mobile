@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../configureStore";
-import { ILoad } from "../../api/load/Load";
+import { ILoad, ITransportation } from "../../api/load/Load";
 import { PackagingType } from "../../api/load/PackagingType";
 
 const DEFAULT_EDITING_LOAD: ILoad = {
@@ -32,11 +32,15 @@ const DEFAULT_EDITING_LOAD: ILoad = {
 };
 
 interface ILoadState {
+    activeTransportation: ITransportation[];
+    transportationJournal: ITransportation[];
     loads: ILoad[];
     editingLoad: ILoad;
 }
 
 const initialState: ILoadState = {
+    activeTransportation: [],
+    transportationJournal: [],
     loads: [],
     editingLoad: DEFAULT_EDITING_LOAD,
 };
@@ -46,7 +50,10 @@ export const loadSlice = createSlice({
     initialState,
     reducers: {
         addLoad: (state, action) => {
-            state.loads = [action.payload, ...state.loads];
+            state.loads = [...state.loads, action.payload];
+        },
+        addActiveTransportation: (state, action) => {
+            state.activeTransportation = [...state.activeTransportation, action.payload];
         },
         removeLoad: (state, action) => {
             state.loads = state.loads.filter((o) => o.createdId !== action.payload);
@@ -87,6 +94,7 @@ export const {
     setTruckRequirementsCarBodies,
     setTruckRequirementsLoadingTypes,
     setTruckRequirementsUnloadingTypes,
+    addActiveTransportation,
 } = loadSlice.actions;
 
 export const selectLoads = (state: RootState) => state.load.loads;
