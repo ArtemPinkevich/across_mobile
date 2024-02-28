@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../configureStore";
 import { ILoad, ITransportation } from "../../api/load/Load";
 import { PackagingType } from "../../api/load/PackagingType";
+import { TransportationStatus } from "../../api/load/TransportationStatus";
+import moment from "moment";
 
 const DEFAULT_EDITING_LOAD: ILoad = {
     createdId: "",
@@ -39,7 +41,44 @@ interface ILoadState {
 }
 
 const initialState: ILoadState = {
-    activeTransportation: [],
+    activeTransportation: [
+        {
+            status: TransportationStatus.readyToLoad,
+            loadPublishInfo: {
+                loadingAddress: "Томская область, Томск, Ленина, 1а",
+                loadingDateFrom: moment().toISOString(),
+                loadingDateTo: moment().add(7, "day").toISOString(),
+                loadingLocalityName: "",
+                unloadingLocalityName: "",
+                unloadingAddress: "Тараз, Ленина, 2б/18",
+            },
+            load: {
+                createdId: moment().toString(),
+                name: "Снег",
+                weight: 20,
+                volume: 30,
+                packagingType: PackagingType.none,
+            },
+        },
+        {
+            status: TransportationStatus.transporting,
+            loadPublishInfo: {
+                loadingAddress: "Томская область, Томск, Ленина, 1а",
+                loadingDateFrom: moment().toISOString(),
+                loadingDateTo: moment().add(7, "day").toISOString(),
+                loadingLocalityName: "",
+                unloadingLocalityName: "",
+                unloadingAddress: "Тараз, Ленина, 2б/18",
+            },
+            load: {
+                createdId: moment().toString(),
+                name: "Снег очень много снега как букв ",
+                weight: 20,
+                volume: 30,
+                packagingType: PackagingType.none,
+            },
+        },
+    ],
     transportationJournal: [],
     loads: [],
     editingLoad: DEFAULT_EDITING_LOAD,

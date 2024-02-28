@@ -1,0 +1,14 @@
+import { TransportationStatus } from "../../../api/load/TransportationStatus";
+
+export const TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP = new Map<Object, string>([
+    [TransportationStatus.notPublished, "Не опублекованно"],
+    [TransportationStatus.readyToLoad, "Поиск перевозчика"],
+    [TransportationStatus.waitingForLoading, "Отгрузка"],
+    [TransportationStatus.transporting, "В дороге"],
+    [TransportationStatus.Delivered, "Доставлено"],
+]);
+
+export const TRANSPORTATION_STATUS_DISPLAY_NAME_ARRAY = Array.from(TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP, ([value, displayName]) => ({
+    value,
+    displayName,
+}));

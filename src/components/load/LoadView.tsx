@@ -1,46 +1,98 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Pressable } from "react-native";
-import { HStack, Center, Menu, Text } from "native-base";
+import { HStack, Center, Menu, Text, VStack, Box } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { removeLoad } from "../../store/slices/loadSlice";
-import { ILoad } from "../../api/load/Load";
+import { ILoad, ITransportation } from "../../api/load/Load";
+import moment from "moment";
+import { TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP } from "../common/EnumMappers/TransportationStatusToDisplayNameMap";
 
 type LoadProps = {
-    load: ILoad;
+    transportation: ITransportation;
 };
 
 export const LoadView = (props: LoadProps) => {
-    const { load } = props;
+    const { transportation } = props;
     const dispatch = useDispatch();
 
     const removeHandler = () => {
-        dispatch(removeLoad(load.createdId));
+        //dispatch(removeLoad(load.createdId));
     };
 
     return (
-        <HStack py={4} pl={4}>
-            <Center>
-                <MaterialCommunityIcons name="package-variant-closed" size={17} />
-            </Center>
-            <Text pl={5} w="80%" bold fontSize="xl">
-                {load.name}
-            </Text>
-            <Center>
+        <Box
+            rounded="lg"
+            overflow="hidden"
+            borderColor="coolGray.200"
+            borderWidth="1"
+            _dark={{
+                borderColor: "coolGray.600",
+                backgroundColor: "gray.700",
+            }}
+            _web={{
+                shadow: 2,
+                borderWidth: 0,
+            }}
+            _light={{
+                backgroundColor: "white",
+            }}
+        >
+            <HStack my={4} pl={4}>
+                <VStack w="90%">
+                    <Text bold fontSize="xl">
+                        {transportation.load.name}
+                    </Text>
+                    <Text fontSize="sm">{`${transportation.load.weight}т ${transportation.load.volume}м³`}</Text>
+
+                    <HStack mt={4}>
+                        <Center>
+                            <MaterialCommunityIcons name="map-marker-outline" size={17} color="blue" />
+                        </Center>
+                        <VStack>
+                            <Text w="70%" pl={5} fontSize="lg">
+                                {transportation.loadPublishInfo.loadingAddress}
+                            </Text>
+                            <Text pl={5} fontSize="xs">
+                                {`${moment(transportation.loadPublishInfo.loadingDateFrom).format("DD MMMM YYYY")} - ${moment(
+                                    transportation.loadPublishInfo.loadingDateTo
+                                ).format("DD MMMM YYYY")}`}
+                            </Text>
+                        </VStack>
+                    </HStack>
+
+                    <HStack mt={4}>
+                        <Center>
+                            <MaterialCommunityIcons name="map-marker" size={17} color="red" />
+                        </Center>
+                        <Text w="70%" pl={5} fontSize="lg">
+                            {transportation.loadPublishInfo.unloadingAddress}
+                        </Text>
+                    </HStack>
+
+                    <Center mt={4} background={"blueGray.100"}>
+                        <Text fontSize="xs" px={5} py={1}>
+                            {TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.status)}
+                        </Text>
+                    </Center>
+                </VStack>
+
                 {/* defaultIsOpen={false} чтобы не фризился экран (по мотивам https://github.com/GeekyAnts/NativeBase/issues/4730) */}
-                <Menu
-                    shadow={2}
-                    w="150"
-                    defaultIsOpen={false}
-                    trigger={(triggerProps) => (
-                        <Pressable accessibilityLabel="More options menu" {...triggerProps}>
-                            <MaterialCommunityIcons name="dots-vertical" size={17} />
-                        </Pressable>
-                    )}
-                >
-                    <Menu.Item onPress={removeHandler}>Удалить</Menu.Item>
-                </Menu>
-            </Center>
-        </HStack>
+                <Box mt={4}>
+                    <Menu
+                        shadow={2}
+                        w="150"
+                        defaultIsOpen={false}
+                        trigger={(triggerProps) => (
+                            <Pressable accessibilityLabel="More options menu" {...triggerProps}>
+                                <MaterialCommunityIcons name="dots-vertical" size={17} />
+                            </Pressable>
+                        )}
+                    >
+                        <Menu.Item onPress={removeHandler}>Удалить</Menu.Item>
+                    </Menu>
+                </Box>
+            </HStack>
+        </Box>
     );
 };

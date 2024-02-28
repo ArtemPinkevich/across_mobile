@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, FlatList, Fab, Icon, Pressable } from "native-base";
+import { Text, FlatList, Fab, Icon, Pressable, Center } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 
 import { View } from "../../components/Themed";
@@ -44,9 +44,9 @@ export default function CarScreenContent(props: CarScreenContentProps) {
 
     if (cars.length === 0) {
         content = (
-            <View style={styles.imgWrap}>
-                <Text style={styles.getStartedText}>Список автомобилей пуст</Text>
-            </View>
+            <Center h={"100%"}>
+                <Text fontSize={"lg"}>Список автомобилей пуст</Text>
+            </Center>
         );
     }
 
@@ -68,21 +68,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "stretch",
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: "bold",
-    },
-    getStartedText: {
-        fontSize: 17,
-        lineHeight: 24,
-        textAlign: "center",
-    },
-    imgWrap: {
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 10,
-        height: 300,
     },
     separator: {
         height: 1,

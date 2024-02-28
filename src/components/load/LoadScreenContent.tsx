@@ -1,15 +1,15 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, FlatList, Fab, Icon, Pressable } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
+import { Text, FlatList, Pressable, Fab, Icon, Center } from "native-base";
 
 import { View } from "../Themed";
 import { LoadView } from "./LoadView";
 import { RootState } from "../../store/configureStore";
 import { router } from "expo-router";
 import { resetEditingLoad } from "../../store/slices/loadSlice";
-import { ILoad } from "../../api/load/Load";
+import { ITransportation } from "../../api/load/Load";
+import { AntDesign } from "@expo/vector-icons";
 
 type LoadScreenContentProps = {
     isSelectionMode: boolean;
@@ -20,35 +20,34 @@ export default function LoadScreenContent(props: LoadScreenContentProps) {
 
     const dispatch = useDispatch();
 
-    const loads = useSelector((state: RootState) => state.load.loads);
+    const activeTransportation: ITransportation[] = useSelector((state: RootState) => state.load.activeTransportation);
 
-    const itemPressHandler = (load: ILoad) => {
+    const itemPressHandler = (load: ITransportation) => {
         if (isSelectionMode) {
             router.back();
         }
     };
 
+    const renderItem = ({ item }: any) => (
+        <Pressable onPress={() => itemPressHandler(item)} my={2}>
+            <LoadView transportation={item as ITransportation} />
+        </Pressable>
+    );
+
+    let content = <FlatList px={"4"} data={activeTransportation} renderItem={renderItem} />;
+
+    if (activeTransportation.length === 0) {
+        content = (
+            <Center h={"100%"}>
+                <Text fontSize={"lg"}>Активных отправлений не найдено</Text>
+            </Center>
+        );
+    }
+
     const addPressHandler = () => {
         dispatch(resetEditingLoad());
         router.push("/EditLoadModal");
     };
-
-    const renderItem = ({ item }: any) => (
-        <Pressable onPress={() => itemPressHandler(item)}>
-            <LoadView load={item as ILoad} />
-            <View style={styles.separator} />
-        </Pressable>
-    );
-
-    let content = <FlatList px={"4"} data={loads} renderItem={renderItem} />;
-
-    if (loads.length === 0) {
-        content = (
-            <View style={styles.imgWrap}>
-                <Text style={styles.getStartedText}>Список пуст</Text>
-            </View>
-        );
-    }
 
     return (
         <View style={styles.container}>
@@ -68,25 +67,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "stretch",
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: "bold",
-    },
-    getStartedText: {
-        fontSize: 17,
-        lineHeight: 24,
-        textAlign: "center",
-    },
-    imgWrap: {
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 10,
-        height: 300,
-    },
-    separator: {
-        height: 1,
-        width: "100%",
-        backgroundColor: "#ddd",
     },
 });
