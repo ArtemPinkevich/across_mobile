@@ -1,23 +1,26 @@
-import { SERVER_ADDRESS } from "../../constants/GlobalConstants";
+import { httpClient } from "../httpClient";
 
 export interface IAuthorizeResponse {
-    id: string;
-    accessToken: string;
-    refreshToken: string;
-    expireDateTime: Date;
+  id: string;
+  accessToken: string;
+  refreshToken: string;
+  expireDateTime: Date;
 }
 
-export async function authorizeAsync(login: string, password: string) {
-    try {
-        const response = await fetch(`${SERVER_ADDRESS}/api/authorization/driver/${login}/${password}`);
-        if (!response.ok) {
-            console.error(`Ошибка авторизации: ${response.status}`);
-            return undefined;
-        }
-
-        const authorizeResponse: IAuthorizeResponse = await response.json();
-        return authorizeResponse;
-    } catch (error) {
-        console.log("---------- authorizeAsync Fetch error: ", error);
-    }
+async function authorize(
+  login: string,
+  password: string
+): Promise<IAuthorizeResponse | undefined> {
+  try {
+    const response = await httpClient.get<IAuthorizeResponse>(
+      `/Authorization/driver/${login}/${password}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Authorize error", error);
+  }
 }
+
+export const AuthorizationApi = {
+  authorize,
+};
