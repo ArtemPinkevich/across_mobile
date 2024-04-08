@@ -43,6 +43,13 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
+                name="SearchOrdersTab"
+                options={{
+                    title: "Поиск",
+                    tabBarIcon: ({ color }) => <FontAwesome name="search" size={24} color={color} />,
+                }}
+            />
+            <Tabs.Screen
                 name="LoadTab"
                 options={{
                     title: "Груз",
