@@ -2,13 +2,16 @@ import { configureStore } from "@reduxjs/toolkit";
 import { profileSlice } from "./slices/profileSlice";
 import { garageSlice } from "./slices/garageSlice";
 import { loadSlice } from "./slices/loadSlice";
+import { garageApi } from "./garage/garageApi";
 
 export const store = configureStore({
     reducer: {
         profile: profileSlice.reducer,
         garage: garageSlice.reducer,
         load: loadSlice.reducer,
+        [garageApi.reducerPath]: garageApi.reducer,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(garageApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -3,20 +3,19 @@ import { useState } from "react";
 import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { router } from "expo-router";
-import { ScrollView, Center, Button, CheckIcon, FormControl, Select, Pressable, Checkbox, Input } from "native-base";
-import { addCar } from "../../../store/slices/garageSlice";
+import { ScrollView, Center, Button, CheckIcon, FormControl, Select, Pressable, Checkbox, Input, Text } from "native-base";
 import { TrailerType } from "../../../api/truck/TrailerType";
-import { ITruck } from "../../../api/truck/Truck";
+import { ITruck, ITruckResultDto, TruckResult } from "../../../api/truck/Truck";
 import { LeftAlignedSection } from "../../../components/screenItems/LeftAlignedSection";
 import { RootState } from "../../../store/configureStore";
 import { CARBODY_DISPLAY_NAME_MAP } from "../../../components/common/selectList/CarBodyToDisplayNameMap";
 import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../../../components/common/selectList/LoadingTypeToDisplayNameMap";
 import { LeftAlignedWithChipsSection } from "../../../components/screenItems/LeftAlignedWithChipsSection";
 import { View } from "../../../components/Themed";
-import { addOrUpdateTruckRequestAsync } from "../../../api/truck/GarageApi";
+import { useAddOrUpdateTruckMutation } from "../../../store/garage/garageApi";
 
 export default function EditCarModal() {
-    const dispatch = useDispatch();
+    const [addOrUpdateTruck, { isLoading, error }] = useAddOrUpdateTruckMutation();
 
     const editingTruсk = useSelector((state: RootState) => state.garage.editingTruсk);
 
@@ -24,7 +23,7 @@ export default function EditCarModal() {
     const [hasLiftgate, setHasLiftgate] = useState<boolean>(editingTruсk.hasLiftgate);
     const [hasStanchionTrailer, setHasStanchionTrailer] = useState<boolean>(editingTruсk.hasStanchionTrailer);
     const [carryingCapacity, setCarryingCapacity] = useState<number>(editingTruсk.carryingCapacity);
-    const [hasLTL, setHasLTL] = useState<boolean>(editingTruсk.hasLTL);
+    const [hasLTL, setHasLTL] = useState<boolean>(editingTruсk.hasLtl);
     const [bodyVolume, setBodyVolume] = useState<number>(editingTruсk.bodyVolume);
     const [innerBodyLength, setInnerBodyLength] = useState<number>(editingTruсk.innerBodyLength);
     const [innerBodyWidth, setInnerBodyWidth] = useState<number>(editingTruсk.innerBodyWidth);
@@ -42,7 +41,9 @@ export default function EditCarModal() {
     const [adr9, setAdr9] = useState<boolean>(editingTruсk.adr9);
 
     const carBodyDisplayName =
-        editingTruсk?.carBody || editingTruсk?.carBody === 0 ? CARBODY_DISPLAY_NAME_MAP.get(editingTruсk.carBody) ?? "Не выбрано" : "Не выбрано";
+        editingTruсk?.carBodyType || editingTruсk?.carBodyType === 0
+            ? CARBODY_DISPLAY_NAME_MAP.get(editingTruсk.carBodyType) ?? "Не выбрано"
+            : "Не выбрано";
 
     let loadingTypeDisplayNames: string[] = [];
     if (editingTruсk?.loadingType) {
@@ -60,7 +61,7 @@ export default function EditCarModal() {
             return;
         }
 
-        if (editingTruсk?.carBody === undefined) {
+        if (editingTruсk?.carBodyType === undefined) {
             alert("Необходимо указать тип кузова");
             return;
         }
@@ -73,10 +74,10 @@ export default function EditCarModal() {
         const truck: ITruck = {
             createdId: new Date().toJSON(),
             trailerType: trailerType,
-            carBody: editingTruсk.carBody,
+            carBodyType: editingTruсk.carBodyType,
             regNumber: "",
             loadingType: editingTruсk.loadingType,
-            hasLTL: hasLTL,
+            hasLtl: hasLTL,
             hasLiftgate: hasLiftgate,
             hasStanchionTrailer: hasStanchionTrailer,
             carryingCapacity: carryingCapacity,
@@ -97,12 +98,12 @@ export default function EditCarModal() {
             ekmt: ekmt,
         };
 
-        const responce = await addOrUpdateTruckRequestAsync(truck);
-        if (responce) {
-            dispatch(addCar(truck));
+        const responce: ITruckResultDto = await addOrUpdateTruck(truck).unwrap();
+        if (responce?.result === TruckResult.Ok) {
             router.back();
         } else {
             alert("Не удалось сохранить информацию в базе. Попробуйте снова или позже");
+            console.log(responce?.reasons);
             return;
         }
     };
@@ -255,9 +256,10 @@ export default function EditCarModal() {
                 </FormControl>
             </ScrollView>
             <Center my={2}>
-                <Button minW={200} size={"lg"} variant="outline" onPress={saveHandler}>
+                <Button minW={200} size={"lg"} variant="outline" isLoading={isLoading} onPress={saveHandler}>
                     Сохранить
                 </Button>
+                {error && <Text color={"red.500"}>Не удалось выполнить операцию</Text>}
             </Center>
         </View>
     );

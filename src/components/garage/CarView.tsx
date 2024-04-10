@@ -1,12 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { Pressable } from "react-native";
 import { HStack, Center, VStack, Menu, Text } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { removeCar } from "../../store/slices/garageSlice";
 import { ITruck } from "../../api/truck/Truck";
 import { CARBODY_DISPLAY_NAME_MAP } from "../common/selectList/CarBodyToDisplayNameMap";
 import { TRAILER_TYPE_DISPLAY_NAME_MAP } from "../common/selectList/TrailerTypeToDisplayNameMap";
+import { useDeleteTruckMutation } from "../../store/garage/garageApi";
 
 type CarProps = {
     truck: ITruck;
@@ -14,13 +13,15 @@ type CarProps = {
 
 export const CarView = (props: CarProps) => {
     const { truck } = props;
-    const dispatch = useDispatch();
+    const [deleteTruck] = useDeleteTruckMutation();
 
     const trailerTypeDisplayName = truck?.trailerType || truck?.trailerType === 0 ? TRAILER_TYPE_DISPLAY_NAME_MAP.get(truck.trailerType) ?? "" : "";
-    const carBodyDisplayName = truck?.carBody || truck?.carBody === 0 ? CARBODY_DISPLAY_NAME_MAP.get(truck.carBody) ?? "" : "";
+    const carBodyDisplayName = truck?.carBodyType || truck?.carBodyType === 0 ? CARBODY_DISPLAY_NAME_MAP.get(truck.carBodyType) ?? "" : "";
 
     const removeHandler = () => {
-        dispatch(removeCar(truck.createdId));
+        if (truck.truckId) {
+            deleteTruck(truck.truckId);
+        }
     };
 
     return (

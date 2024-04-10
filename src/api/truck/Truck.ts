@@ -18,7 +18,7 @@ export interface IDangerousGoods {
 }
 
 export interface ITruckBase {
-    hasLTL: boolean; // догруз
+    hasLtl: boolean; // догруз
     hasLiftgate: boolean; // Гидролифт
     hasStanchionTrailer: boolean; // коники
     carryingCapacity: number; // грузоподъемность, т (макс. 9999)
@@ -26,11 +26,12 @@ export interface ITruckBase {
 
 // prettier-ignore
 export interface ITruck extends IDangerousGoods, ITruckBase {
+    truckId?: number,
     createdId: string,  // Нужно ли ???
     regNumber: string,  // Нужно ли ???
 
     trailerType?: TrailerType,      // Тип прицепа
-    carBody?: CarBodyType,          // Кузов
+    carBodyType?: CarBodyType,          // Кузов
     loadingType?: LoadingType[],    // Тип загрузки
 
     bodyVolume: number,             // объем кузова, m3 (макс. 9999)
@@ -39,4 +40,19 @@ export interface ITruck extends IDangerousGoods, ITruckBase {
     innerBodyLength: number,
     innerBodyWidth: number,
     innerBodyHeight: number,
+}
+
+export enum TruckResult {
+    Ok,
+    Error,
+}
+
+export interface ITruckResultDto {
+    result: TruckResult;
+    reasons: string[];
+}
+
+export interface ITrucksListResultDto {
+    result: ITruckResultDto;
+    trucks: ITruck[];
 }

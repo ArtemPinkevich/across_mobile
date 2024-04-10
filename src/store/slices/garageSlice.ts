@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../configureStore";
 import { ITruck } from "../../api/truck/Truck";
 
 const DEFAULT_EDITING_TRUCK = {
@@ -8,7 +7,7 @@ const DEFAULT_EDITING_TRUCK = {
     carBody: undefined,
     regNumber: "",
     loadingType: undefined,
-    hasLTL: false,
+    hasLtl: false,
     hasLiftgate: false,
     hasStanchionTrailer: false,
     carryingCapacity: 0,
@@ -48,14 +47,8 @@ export const garageSlice = createSlice({
     initialState,
     // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
-        addCar: (state, action) => {
-            state.cars = [action.payload, ...state.cars];
-        },
-        removeCar: (state, action) => {
-            state.cars = state.cars.filter((o) => o.createdId !== action.payload);
-        },
         setCarBody: (state, action) => {
-            state.editingTruсk = { ...state.editingTruсk, carBody: action.payload };
+            state.editingTruсk = { ...state.editingTruсk, carBodyType: action.payload };
         },
         setLoadingType: (state, action) => {
             state.editingTruсk = { ...state.editingTruсk, loadingType: action.payload };
@@ -66,9 +59,6 @@ export const garageSlice = createSlice({
     },
 });
 
-export const { addCar, removeCar, setCarBody, setLoadingType, resetEditingTruсk } = garageSlice.actions;
-
-export const selectCars = (state: RootState) => state.garage.cars;
-export const selectFavariteCar = (state: RootState) => state.garage.favariteCar;
+export const { setCarBody, setLoadingType, resetEditingTruсk } = garageSlice.actions;
 
 export default garageSlice.reducer;

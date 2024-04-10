@@ -1,15 +1,15 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Text, FlatList, Fab, Icon, Pressable, Center } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 
 import { View } from "../../components/Themed";
 import { CarView } from "./CarView";
-import { RootState } from "../../store/configureStore";
 import { router } from "expo-router";
 import { ITruck } from "../../api/truck/Truck";
 import { resetEditingTruсk } from "../../store/slices/garageSlice";
+import { useGetTrucksQuery } from "../../store/garage/garageApi";
 
 type CarScreenContentProps = {
     isSelectionMode: boolean;
@@ -20,7 +20,8 @@ export default function CarScreenContent(props: CarScreenContentProps) {
 
     const dispatch = useDispatch();
 
-    const cars = useSelector((state: RootState) => state.garage.cars);
+    const { data } = useGetTrucksQuery();
+    const cars = data?.trucks ?? [];
 
     const itemPressHandler = (car: ITruck) => {
         if (isSelectionMode) {

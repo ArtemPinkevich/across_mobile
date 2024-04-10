@@ -21,7 +21,7 @@ export default function TruckRequirementsModal() {
     const [hasLiftgate, setHasLiftgate] = useState<boolean>(editingLoad.truckRequirements?.hasLiftgate ?? false);
     const [hasStanchionTrailer, setHasStanchionTrailer] = useState<boolean>(editingLoad.truckRequirements?.hasStanchionTrailer ?? false);
     const [carryingCapacity, setCarryingCapacity] = useState<number>(editingLoad.truckRequirements?.carryingCapacity ?? 0);
-    const [hasLTL, setHasLTL] = useState<boolean>(editingLoad.truckRequirements?.hasLTL ?? false);
+    const [hasLTL, setHasLTL] = useState<boolean>(editingLoad.truckRequirements?.hasLtl ?? false);
     const [tir, setTir] = useState<boolean>(editingLoad.truckRequirements?.tir ?? false);
     const [ekmt, setEkmt] = useState<boolean>(editingLoad.truckRequirements?.ekmt ?? false);
     const [adr1, setAdr1] = useState<boolean>(editingLoad.truckRequirements?.adr1 ?? false);
@@ -69,7 +69,7 @@ export default function TruckRequirementsModal() {
             carBodies: editingLoad?.truckRequirements?.carBodies ?? [],
             loadingType: editingLoad?.truckRequirements?.loadingType ?? [],
             unloadingTypes: editingLoad?.truckRequirements?.unloadingTypes ?? [],
-            hasLTL: hasLTL,
+            hasLtl: hasLTL,
             hasLiftgate: hasLiftgate,
             hasStanchionTrailer: hasStanchionTrailer,
             carryingCapacity: carryingCapacity,
