@@ -1,15 +1,16 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Text, FlatList, Pressable, Fab, Icon, Center } from "native-base";
 
 import { View } from "../Themed";
 import { LoadView } from "./LoadView";
-import { RootState } from "../../store/configureStore";
 import { router } from "expo-router";
-import { resetEditingLoad } from "../../store/slices/loadSlice";
-import { ITransportation } from "../../api/load/Load";
+import { resetEditingLoad } from "../../store/slices/buildTransportationSlice";
+import { ITransportation } from "../../api/transportation/Transportation";
 import { AntDesign } from "@expo/vector-icons";
+import { useGetTransportationsQuery } from "../../store/load/transportationApi";
+import { TransportationStatus } from "../../api/transportation/TransportationStatus";
 
 type LoadScreenContentProps = {
     isSelectionMode: boolean;
@@ -20,7 +21,8 @@ export default function LoadScreenContent(props: LoadScreenContentProps) {
 
     const dispatch = useDispatch();
 
-    const activeTransportation: ITransportation[] = useSelector((state: RootState) => state.load.activeTransportation);
+    const { data } = useGetTransportationsQuery();
+    const filtred = data?.transportationOrderDtos.filter((o) => o.transportationStatus !== TransportationStatus.Delivered) ?? [];
 
     const itemPressHandler = (load: ITransportation) => {
         if (isSelectionMode) {
@@ -28,15 +30,15 @@ export default function LoadScreenContent(props: LoadScreenContentProps) {
         }
     };
 
-    const renderItem = ({ item }: any) => (
+    const renderItem = (item: ITransportation) => (
         <Pressable onPress={() => itemPressHandler(item)} my={2}>
             <LoadView transportation={item as ITransportation} />
         </Pressable>
     );
 
-    let content = <FlatList px={"4"} data={activeTransportation} renderItem={renderItem} />;
+    let content = <FlatList px={"4"} data={filtred} renderItem={(o) => renderItem(o.item)} />;
 
-    if (activeTransportation.length === 0) {
+    if (filtred.length === 0) {
         content = (
             <Center h={"100%"}>
                 <Text fontSize={"lg"}>Активных отправлений не найдено</Text>
@@ -45,7 +47,7 @@ export default function LoadScreenContent(props: LoadScreenContentProps) {
     }
 
     const addPressHandler = () => {
-        dispatch(resetEditingLoad());
+        dispatch(resetEditingLoad()); // Сбрасываем временную информацию, чтобы начать создание груза с нуля
         router.push("/EditLoadModal");
     };
 

@@ -1,4 +1,4 @@
-import { PackagingType } from "../../../api/load/PackagingType";
+import { PackagingType } from "../../../api/transportation/PackagingType";
 
 export const PACKAGING_TYPE_DISPLAY_NAME_MAP = new Map<Object, string>([
     [PackagingType.none, "Не указано"],

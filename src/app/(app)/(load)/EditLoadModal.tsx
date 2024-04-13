@@ -7,15 +7,15 @@ import { ScrollView, Center, Button, FormControl, Pressable, Input } from "nativ
 import { LeftAlignedSection } from "../../../components/screenItems/LeftAlignedSection";
 import { RootState } from "../../../store/configureStore";
 import { View } from "../../../components/Themed";
-import { PackagingType } from "../../../api/load/PackagingType";
+import { PackagingType } from "../../../api/transportation/PackagingType";
 import { PACKAGING_TYPE_DISPLAY_NAME_MAP } from "../../../components/common/selectList/PackagingTypeToDisplayNameMap";
-import { ILoad } from "../../../api/load/Load";
-import { addLoad } from "../../../store/slices/loadSlice";
+import { ILoad } from "../../../api/transportation/Transportation";
+import { setEditingLoad } from "../../../store/slices/buildTransportationSlice";
 
 export default function EditLoadModal() {
     const dispatch = useDispatch();
 
-    const editingLoad = useSelector((state: RootState) => state.load.editingLoad);
+    const editingLoad = useSelector((state: RootState) => state.buildTransportation.editingLoad);
 
     const [name, setName] = useState<string>(editingLoad.name);
     const [weight, setWeight] = useState<number>(editingLoad.weight);
@@ -60,6 +60,7 @@ export default function EditLoadModal() {
             diameter: diameter,
         };
 
+        dispatch(setEditingLoad(load));
         router.push("/TruckRequirementsModal");
     };
 

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { router } from "expo-router";
 import { ScrollView, Center, Button, CheckIcon, FormControl, Select, Pressable, Checkbox, Input, Text } from "native-base";
 import { TrailerType } from "../../../api/truck/TrailerType";
-import { ITruck, ITruckResultDto, TruckResult } from "../../../api/truck/Truck";
+import { ITruck, ITruckResultDto } from "../../../api/truck/Truck";
 import { LeftAlignedSection } from "../../../components/screenItems/LeftAlignedSection";
 import { RootState } from "../../../store/configureStore";
 import { CARBODY_DISPLAY_NAME_MAP } from "../../../components/common/selectList/CarBodyToDisplayNameMap";
@@ -13,6 +13,7 @@ import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../../../components/common/select
 import { LeftAlignedWithChipsSection } from "../../../components/screenItems/LeftAlignedWithChipsSection";
 import { View } from "../../../components/Themed";
 import { useAddOrUpdateTruckMutation } from "../../../store/garage/garageApi";
+import { ApiCommonResult } from "../../../api/common/commonApi";
 
 export default function EditCarModal() {
     const [addOrUpdateTruck, { isLoading, error }] = useAddOrUpdateTruckMutation();
@@ -99,7 +100,7 @@ export default function EditCarModal() {
         };
 
         const responce: ITruckResultDto = await addOrUpdateTruck(truck).unwrap();
-        if (responce?.result === TruckResult.Ok) {
+        if (responce?.result === ApiCommonResult.Ok) {
             router.back();
         } else {
             alert("Не удалось сохранить информацию в базе. Попробуйте снова или позже");

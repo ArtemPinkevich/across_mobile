@@ -3,26 +3,28 @@ import { useState } from "react";
 import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { router } from "expo-router";
-import { ScrollView, Center, Button, FormControl, Input } from "native-base";
+import { ScrollView, Center, Button, FormControl, Input, Text } from "native-base";
 import { RootState } from "../../../store/configureStore";
 import { View } from "../../../components/Themed";
-import { ILoadPublishInfo, ITransportation } from "../../../api/load/Load";
-import { addActiveTransportation } from "../../../store/slices/loadSlice";
-import { TransportationStatus } from "../../../api/load/TransportationStatus";
+import { ILoadPublishInfo, ITransportation, TransportationOrderResult } from "../../../api/transportation/Transportation";
+import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
 import moment, { Moment } from "moment";
 import DateTimePickerWrapper from "../../../components/common/DateTimePickerWrapper";
+import { useAddOrUpdateTransportationMutation } from "../../../store/load/transportationApi";
+import { ApiCommonResult } from "../../../api/common/commonApi";
 
 export default function PublishLoadModal() {
     const dispatch = useDispatch();
+    const [addOrUpdateTransportation, { isLoading, error }] = useAddOrUpdateTransportationMutation();
 
-    const editingLoad = useSelector((state: RootState) => state.load.editingLoad);
+    const editingLoad = useSelector((state: RootState) => state.buildTransportation.editingLoad);
 
     const [loadingAddress, setLoadingAddress] = useState("");
     const [unloadingAddress, setUnloadingAddress] = useState("");
     const [loadingDateFrom, setLoadingDateFrom] = useState<Moment | undefined>(moment());
     const [loadingDateTo, setLoadingDateTo] = useState<Moment | undefined>();
 
-    const saveHandler = () => {
+    const saveHandler = async () => {
         const newLoadPublishInfo: ILoadPublishInfo = {
             loadingDateFrom: loadingDateFrom?.toISOString() ?? "",
             loadingDateTo: loadingDateTo?.toISOString() ?? "",
@@ -35,11 +37,17 @@ export default function PublishLoadModal() {
         const transportation: ITransportation = {
             loadPublishInfo: newLoadPublishInfo,
             load: editingLoad,
-            status: TransportationStatus.readyToLoad,
+            transportationStatus: TransportationStatus.readyToLoad,
         };
 
-        dispatch(addActiveTransportation(transportation));
-        router.replace("/");
+        const responce: TransportationOrderResult = await addOrUpdateTransportation(transportation).unwrap();
+        if (responce?.result === ApiCommonResult.Ok) {
+            router.replace("/LoadTab");
+        } else {
+            alert("Не удалось сохранить информацию в базе. Попробуйте снова или позже");
+            console.log(responce?.reasons);
+            return;
+        }
     };
 
     return (
@@ -61,9 +69,10 @@ export default function PublishLoadModal() {
                 </FormControl>
             </ScrollView>
             <Center my={2}>
-                <Button minW={200} size={"lg"} variant="outline" onPress={saveHandler}>
+                <Button minW={200} size={"lg"} variant="outline" isLoading={isLoading} onPress={saveHandler}>
                     Готово
                 </Button>
+                {error && <Text color={"red.500"}>Не удалось выполнить операцию</Text>}
             </Center>
         </View>
     );

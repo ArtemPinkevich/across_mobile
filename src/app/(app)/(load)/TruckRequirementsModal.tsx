@@ -7,8 +7,8 @@ import { ScrollView, Center, Button, FormControl, Pressable, Input, Checkbox } f
 import { LeftAlignedSection } from "../../../components/screenItems/LeftAlignedSection";
 import { RootState } from "../../../store/configureStore";
 import { View } from "../../../components/Themed";
-import { ITruckRequirementsForLoad } from "../../../api/load/Load";
-import { setTruckRequirements } from "../../../store/slices/loadSlice";
+import { ITruckRequirementsForLoad } from "../../../api/transportation/Transportation";
+import { setTruckRequirements } from "../../../store/slices/buildTransportationSlice";
 import { LeftAlignedWithChipsSection } from "../../../components/screenItems/LeftAlignedWithChipsSection";
 import { CARBODY_DISPLAY_NAME_MAP } from "../../../components/common/selectList/CarBodyToDisplayNameMap";
 import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../../../components/common/selectList/LoadingTypeToDisplayNameMap";
@@ -16,7 +16,10 @@ import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../../../components/common/select
 export default function TruckRequirementsModal() {
     const dispatch = useDispatch();
 
-    const editingLoad = useSelector((state: RootState) => state.load.editingLoad);
+    const editingLoad = useSelector((state: RootState) => state.buildTransportation.editingLoad);
+    const truckRequirementsCarBodies = useSelector((state: RootState) => state.buildTransportation.requiredCarBodies);
+    const truckRequiredLoadingTypes = useSelector((state: RootState) => state.buildTransportation.requiredLoadingTypes);
+    const truckRequiredUnloadingTypes = useSelector((state: RootState) => state.buildTransportation.requiredUnloadingTypes);
 
     const [hasLiftgate, setHasLiftgate] = useState<boolean>(editingLoad.truckRequirements?.hasLiftgate ?? false);
     const [hasStanchionTrailer, setHasStanchionTrailer] = useState<boolean>(editingLoad.truckRequirements?.hasStanchionTrailer ?? false);
@@ -34,41 +37,15 @@ export default function TruckRequirementsModal() {
     const [adr8, setAdr8] = useState<boolean>(editingLoad.truckRequirements?.adr8 ?? false);
     const [adr9, setAdr9] = useState<boolean>(editingLoad.truckRequirements?.adr9 ?? false);
 
-    let carBodiesDisplayName: string[] = [];
-    if (editingLoad?.truckRequirements?.carBodies) {
-        editingLoad.truckRequirements.carBodies.forEach((carBody) => {
-            const carBodyDisplayName = CARBODY_DISPLAY_NAME_MAP.get(carBody);
-            if (carBodyDisplayName) {
-                carBodiesDisplayName.push(carBodyDisplayName);
-            }
-        });
-    }
-
-    let loadingTypeDisplayNames: string[] = [];
-    if (editingLoad?.truckRequirements?.loadingType) {
-        editingLoad.truckRequirements.loadingType.forEach((loadingType) => {
-            const loadingTypeDisplayName = LOADING_TYPE_DISPLAY_NAME_MAP.get(loadingType);
-            if (loadingTypeDisplayName) {
-                loadingTypeDisplayNames.push(loadingTypeDisplayName);
-            }
-        });
-    }
-
-    let unloadingTypesDisplayNames: string[] = [];
-    if (editingLoad?.truckRequirements?.unloadingTypes) {
-        editingLoad.truckRequirements.unloadingTypes.forEach((unloadingType) => {
-            const unloadingTypeDisplayName = LOADING_TYPE_DISPLAY_NAME_MAP.get(unloadingType);
-            if (unloadingTypeDisplayName) {
-                unloadingTypesDisplayNames.push(unloadingTypeDisplayName);
-            }
-        });
-    }
+    let carBodiesDisplayName = truckRequirementsCarBodies?.map((o) => CARBODY_DISPLAY_NAME_MAP.get(o) ?? "").filter((s) => s) ?? [];
+    let loadingTypeDisplayNames = truckRequiredLoadingTypes?.map((o) => LOADING_TYPE_DISPLAY_NAME_MAP.get(o) ?? "").filter((s) => s) ?? [];
+    let unloadingTypesDisplayNames = truckRequiredUnloadingTypes?.map((o) => LOADING_TYPE_DISPLAY_NAME_MAP.get(o) ?? "").filter((s) => s) ?? [];
 
     const saveHandler = () => {
         const truckRequirements: ITruckRequirementsForLoad = {
-            carBodies: editingLoad?.truckRequirements?.carBodies ?? [],
-            loadingType: editingLoad?.truckRequirements?.loadingType ?? [],
-            unloadingTypes: editingLoad?.truckRequirements?.unloadingTypes ?? [],
+            carBodies: truckRequirementsCarBodies ?? [],
+            loadingType: truckRequiredLoadingTypes ?? [],
+            unloadingTypes: truckRequiredUnloadingTypes ?? [],
             hasLtl: hasLTL,
             hasLiftgate: hasLiftgate,
             hasStanchionTrailer: hasStanchionTrailer,

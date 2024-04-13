@@ -1,9 +1,8 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { Pressable } from "react-native";
 import { HStack, Center, Menu, Text, VStack, Box } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { ITransportation } from "../../api/load/Load";
+import { ITransportation } from "../../api/transportation/Transportation";
 import moment from "moment";
 
 type LoadJournalItemProps = {
@@ -12,11 +11,8 @@ type LoadJournalItemProps = {
 
 export const LoadJournalItem = (props: LoadJournalItemProps) => {
     const { transportation } = props;
-    const dispatch = useDispatch();
 
-    const removeHandler = () => {
-        //dispatch(removeLoad(load.createdId));
-    };
+    const cloneHandler = () => {};
 
     return (
         <Box overflow="hidden" borderColor="coolGray.200" borderWidth="1">
@@ -69,8 +65,8 @@ export const LoadJournalItem = (props: LoadJournalItemProps) => {
                             </Pressable>
                         )}
                     >
-                        <Menu.Item onPress={removeHandler}>Удалить</Menu.Item>
-                        <Menu.Item onPress={removeHandler}>Создать копированием</Menu.Item>
+                        <Menu.Item onPress={cloneHandler}>Удалить</Menu.Item>
+                        <Menu.Item onPress={cloneHandler}>Создать копированием</Menu.Item>
                     </Menu>
                 </Box>
             </HStack>

@@ -1,3 +1,4 @@
+import { ApiCommonResult } from "../common/commonApi";
 import { CarBodyType } from "../truck/CarBodyType";
 import { LoadingType } from "../truck/LoadingType";
 import { IDangerousGoods, ITruckBase } from "../truck/Truck";
@@ -46,7 +47,19 @@ export interface ILoadPublishInfo {
 }
 
 export interface ITransportation {
+    transportationOrderId?: number;
     loadPublishInfo: ILoadPublishInfo;
     load: ILoad;
-    status: TransportationStatus;
+    transportationStatus: TransportationStatus;
+}
+
+export interface ITransportationResult {
+    result: TransportationOrderResult;
+    transportationOrderDtos: ITransportation[];
+}
+
+export interface TransportationOrderResult {
+    transportationId?: number;
+    result: ApiCommonResult;
+    reasons: string[];
 }

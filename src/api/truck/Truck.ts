@@ -1,3 +1,4 @@
+import { ApiCommonResult } from "../common/commonApi";
 import { CarBodyType } from "./CarBodyType";
 import { LoadingType } from "./LoadingType";
 import { TrailerType } from "./TrailerType";
@@ -42,13 +43,8 @@ export interface ITruck extends IDangerousGoods, ITruckBase {
     innerBodyHeight: number,
 }
 
-export enum TruckResult {
-    Ok,
-    Error,
-}
-
 export interface ITruckResultDto {
-    result: TruckResult;
+    result: ApiCommonResult;
     reasons: string[];
 }
 

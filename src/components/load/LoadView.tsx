@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 import { Pressable } from "react-native";
 import { HStack, Center, Menu, Text, VStack, Box } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { removeLoad } from "../../store/slices/loadSlice";
-import { ILoad, ITransportation } from "../../api/load/Load";
+import { ITransportation } from "../../api/transportation/Transportation";
 import moment from "moment";
 import { TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP } from "../common/EnumMappers/TransportationStatusToDisplayNameMap";
+import { useDeleteTransportationMutation } from "../../store/load/transportationApi";
 
 type LoadProps = {
     transportation: ITransportation;
@@ -15,9 +15,12 @@ type LoadProps = {
 export const LoadView = (props: LoadProps) => {
     const { transportation } = props;
     const dispatch = useDispatch();
+    const [deleteTransportation] = useDeleteTransportationMutation();
 
     const removeHandler = () => {
-        //dispatch(removeLoad(load.createdId));
+        if (transportation.transportationOrderId) {
+            deleteTransportation(transportation.transportationOrderId);
+        }
     };
 
     return (
@@ -72,7 +75,7 @@ export const LoadView = (props: LoadProps) => {
 
                     <Center mt={4} background={"blueGray.100"}>
                         <Text fontSize="xs" px={5} py={1}>
-                            {TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.status)}
+                            {TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationStatus)}
                         </Text>
                     </Center>
                 </VStack>
@@ -89,7 +92,7 @@ export const LoadView = (props: LoadProps) => {
                             </Pressable>
                         )}
                     >
-                        <Menu.Item onPress={removeHandler}>Удалить</Menu.Item>
+                        <Menu.Item onPress={() => removeHandler()}>Удалить</Menu.Item>
                     </Menu>
                 </Box>
             </HStack>

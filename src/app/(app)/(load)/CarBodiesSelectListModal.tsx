@@ -3,12 +3,12 @@ import { CARBODY_DISPLAY_NAME_ARRAY, CARBODY_DISPLAY_NAME_MAP } from "../../../c
 import { ISelectItem } from "../../../components/common/selectList/SelectItem";
 import SelectList from "../../../components/common/selectList/SelectList";
 import { RootState } from "../../../store/configureStore";
-import { setTruckRequirementsCarBodies } from "../../../store/slices/loadSlice";
+import { setTruckRequirementsCarBodies } from "../../../store/slices/buildTransportationSlice";
 
 export default function CarBodiesSelectListModal() {
     const dispatch = useDispatch();
 
-    const editingLoad = useSelector((state: RootState) => state.load.editingLoad);
+    const editingLoad = useSelector((state: RootState) => state.buildTransportation.editingLoad);
     const defaultSelected = editingLoad.truckRequirements?.carBodies.map((o) => {
         const selectItem: ISelectItem = { value: o, displayName: CARBODY_DISPLAY_NAME_MAP.get(o) ?? "" };
         return selectItem;

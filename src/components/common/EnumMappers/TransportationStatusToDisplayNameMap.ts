@@ -1,4 +1,4 @@
-import { TransportationStatus } from "../../../api/load/TransportationStatus";
+import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
 
 export const TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP = new Map<Object, string>([
     [TransportationStatus.notPublished, "Не опублекованно"],

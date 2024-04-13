@@ -59,7 +59,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="LoadJournalTab"
                 options={{
-                    title: "Журнал",
+                    title: "История",
                     tabBarIcon: ({ color }) => <MaterialCommunityIcons name="history" size={30} color={color} />,
                 }}
             />
