@@ -1,14 +1,12 @@
 import { Platform, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
 import { Link } from "expo-router";
 import { Text, Center, HStack, VStack, Fab, Icon } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import moment from "moment";
 import { View } from "../../../components/Themed";
-import { RootState } from "../../../store/configureStore";
-import { Gender } from "../../../api/GenderEnum";
 import { TitleValueItem } from "../../../components/screenItems/TitleValueItem";
+import { useGetProfileQuery } from "../../../store/profile/profileApi";
 
 export default function ProfileTab() {
     let content = (
@@ -17,14 +15,10 @@ export default function ProfileTab() {
         </Center>
     );
 
-    let profile = useSelector((state: RootState) => state.profile);
-    const phoneNumber = profile.phoneNumber;
+    const { data: profile } = useGetProfileQuery();
 
     if (profile) {
-        let genderValue = "Не указано";
-        if (profile.gender === Gender.Woman) genderValue = "Женский";
-        if (profile.gender === Gender.Man) genderValue = "Мужской";
-
+        const phoneNumber = profile.phoneNumber;
         const birthdayMoment = moment(profile.birthDate);
         const isBirthdayValid = profile.birthDate && birthdayMoment.isValid();
 

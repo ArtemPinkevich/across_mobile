@@ -1,21 +1,20 @@
 import * as React from "react";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Platform, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import { Button, Center, ScrollView, Input, VStack, Pressable } from "native-base";
+import { Button, Center, ScrollView, Input, VStack, Pressable, Text } from "native-base";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import PhoneNumberInput from "../../../components/common/PhoneNumberInput";
-import { RootState } from "../../../store/configureStore";
-import { Gender } from "../../../api/GenderEnum";
-import { IProfileSettings, setProfileSettings } from "../../../store/slices/profileSlice";
 import { View } from "../../../components/Themed";
+import { useGetProfileQuery, useUpdateProfileMutation } from "../../../store/profile/profileApi";
+import { IProfile, IProfileResult } from "../../../api/profile/Profile";
+import { ApiCommonResult } from "../../../api/common/commonApi";
 
 export default function EditProfileModal() {
-    const dispatch = useDispatch();
-
-    const profile: IProfileSettings = useSelector((state: RootState) => state.profile);
+    const [updateProfile, { isLoading, error }] = useUpdateProfileMutation();
+    const { data: profile } = useGetProfileQuery();
 
     const [name, setName] = useState(profile?.name);
     const [surname, setSurname] = useState(profile?.surname);
@@ -24,18 +23,22 @@ export default function EditProfileModal() {
     const [birthday, setBirthday] = useState(profile?.birthDate);
     const [showDatePicker, setShowDatePicker] = useState(false);
 
-    const saveHandler = () => {
-        const profile: IProfileSettings = {
-            id: new Date().toJSON(),
+    const saveHandler = async () => {
+        const profile: IProfile = {
             name: name?.trim(),
             surname: surname?.trim(),
             patronymic: patronymic?.trim(),
             phoneNumber: phoneNumber ?? "",
             birthDate: birthday,
-            gender: Gender.None,
         };
-        dispatch(setProfileSettings(profile));
-        router.back();
+
+        const responce: IProfileResult = await updateProfile(profile).unwrap();
+        if (responce?.result === ApiCommonResult.Ok) {
+            router.back();
+        } else {
+            console.log(responce?.reasons);
+            return;
+        }
     };
 
     const birthdayOnChange = (event: any, selectedDate: any) => {
@@ -77,9 +80,10 @@ export default function EditProfileModal() {
                     )}
 
                     <Center my={"10"}>
-                        <Button variant="outline" minW={200} size={"lg"} onPress={saveHandler}>
+                        <Button variant="outline" minW={200} size={"lg"} isLoading={isLoading} onPress={saveHandler}>
                             Сохранить
                         </Button>
+                        {error && <Text color={"red.500"}>Не удалось выполнить операцию</Text>}
                     </Center>
                 </VStack>
             </ScrollView>
