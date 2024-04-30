@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Platform, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { Button, Center, ScrollView, Input, VStack, Pressable, Text } from "native-base";

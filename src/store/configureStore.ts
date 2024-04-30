@@ -4,6 +4,7 @@ import { buildTransportationSlice } from "./slices/buildTransportationSlice";
 import { garageApi } from "./garage/garageApi";
 import { transportationApi } from "./load/transportationApi";
 import { profileApi } from "./profile/profileApi";
+import { searchApi } from "./search/searchApi";
 
 export const store = configureStore({
     reducer: {
@@ -12,8 +13,10 @@ export const store = configureStore({
         [garageApi.reducerPath]: garageApi.reducer,
         [transportationApi.reducerPath]: transportationApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,
+        [searchApi.reducerPath]: searchApi.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([garageApi.middleware, transportationApi.middleware, profileApi.middleware]),
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat([garageApi.middleware, transportationApi.middleware, profileApi.middleware, searchApi.middleware]),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
