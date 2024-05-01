@@ -5,11 +5,13 @@ import { garageApi } from "./garage/garageApi";
 import { transportationApi } from "./load/transportationApi";
 import { profileApi } from "./profile/profileApi";
 import { searchApi } from "./search/searchApi";
+import { transportationsSlice } from "./slices/transportationsSlice";
 
 export const store = configureStore({
     reducer: {
         [garageSlice.name]: garageSlice.reducer,
         [buildTransportationSlice.name]: buildTransportationSlice.reducer,
+        [transportationsSlice.name]: transportationsSlice.reducer,
         [garageApi.reducerPath]: garageApi.reducer,
         [transportationApi.reducerPath]: transportationApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,

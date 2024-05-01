@@ -10,6 +10,8 @@ export default function LoadLayout() {
             <Stack.Screen name="LoadingTypesSelectListModal" options={{ title: "Выбор типа загрузки", presentation: "modal" }} />
             <Stack.Screen name="UnloadingTypesSelectListModal" options={{ title: "Выбор типа выгрузки", presentation: "modal" }} />
             <Stack.Screen name="PublishLoadModal" options={{ title: "Публикация груза", presentation: "modal" }} />
+            <Stack.Screen name="OfferedTransportationDetailsModal" options={{ title: "Описание заказа", presentation: "modal" }} />
+            <Stack.Screen name="OnlyInfoTransportationDetailsModal" options={{ title: "Описание заказа", presentation: "modal" }} />
         </Stack>
     );
 }

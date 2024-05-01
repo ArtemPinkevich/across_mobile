@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { FlatList } from "react-native";
+import { router } from "expo-router";
 import { Text, ScrollView, Button, Center, FormControl, Input, Pressable, IconButton, HStack, Box, VStack, Badge } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { View } from "../../../components/Themed";
@@ -10,8 +12,11 @@ import { useLazySearchTransportationsQuery } from "../../../store/search/searchA
 import { SearchRequest } from "../../../api/search/Search";
 import { ITransportation } from "../../../api/transportation/Transportation";
 import { LoadItemSearch } from "../../../components/load/LoadItemSearch";
+import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 
 export default function SearchOrdersTab() {
+    const dispatch = useDispatch();
+
     const [transportations, setTransportations] = useState<ITransportation[]>([]);
     const [loadingAddress, setLoadingAddress] = useState("");
     const [unloadingAddress, setUnloadingAddress] = useState("");
@@ -74,7 +79,7 @@ export default function SearchOrdersTab() {
         }
 
         if (!loadingDateFrom) {
-            alert("Необходимо указать дау загрузки");
+            alert("Необходимо указать дату загрузки");
             return;
         }
 
@@ -91,7 +96,10 @@ export default function SearchOrdersTab() {
         }
     };
 
-    const itemPressHandler = (transportation: ITransportation) => {};
+    const itemPressHandler = (transportation: ITransportation) => {
+        dispatch(setViewedTransportation(transportation));
+        router.push("/OfferedTransportationDetailsModal");
+    };
 
     const renderItem = (item: ITransportation) => (
         <Pressable onPress={() => itemPressHandler(item)} my={1}>

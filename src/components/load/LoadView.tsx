@@ -7,6 +7,8 @@ import { ITransportation } from "../../api/transportation/Transportation";
 import moment from "moment";
 import { TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP } from "../common/EnumMappers/TransportationStatusToDisplayNameMap";
 import { useDeleteTransportationMutation } from "../../store/load/transportationApi";
+import { setViewedTransportation } from "../../store/slices/transportationsSlice";
+import { router } from "expo-router";
 
 type LoadProps = {
     transportation: ITransportation;
@@ -23,24 +25,13 @@ export const LoadView = (props: LoadProps) => {
         }
     };
 
+    const showDetailsHandler = () => {
+        dispatch(setViewedTransportation(transportation));
+        router.push("/OnlyInfoTransportationDetailsModal");
+    };
+
     return (
-        <Box
-            rounded="lg"
-            overflow="hidden"
-            borderColor="coolGray.200"
-            borderWidth="1"
-            _dark={{
-                borderColor: "coolGray.600",
-                backgroundColor: "gray.700",
-            }}
-            _web={{
-                shadow: 2,
-                borderWidth: 0,
-            }}
-            _light={{
-                backgroundColor: "white",
-            }}
-        >
+        <Box rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" shadow={1}>
             <HStack my={4} pl={4}>
                 <VStack w="90%">
                     <Text bold fontSize="xl">
@@ -92,6 +83,7 @@ export const LoadView = (props: LoadProps) => {
                             </Pressable>
                         )}
                     >
+                        <Menu.Item onPress={() => showDetailsHandler()}>Детали</Menu.Item>
                         <Menu.Item onPress={() => removeHandler()}>Удалить</Menu.Item>
                     </Menu>
                 </Box>
