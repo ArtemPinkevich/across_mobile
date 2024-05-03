@@ -89,7 +89,9 @@ export default function TransportationDetailsModal() {
                                 </Text>
                                 <Text>{viewedTransportation.cargo.volume}м³</Text>
 
-                                {(viewedTransportation.cargo.length || viewedTransportation.cargo.width || viewedTransportation.cargo.height) && (
+                                {((viewedTransportation.cargo.length !== undefined && viewedTransportation.cargo.length > 0) ||
+                                    (viewedTransportation.cargo.width !== undefined && viewedTransportation.cargo.width > 0) ||
+                                    (viewedTransportation.cargo.height !== undefined && viewedTransportation.cargo.height > 0)) && (
                                     <Box>
                                         <Text mt={2} fontWeight="500" color={"darkBlue.500"}>
                                             Длина/Ширина/Ввысота
@@ -100,7 +102,7 @@ export default function TransportationDetailsModal() {
                                     </Box>
                                 )}
 
-                                {viewedTransportation.cargo.diameter && (
+                                {viewedTransportation.cargo.diameter !== undefined && viewedTransportation.cargo.diameter > 0 && (
                                     <Box>
                                         <Text mt={2} fontWeight="500" color={"darkBlue.500"}>
                                             Диаметр
@@ -116,9 +118,10 @@ export default function TransportationDetailsModal() {
                                         </Text>
                                         <HStack space={1}>
                                             <Text>{packagingTypeDisplayName}</Text>
-                                            {viewedTransportation.cargo.packagingQuantity && (
-                                                <Text>({viewedTransportation.cargo.packagingQuantity} шт.)</Text>
-                                            )}
+                                            {viewedTransportation.cargo.packagingQuantity !== undefined &&
+                                                viewedTransportation.cargo.packagingQuantity > 0 && (
+                                                    <Text>{viewedTransportation.cargo.packagingQuantity} шт.</Text>
+                                                )}
                                         </HStack>
                                     </Box>
                                 )}
@@ -130,18 +133,22 @@ export default function TransportationDetailsModal() {
                         <Box mt={4}>
                             <Heading size="sm">Транспорт</Heading>
                             <Box ml={4}>
-                                <Text mt={2} fontWeight="500" color={"darkBlue.500"}>
-                                    Кузов
-                                </Text>
-                                <Text>{carBodiesDisplayName.join(", ")}</Text>
-
-                                <Text mt={2} fontWeight="500" color={"darkBlue.500"}>
-                                    Загрузка/выгрузка
-                                </Text>
-                                <Text>{loadingTypeDisplayNames.join(", ")}</Text>
-                                <Text>{unloadingTypesDisplayNames.join(", ")}</Text>
-
-                                {truckRequirements.carryingCapacity && (
+                                <Box>
+                                    <Text mt={2} fontWeight="500" color={"darkBlue.500"}>
+                                        Кузов
+                                    </Text>
+                                    <Text>{carBodiesDisplayName.length > 0 ? carBodiesDisplayName.join(", ") : "Не указано"}</Text>
+                                </Box>
+                                {(loadingTypeDisplayNames.length > 0 || unloadingTypesDisplayNames.length > 0) && (
+                                    <Box>
+                                        <Text mt={2} fontWeight="500" color={"darkBlue.500"}>
+                                            Загрузка/выгрузка
+                                        </Text>
+                                        <Text>{loadingTypeDisplayNames.join(", ")}</Text>
+                                        <Text>{unloadingTypesDisplayNames.join(", ")}</Text>
+                                    </Box>
+                                )}
+                                {truckRequirements.carryingCapacity > 0 && (
                                     <Box>
                                         <Text mt={2} fontWeight="500" color={"darkBlue.500"}>
                                             Грузоподъемность
@@ -149,7 +156,6 @@ export default function TransportationDetailsModal() {
                                         <Text>{truckRequirements.carryingCapacity}т</Text>
                                     </Box>
                                 )}
-
                                 {additionalTruckRequirements.length > 0 && (
                                     <Box>
                                         <Text mt={2} fontWeight="500" color={"darkBlue.500"}>

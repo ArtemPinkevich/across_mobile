@@ -55,6 +55,9 @@ export const buildTransportationSlice = createSlice({
         },
         resetEditingCargo: (state) => {
             state.editingCargo = DEFAULT_EDITING_CARGO;
+            state.requiredCarBodies = [];
+            state.requiredLoadingTypes = [];
+            state.requiredUnloadingTypes = [];
         },
         setPackagingType: (state, action) => {
             state.editingCargo = { ...state.editingCargo, packagingType: action.payload };
