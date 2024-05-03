@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CARBODY_DISPLAY_NAME_ARRAY } from "../../../components/common/selectList/CarBodyToDisplayNameMap";
+import { CARBODY_DISPLAY_NAME_ARRAY } from "../../../api/transportation/toDisplayNameMappers/CarBodyToDisplayNameMap";
 import SelectList from "../../../components/common/selectList/SelectList";
 import { useDispatch } from "react-redux";
 import { setCarBody } from "../../../store/slices/garageSlice";

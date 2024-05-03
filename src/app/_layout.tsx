@@ -1,9 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack, useRouter } from "expo-router";
 import { useEffect } from "react";
@@ -15,83 +11,81 @@ import { SessionProvider } from "../auth/ctx";
 import { JwtTokenService } from "../services/JwtTokenService";
 
 export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
+    // Catch any errors thrown by the Layout component.
+    ErrorBoundary,
 } from "expo-router";
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
+    // Ensure that reloading on `/modal` keeps a back button present.
+    initialRouteName: "(tabs)",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
-    ...FontAwesome.font,
-  });
+    const [loaded, error] = useFonts({
+        SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
+        ...FontAwesome.font,
+    });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+    useEffect(() => {
+        if (error) throw error;
+    }, [error]);
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    useEffect(() => {
+        if (loaded) {
+            SplashScreen.hideAsync();
+        }
+    }, [loaded]);
+
+    if (!loaded) {
+        return null;
     }
-  }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
+    return <RootLayoutNav />;
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-  const router = useRouter();
+    const colorScheme = useColorScheme();
+    const router = useRouter();
 
-  useEffect(() => {
-    //При проверяем был ли ранее пользователь авторизован
-    async function checkAuth() {
-      /*
+    useEffect(() => {
+        //При проверяем был ли ранее пользователь авторизован
+        async function checkAuth() {
+            /*
         Если есть access-токен в AsyncStorage, то обновим пару токенов.
         Перед обновлением токенов, удаляется текущий access-токен и только потом делается запрос.
         Поэтому, т.к. нет эдпоинта /refresh, при входе в приложение будем попадать всегда на sign-in.
         Можно закомментировать обновление токенов, чтобы всегда быть в приложении.
       */
-      if (await JwtTokenService.getAccessToken()) {
-        await JwtTokenService.refreshTokens();
-      }
+            if (await JwtTokenService.getAccessToken()) {
+                await JwtTokenService.refreshTokens();
+            }
 
-      // если нет в AsyncStorage access-токена, то перенаправляем на страницу авторизации
-      if (!(await JwtTokenService.getAccessToken())) {
-        router.replace("/sign-in");
-      }
-    }
+            // если нет в AsyncStorage access-токена, то перенаправляем на страницу авторизации
+            if (!(await JwtTokenService.getAccessToken())) {
+                router.replace("/sign-in");
+            }
+        }
 
-    checkAuth();
-  }, []);
+        checkAuth();
+    }, []);
 
-  return (
-    <Provider store={store}>
-      <NativeBaseProvider>
-        <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
-          <SessionProvider>
-            <Stack>
-              <Stack.Screen name="(app)" options={{ headerShown: false }} />
-              <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-              <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-            </Stack>
-          </SessionProvider>
-        </ThemeProvider>
-      </NativeBaseProvider>
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <NativeBaseProvider>
+                <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+                    <SessionProvider>
+                        <Stack>
+                            <Stack.Screen name="(app)" options={{ headerShown: false }} />
+                            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+                            <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+                        </Stack>
+                    </SessionProvider>
+                </ThemeProvider>
+            </NativeBaseProvider>
+        </Provider>
+    );
 }

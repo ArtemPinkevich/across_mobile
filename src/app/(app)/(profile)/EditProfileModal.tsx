@@ -7,7 +7,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import PhoneNumberInput from "../../../components/common/PhoneNumberInput";
 import { View } from "../../../components/Themed";
-import { useGetProfileQuery, useUpdateProfileMutation } from "../../../store/profile/profileApi";
+import { useGetProfileQuery, useUpdateProfileMutation } from "../../../store/rtkQuery/profileApi";
 import { IProfile, IProfileResult } from "../../../api/profile/Profile";
 import { ApiCommonResult } from "../../../api/common/commonApi";
 

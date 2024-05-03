@@ -1,5 +1,5 @@
 import { LoadingType } from "../api/truck/LoadingType";
-import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../components/common/selectList/LoadingTypeToDisplayNameMap";
+import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../api/transportation/toDisplayNameMappers/LoadingTypeToDisplayNameMap";
 
 it(`all LoadingType exist in LOADING_TYPE_DISPLAY_NAME_MAP`, () => {
     const loadingTypesArrayOfEnum = Object.values(LoadingType).filter((o) => !isNaN(Number(o)));

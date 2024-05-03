@@ -1,5 +1,5 @@
 import { CarBodyType } from "../api/truck/CarBodyType";
-import { CARBODY_DISPLAY_NAME_MAP } from "../components/common/selectList/CarBodyToDisplayNameMap";
+import { CARBODY_DISPLAY_NAME_MAP } from "../api/transportation/toDisplayNameMappers/CarBodyToDisplayNameMap";
 
 it(`all CarBodyType exist in CARBODY_DISPLAY_NAME_MAP`, () => {
     const carBodiesArrayOfEnum = Object.values(CarBodyType).filter((o) => !isNaN(Number(o)));

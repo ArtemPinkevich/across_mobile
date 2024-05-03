@@ -6,7 +6,7 @@ type Props = {
     value: string;
 };
 
-export const TitleValueItem = ({ title, value }: Props) => {
+export const TitleAndValueItem = ({ title, value }: Props) => {
     return (
         <Box
             rounded="lg"

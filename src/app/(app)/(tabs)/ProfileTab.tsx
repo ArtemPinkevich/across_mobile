@@ -5,8 +5,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import moment from "moment";
 import { View } from "../../../components/Themed";
-import { TitleValueItem } from "../../../components/screenItems/TitleValueItem";
-import { useGetProfileQuery } from "../../../store/profile/profileApi";
+import { TitleAndValueItem } from "../../../components/screenItems/TitleValueItem";
+import { useGetProfileQuery } from "../../../store/rtkQuery/profileApi";
 
 export default function ProfileTab() {
     let content = (
@@ -36,9 +36,9 @@ export default function ProfileTab() {
                             <Text>{profile.patronymic}</Text>
                         </VStack>
                     </HStack>
-                    <TitleValueItem title={"Номер телефона"} value={!phoneNumber || phoneNumber === "" ? "Не указано" : phoneNumber} />
+                    <TitleAndValueItem title={"Номер телефона"} value={!phoneNumber || phoneNumber === "" ? "Не указано" : phoneNumber} />
                     {Platform.OS === "web" ? null : (
-                        <TitleValueItem title={"Дата рождения"} value={isBirthdayValid ? birthdayMoment.format("DD MMMM YYYY") : "Не указано"} />
+                        <TitleAndValueItem title={"Дата рождения"} value={isBirthdayValid ? birthdayMoment.format("DD MMMM YYYY") : "Не указано"} />
                     )}
                 </VStack>
             </View>

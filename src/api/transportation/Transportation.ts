@@ -5,14 +5,14 @@ import { IDangerousGoods, ITruckBase } from "../truck/Truck";
 import { PackagingType } from "./PackagingType";
 import { TransportationStatus } from "./TransportationStatus";
 
-export interface ITruckRequirementsForLoad extends ITruckBase, IDangerousGoods {
+export interface ITruckRequirements extends ITruckBase, IDangerousGoods {
     carBodies: CarBodyType[]; // Кузов
-    loadingType: LoadingType[]; // Тип загрузки
-    unloadingTypes: LoadingType[]; // Тип выгрузки
+    loadingTypeDtos: LoadingType[]; // Тип загрузки
+    unloadingTypeDtos: LoadingType[]; // Тип выгрузки
 }
 
 // prettier-ignore
-export interface ILoad {
+export interface ICargo {
     createdId: string,              // Нужно ли ???
     name: string,                   // Название
     weight: number,                 // Вес, т
@@ -27,10 +27,10 @@ export interface ILoad {
 
     diameter?: number,
 
-    truckRequirements?: ITruckRequirementsForLoad
+    truckRequirements?: ITruckRequirements
 }
 
-export interface ILoadPublishInfo {
+export interface ITransferInfo {
     loadingDateFrom: string; // Строка формата DateOnly, например "30.01.2022"
     loadingDateTo: string;
     // LoadingTimeFrom: string;            // Строка формата TimeOnly, например "08:00"
@@ -48,8 +48,8 @@ export interface ILoadPublishInfo {
 
 export interface ITransportation {
     transportationOrderId?: number;
-    loadPublishInfo: ILoadPublishInfo;
-    load: ILoad;
+    transferInfo: ITransferInfo;
+    cargo: ICargo;
     transportationStatus: TransportationStatus;
 }
 

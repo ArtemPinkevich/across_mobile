@@ -4,7 +4,7 @@ import { ITransportation } from "../transportation/Transportation";
 export interface SearchRequest {
     fromAddress: string;
     toAddress: string;
-    loadDate: string;
+    loadingDate: string; // Строка формата ISO 8601: moment().toISOString(true)
 }
 
 export interface SearchResponse {

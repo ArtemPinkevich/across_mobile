@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { garageSlice } from "./slices/garageSlice";
 import { buildTransportationSlice } from "./slices/buildTransportationSlice";
-import { garageApi } from "./garage/garageApi";
-import { transportationApi } from "./load/transportationApi";
-import { profileApi } from "./profile/profileApi";
-import { searchApi } from "./search/searchApi";
+import { garageApi } from "./rtkQuery/garageApi";
+import { transportationApi } from "./rtkQuery/transportationApi";
+import { profileApi } from "./rtkQuery/profileApi";
+import { searchApi } from "./rtkQuery/searchApi";
 import { transportationsSlice } from "./slices/transportationsSlice";
 
 export const store = configureStore({

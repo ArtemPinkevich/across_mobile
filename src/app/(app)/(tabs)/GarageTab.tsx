@@ -1,5 +1,5 @@
-import CarScreenContent from "../../../components/garage/CarScreenContent";
+import TruckList from "../../../components/garage/TruckList";
 
 export default function GarageTab() {
-    return <CarScreenContent isSelectionMode={false} />;
+    return <TruckList isSelectionMode={false} />;
 }

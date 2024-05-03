@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ILoad } from "../../api/transportation/Transportation";
+import { ICargo } from "../../api/transportation/Transportation";
 import { PackagingType } from "../../api/transportation/PackagingType";
 import { CarBodyType } from "../../api/truck/CarBodyType";
 import { LoadingType } from "../../api/truck/LoadingType";
 
-const DEFAULT_EDITING_LOAD: ILoad = {
+const DEFAULT_EDITING_CARGO: ICargo = {
     createdId: "",
     name: "",
     weight: 0,
@@ -12,8 +12,8 @@ const DEFAULT_EDITING_LOAD: ILoad = {
     packagingType: PackagingType.none,
     truckRequirements: {
         carBodies: [],
-        loadingType: [],
-        unloadingTypes: [],
+        loadingTypeDtos: [],
+        unloadingTypeDtos: [],
         hasLtl: false,
         hasLiftgate: false,
         hasStanchionTrailer: false,
@@ -33,14 +33,14 @@ const DEFAULT_EDITING_LOAD: ILoad = {
 };
 
 interface ILoadState {
-    editingLoad: ILoad;
+    editingCargo: ICargo;
     requiredCarBodies: CarBodyType[];
     requiredLoadingTypes: LoadingType[];
     requiredUnloadingTypes: LoadingType[];
 }
 
 const initialState: ILoadState = {
-    editingLoad: DEFAULT_EDITING_LOAD,
+    editingCargo: DEFAULT_EDITING_CARGO,
     requiredCarBodies: [],
     requiredLoadingTypes: [],
     requiredUnloadingTypes: [],
@@ -50,17 +50,17 @@ export const buildTransportationSlice = createSlice({
     name: "buildTransportation",
     initialState,
     reducers: {
-        setEditingLoad: (state, action) => {
-            state.editingLoad = { ...action.payload };
+        setEditingCargo: (state, action) => {
+            state.editingCargo = { ...action.payload };
         },
-        resetEditingLoad: (state) => {
-            state.editingLoad = DEFAULT_EDITING_LOAD;
+        resetEditingCargo: (state) => {
+            state.editingCargo = DEFAULT_EDITING_CARGO;
         },
         setPackagingType: (state, action) => {
-            state.editingLoad = { ...state.editingLoad, packagingType: action.payload };
+            state.editingCargo = { ...state.editingCargo, packagingType: action.payload };
         },
         setTruckRequirements: (state, action) => {
-            state.editingLoad = { ...state.editingLoad, truckRequirements: { ...action.payload } };
+            state.editingCargo = { ...state.editingCargo, truckRequirements: { ...action.payload } };
         },
         setTruckRequirementsCarBodies: (state, action) => {
             state.requiredCarBodies = [...action.payload];
@@ -75,9 +75,9 @@ export const buildTransportationSlice = createSlice({
 });
 
 export const {
-    setEditingLoad,
+    setEditingCargo,
     setPackagingType,
-    resetEditingLoad,
+    resetEditingCargo,
     setTruckRequirements,
     setTruckRequirementsCarBodies,
     setTruckRequirementsLoadingTypes,

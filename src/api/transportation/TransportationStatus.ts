@@ -1,7 +1,7 @@
 // prettier-ignore
 export enum TransportationStatus {
     notPublished,
-    readyToLoad,
+    carrierFinding,
     waitingForLoading,
     transporting,
     Delivered

@@ -43,21 +43,21 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="SearchOrdersTab"
+                name="SearchTab"
                 options={{
                     title: "Поиск",
                     tabBarIcon: ({ color }) => <FontAwesome name="search" size={24} color={color} />,
                 }}
             />
             <Tabs.Screen
-                name="LoadTab"
+                name="TransportationTab"
                 options={{
                     title: "Груз",
                     tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
                 }}
             />
             <Tabs.Screen
-                name="LoadJournalTab"
+                name="JournalTab"
                 options={{
                     title: "История",
                     tabBarIcon: ({ color }) => <MaterialCommunityIcons name="history" size={30} color={color} />,
