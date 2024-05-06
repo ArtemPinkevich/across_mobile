@@ -73,11 +73,6 @@ export default function SearchTab() {
             return;
         }
 
-        if (!unloadingAddress) {
-            alert("Необходимо указать пункт назначения");
-            return;
-        }
-
         if (!loadingDateFrom) {
             alert("Необходимо указать дату загрузки");
             return;

@@ -11,7 +11,7 @@ export const TransportationSearchItem = (props: TransportationSearchItemProps) =
     const { transportation } = props;
 
     return (
-        <Box overflow="hidden" borderColor="coolGray.200" borderWidth="1" shadow={1}>
+        <Box overflow="hidden" borderColor="coolGray.200" borderWidth="1" shadow={1} borderRadius={5}>
             <HStack my={1} pl={4}>
                 <VStack w="90%">
                     <Text bold fontSize="md">

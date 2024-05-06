@@ -8,7 +8,7 @@ export const searchApi = createApi({
     endpoints: (build) => ({
         searchTransportations: build.query<SearchResponse, SearchRequest>({
             query: (searchRequest) => ({
-                url: `Search/search?FromAddress=${searchRequest.fromAddress}&ToAddress=${searchRequest.toAddress}&LoadDate=${encodeURIComponent(
+                url: `Search/search?FromAddress=${searchRequest.fromAddress}&ToAddress=${searchRequest.toAddress}&LoadingDate=${encodeURIComponent(
                     searchRequest.loadingDate
                 )}`,
             }),

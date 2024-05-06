@@ -6,6 +6,7 @@ import { CARBODY_DISPLAY_NAME_MAP } from "../../api/transportation/toDisplayName
 import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../../api/transportation/toDisplayNameMappers/LoadingTypeToDisplayNameMap";
 import { PACKAGING_TYPE_DISPLAY_NAME_MAP } from "../../api/transportation/toDisplayNameMappers/PackagingTypeToDisplayNameMap";
 import { RootState } from "../../store/configureStore";
+import { useMemo } from "react";
 
 export default function TransportationDetailsModal() {
     const viewedTransportation = useSelector((state: RootState) => state.transportations.viewedTransportation);
@@ -31,6 +32,14 @@ export default function TransportationDetailsModal() {
         : undefined;
 
     const loadingDateFrom = moment(viewedTransportation.transferInfo?.loadingDateFrom, moment.ISO_8601);
+    const loadingDateTo = moment(viewedTransportation.transferInfo?.loadingDateTo, moment.ISO_8601);
+    const loadingDisplayDateRange = useMemo(() => {
+        return loadingDateFrom.isValid()
+            ? loadingDateTo.isValid()
+                ? `${loadingDateFrom.format("DD.MM.YYYY")} - ${loadingDateTo.format("DD.MM.YYYY")}`
+                : `${loadingDateFrom.format("DD.MM.YYYY")}`
+            : "Дата не определена";
+    }, [loadingDateFrom, loadingDateTo]);
 
     const additionalTruckRequirements = [];
     if (truckRequirements?.hasLtl) additionalTruckRequirements.push("Догруз");
@@ -61,13 +70,7 @@ export default function TransportationDetailsModal() {
                         <Text fontSize="lg">
                             {viewedTransportation.transferInfo.loadingAddress} → {viewedTransportation.transferInfo.unloadingAddress}
                         </Text>
-                        {loadingDateFrom.isValid() ? (
-                            <Text fontSize="md">{loadingDateFrom.format("DD.MM.YYYY")}</Text>
-                        ) : (
-                            <Text fontSize="xs" color={"error.500"}>
-                                Дата не определена
-                            </Text>
-                        )}
+                        <Text fontSize="md">{loadingDisplayDateRange}</Text>
                     </Box>
 
                     {viewedTransportation.cargo && (
