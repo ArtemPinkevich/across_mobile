@@ -9,6 +9,7 @@ import { TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP } from "../../api/transportat
 import { useDeleteTransportationMutation } from "../../store/rtkQuery/transportationApi";
 import { setViewedTransportation } from "../../store/slices/transportationsSlice";
 import { router } from "expo-router";
+import { setEditingTransportation } from "../../store/slices/buildTransportationSlice";
 
 type TransportationItemProps = {
     transportation: ITransportation;
@@ -28,6 +29,11 @@ export const TransportationItem = (props: TransportationItemProps) => {
     const showDetailsHandler = () => {
         dispatch(setViewedTransportation(transportation));
         router.push("/OnlyInfoTransportationDetailsModal");
+    };
+
+    const cloneHandler = () => {
+        dispatch(setEditingTransportation(transportation));
+        router.push("/CargoEditingModal");
     };
 
     return (
@@ -83,8 +89,9 @@ export const TransportationItem = (props: TransportationItemProps) => {
                             </Pressable>
                         )}
                     >
-                        <Menu.Item onPress={() => showDetailsHandler()}>Детали</Menu.Item>
-                        <Menu.Item onPress={() => removeHandler()}>Удалить</Menu.Item>
+                        <Menu.Item onPress={showDetailsHandler}>Детали</Menu.Item>
+                        <Menu.Item onPress={cloneHandler}>Создать копированием</Menu.Item>
+                        <Menu.Item onPress={removeHandler}>Удалить</Menu.Item>
                     </Menu>
                 </Box>
             </HStack>

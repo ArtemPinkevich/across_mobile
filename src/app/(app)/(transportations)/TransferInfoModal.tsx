@@ -12,15 +12,18 @@ import moment, { Moment } from "moment";
 import DateTimePickerWrapper from "../../../components/common/DateTimePickerWrapper";
 import { useAddOrUpdateTransportationMutation } from "../../../store/rtkQuery/transportationApi";
 import { ApiCommonResult } from "../../../api/common/commonApi";
+import { setEditingTransferInfo } from "../../../store/slices/buildTransportationSlice";
 
 export default function TransferInfoModal() {
     const dispatch = useDispatch();
     const [addOrUpdateTransportation, { isLoading, error }] = useAddOrUpdateTransportationMutation();
 
-    const editingCargo = useSelector((state: RootState) => state.buildTransportation.editingCargo);
+    const editingTransportation = useSelector((state: RootState) => state.buildTransportation.editingTransportation);
+    const editingCargo = editingTransportation.cargo;
+    const transferInfo = editingTransportation.transferInfo;
 
-    const [loadingAddress, setLoadingAddress] = useState("");
-    const [unloadingAddress, setUnloadingAddress] = useState("");
+    const [loadingAddress, setLoadingAddress] = useState(transferInfo.loadingAddress);
+    const [unloadingAddress, setUnloadingAddress] = useState(transferInfo.unloadingAddress);
     const [loadingDateFrom, setLoadingDateFrom] = useState<Moment | undefined>(moment());
     const [loadingDateTo, setLoadingDateTo] = useState<Moment | undefined>();
 
@@ -33,6 +36,8 @@ export default function TransferInfoModal() {
             unloadingLocalityName: "",
             unloadingAddress: unloadingAddress,
         };
+
+        dispatch(setEditingTransferInfo(newTransferInfo));
 
         const transportation: ITransportation = {
             transferInfo: newTransferInfo,

@@ -27,7 +27,7 @@ export interface ICargo {
 
     diameter?: number,
 
-    truckRequirements?: ITruckRequirements
+    truckRequirements: ITruckRequirements
 }
 
 export interface ITransferInfo {

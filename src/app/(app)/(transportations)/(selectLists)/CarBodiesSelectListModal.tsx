@@ -8,7 +8,7 @@ import { setTruckRequirementsCarBodies } from "../../../../store/slices/buildTra
 export default function CarBodiesSelectListModal() {
     const dispatch = useDispatch();
 
-    const editingCargo = useSelector((state: RootState) => state.buildTransportation.editingCargo);
+    const editingCargo = useSelector((state: RootState) => state.buildTransportation.editingTransportation.cargo);
     const defaultSelected = editingCargo.truckRequirements?.carBodies.map((o) => {
         const selectItem: ISelectItem = { value: o, displayName: CARBODY_DISPLAY_NAME_MAP.get(o) ?? "" };
         return selectItem;

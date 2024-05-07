@@ -7,7 +7,7 @@ import { ITransportation } from "../../../api/transportation/Transportation";
 import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
 import { TransportationItem } from "../../../components/transportation/TransportationItem";
 import { useGetTransportationsQuery } from "../../../store/rtkQuery/transportationApi";
-import { resetEditingCargo } from "../../../store/slices/buildTransportationSlice";
+import { resetEditingTransportation } from "../../../store/slices/buildTransportationSlice";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { View } from "../../../components/Themed";
 
@@ -39,7 +39,7 @@ export default function TransportationTab() {
     }
 
     const addPressHandler = () => {
-        dispatch(resetEditingCargo()); // Сбрасываем временную информацию, чтобы начать создание груза с нуля
+        dispatch(resetEditingTransportation()); // Сбрасываем временную информацию, чтобы начать создание груза с нуля
         router.push("/CargoEditingModal");
     };
 

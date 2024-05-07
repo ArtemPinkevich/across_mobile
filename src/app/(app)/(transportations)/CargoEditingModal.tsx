@@ -15,7 +15,8 @@ import { setEditingCargo } from "../../../store/slices/buildTransportationSlice"
 export default function CargoEditingModal() {
     const dispatch = useDispatch();
 
-    const editingCargo = useSelector((state: RootState) => state.buildTransportation.editingCargo);
+    const editingTransportation = useSelector((state: RootState) => state.buildTransportation.editingTransportation);
+    const editingCargo = editingTransportation.cargo;
 
     const [name, setName] = useState<string>(editingCargo.name);
     const [weight, setWeight] = useState<number>(editingCargo.weight);
@@ -58,6 +59,7 @@ export default function CargoEditingModal() {
             width: width,
             height: height,
             diameter: diameter,
+            truckRequirements: editingCargo.truckRequirements,
         };
 
         dispatch(setEditingCargo(cargo));

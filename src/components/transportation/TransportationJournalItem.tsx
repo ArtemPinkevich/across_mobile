@@ -7,6 +7,7 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { setViewedTransportation } from "../../store/slices/transportationsSlice";
 import { router } from "expo-router";
+import { setEditingTransportation } from "../../store/slices/buildTransportationSlice";
 
 type TransportationJournalItemProps = {
     transportation: ITransportation;
@@ -16,7 +17,10 @@ export const TransportationJournalItem = (props: TransportationJournalItemProps)
     const { transportation } = props;
     const dispatch = useDispatch();
 
-    const cloneHandler = () => {};
+    const cloneHandler = () => {
+        dispatch(setEditingTransportation(transportation));
+        router.push("/CargoEditingModal");
+    };
 
     const showDetailsHandler = () => {
         dispatch(setViewedTransportation(transportation));
@@ -76,7 +80,6 @@ export const TransportationJournalItem = (props: TransportationJournalItemProps)
                     >
                         <Menu.Item onPress={showDetailsHandler}>Детали</Menu.Item>
                         <Menu.Item onPress={cloneHandler}>Создать копированием</Menu.Item>
-                        <Menu.Item onPress={cloneHandler}>Удалить</Menu.Item>
                     </Menu>
                 </Box>
             </HStack>

@@ -11,7 +11,7 @@ import {
 export default function UnloadingTypesSelectListModal() {
     const dispatch = useDispatch();
 
-    const editingCargo = useSelector((state: RootState) => state.buildTransportation.editingCargo);
+    const editingCargo = useSelector((state: RootState) => state.buildTransportation.editingTransportation.cargo);
     const defaultSelected = editingCargo.truckRequirements?.unloadingTypeDtos?.map((o) => {
         const selectItem: ISelectItem = { value: o, displayName: LOADING_TYPE_DISPLAY_NAME_MAP.get(o) ?? "" };
         return selectItem;

@@ -16,10 +16,11 @@ import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../../../api/transportation/toDis
 export default function TruckRequirementsModal() {
     const dispatch = useDispatch();
 
-    const editingCargo = useSelector((state: RootState) => state.buildTransportation.editingCargo);
-    const truckRequirementsCarBodies = useSelector((state: RootState) => state.buildTransportation.requiredCarBodies);
-    const truckRequiredLoadingTypes = useSelector((state: RootState) => state.buildTransportation.requiredLoadingTypes);
-    const truckRequiredUnloadingTypes = useSelector((state: RootState) => state.buildTransportation.requiredUnloadingTypes);
+    const editingCargo = useSelector((state: RootState) => state.buildTransportation.editingTransportation.cargo);
+
+    const truckRequirementsCarBodies = editingCargo.truckRequirements.carBodies;
+    const truckRequiredLoadingTypes = editingCargo.truckRequirements.loadingTypeDtos;
+    const truckRequiredUnloadingTypes = editingCargo.truckRequirements.unloadingTypeDtos;
 
     const [hasLiftgate, setHasLiftgate] = useState<boolean>(editingCargo.truckRequirements?.hasLiftgate ?? false);
     const [hasStanchionTrailer, setHasStanchionTrailer] = useState<boolean>(editingCargo.truckRequirements?.hasStanchionTrailer ?? false);

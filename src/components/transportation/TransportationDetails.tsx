@@ -171,7 +171,7 @@ export default function TransportationDetailsModal() {
                                 {dangerousGoodsRequirements.length > 0 && (
                                     <Box>
                                         <Text mt={2} fontWeight="500" color={"darkBlue.500"}>
-                                            Доп. требования
+                                            Требуемые разрешения
                                         </Text>
                                         <Text>{dangerousGoodsRequirements.join(", ")}</Text>
                                     </Box>
