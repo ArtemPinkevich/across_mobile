@@ -6,7 +6,7 @@ interface IRefreshTokensResponse {
 
 async function refreshTokens(): Promise<IRefreshTokensResponse | undefined> {
   try {
-    const response = await httpClient.post<IRefreshTokensResponse>(
+    const response = await httpClient.get<IRefreshTokensResponse>(
       "/Authorization/refresh_tokens"
     );
     return response.data;
