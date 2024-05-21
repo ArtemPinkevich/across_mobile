@@ -59,61 +59,31 @@ export const buildTransportationSlice = createSlice({
 	initialState,
 	reducers: {
 		setEditingTransportation: (state, action) => {
-			state.editingTransportation = { ...action.payload };
+			state.editingTransportation = action.payload;
 		},
 		resetEditingTransportation: (state) => {
 			state.editingTransportation = DEFAULT_EDITING_TRANSPORTATION;
 		},
 		setEditingCargo: (state, action) => {
-			state.editingTransportation = { ...state.editingTransportation, cargo: action.payload };
+			state.editingTransportation.cargo = action.payload;
 		},
 		setEditingTransferInfo: (state, action) => {
-			state.editingTransportation = { ...state.editingTransportation, transferInfo: action.payload };
+			state.editingTransportation.transferInfo = action.payload;
 		},
 		setPackagingType: (state, action) => {
-			state.editingTransportation = {
-				...state.editingTransportation,
-				cargo: {
-					...state.editingTransportation.cargo,
-					packagingType: action.payload,
-				},
-			};
+			state.editingTransportation.cargo.packagingType = action.payload;
 		},
 		setTruckRequirements: (state, action) => {
-			state.editingTransportation = {
-				...state.editingTransportation,
-				cargo: {
-					...state.editingTransportation.cargo,
-					truckRequirements: { ...action.payload },
-				},
-			};
+			state.editingTransportation.cargo.truckRequirements = action.payload;
 		},
 		setTruckRequirementsCarBodies: (state, action) => {
-			state.editingTransportation = {
-				...state.editingTransportation,
-				cargo: {
-					...state.editingTransportation.cargo,
-					truckRequirements: { ...state.editingTransportation.cargo.truckRequirements, carBodies: [...action.payload] },
-				},
-			};
+			state.editingTransportation.cargo.truckRequirements.carBodies = action.payload;
 		},
 		setTruckRequirementsLoadingTypes: (state, action) => {
-			state.editingTransportation = {
-				...state.editingTransportation,
-				cargo: {
-					...state.editingTransportation.cargo,
-					truckRequirements: { ...state.editingTransportation.cargo.truckRequirements, loadingTypeDtos: [...action.payload] },
-				},
-			};
+			state.editingTransportation.cargo.truckRequirements.loadingTypeDtos = action.payload;
 		},
 		setTruckRequirementsUnloadingTypes: (state, action) => {
-			state.editingTransportation = {
-				...state.editingTransportation,
-				cargo: {
-					...state.editingTransportation.cargo,
-					truckRequirements: { ...state.editingTransportation.cargo.truckRequirements, unloadingTypeDtos: [...action.payload] },
-				},
-			};
+			state.editingTransportation.cargo.truckRequirements.unloadingTypeDtos = action.payload;
 		},
 	},
 });
