@@ -12,89 +12,92 @@ import { router } from "expo-router";
 import { setEditingTransportation } from "../../store/slices/buildTransportationSlice";
 
 type TransportationItemProps = {
-    transportation: ITransportation;
+	transportation: ITransportation;
+	isMenuVisible?: boolean;
 };
 
 export const TransportationItem = (props: TransportationItemProps) => {
-    const { transportation } = props;
-    const dispatch = useDispatch();
-    const [deleteTransportation] = useDeleteTransportationMutation();
+	const { transportation, isMenuVisible = true } = props;
+	const dispatch = useDispatch();
+	const [deleteTransportation] = useDeleteTransportationMutation();
 
-    const removeHandler = () => {
-        if (transportation.transportationOrderId) {
-            deleteTransportation(transportation.transportationOrderId);
-        }
-    };
+	const removeHandler = () => {
+		if (transportation.transportationOrderId) {
+			deleteTransportation(transportation.transportationOrderId);
+		}
+	};
 
-    const showDetailsHandler = () => {
-        dispatch(setViewedTransportation(transportation));
-        router.push("/OnlyInfoTransportationDetailsModal");
-    };
+	const showDetailsHandler = () => {
+		dispatch(setViewedTransportation(transportation));
+		router.push("/OnlyInfoTransportationDetailsModal");
+	};
 
-    const cloneHandler = () => {
-        dispatch(setEditingTransportation(transportation));
-        router.push("/CargoEditingModal");
-    };
+	const cloneHandler = () => {
+		dispatch(setEditingTransportation(transportation));
+		router.push("/CargoEditingModal");
+	};
 
-    return (
-        <Box rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" shadow={1}>
-            <HStack my={4} pl={4}>
-                <VStack w="90%">
-                    <Text bold fontSize="xl">
-                        {transportation.cargo.name}
-                    </Text>
-                    <Text fontSize="sm">{`${transportation.cargo.weight}т ${transportation.cargo.volume}м³`}</Text>
+	return (
+		<Box rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" shadow={1}>
+			<HStack my={4} pl={4}>
+				<VStack w="90%">
+					<Text bold fontSize="xl">
+						{transportation.cargo.name}
+					</Text>
+					<Text fontSize="sm">{`${transportation.cargo.weight}т ${transportation.cargo.volume}м³`}</Text>
 
-                    <HStack mt={4}>
-                        <Center>
-                            <MaterialCommunityIcons name="map-marker-outline" size={17} color="blue" />
-                        </Center>
-                        <VStack>
-                            <Text w="70%" pl={5} fontSize="lg">
-                                {transportation.transferInfo.loadingAddress}
-                            </Text>
-                            <Text pl={5} fontSize="xs">
-                                {`${moment(transportation.transferInfo.loadingDateFrom).format("DD MMMM YYYY")} - ${moment(
-                                    transportation.transferInfo.loadingDateTo
-                                ).format("DD MMMM YYYY")}`}
-                            </Text>
-                        </VStack>
-                    </HStack>
+					<HStack mt={4}>
+						<Center>
+							<MaterialCommunityIcons name="map-marker-outline" size={17} color="blue" />
+						</Center>
+						<VStack>
+							<Text w="70%" pl={5} fontSize="lg">
+								{transportation.transferInfo.loadingAddress}
+							</Text>
+							<Text pl={5} fontSize="xs">
+								{`${moment(transportation.transferInfo.loadingDateFrom).format("DD MMMM YYYY")} - ${moment(
+									transportation.transferInfo.loadingDateTo,
+								).format("DD MMMM YYYY")}`}
+							</Text>
+						</VStack>
+					</HStack>
 
-                    <HStack mt={4}>
-                        <Center>
-                            <MaterialCommunityIcons name="map-marker" size={17} color="red" />
-                        </Center>
-                        <Text w="70%" pl={5} fontSize="lg">
-                            {transportation.transferInfo.unloadingAddress}
-                        </Text>
-                    </HStack>
+					<HStack mt={4}>
+						<Center>
+							<MaterialCommunityIcons name="map-marker" size={17} color="red" />
+						</Center>
+						<Text w="70%" pl={5} fontSize="lg">
+							{transportation.transferInfo.unloadingAddress}
+						</Text>
+					</HStack>
 
-                    <Center mt={4} background={"blueGray.100"}>
-                        <Text fontSize="xs" px={5} py={1}>
-                            {TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationStatus)}
-                        </Text>
-                    </Center>
-                </VStack>
+					<Center mt={4} background={"blueGray.100"}>
+						<Text fontSize="xs" px={5} py={1}>
+							{TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationStatus)}
+						</Text>
+					</Center>
+				</VStack>
 
-                {/* defaultIsOpen={false} чтобы не фризился экран (по мотивам https://github.com/GeekyAnts/NativeBase/issues/4730) */}
-                <Box mt={4}>
-                    <Menu
-                        shadow={2}
-                        w="150"
-                        defaultIsOpen={false}
-                        trigger={(triggerProps) => (
-                            <Pressable accessibilityLabel="More options menu" {...triggerProps}>
-                                <MaterialCommunityIcons name="dots-vertical" size={17} />
-                            </Pressable>
-                        )}
-                    >
-                        <Menu.Item onPress={showDetailsHandler}>Детали</Menu.Item>
-                        <Menu.Item onPress={cloneHandler}>Создать копированием</Menu.Item>
-                        <Menu.Item onPress={removeHandler}>Удалить</Menu.Item>
-                    </Menu>
-                </Box>
-            </HStack>
-        </Box>
-    );
+				{/* defaultIsOpen={false} чтобы не фризился экран (по мотивам https://github.com/GeekyAnts/NativeBase/issues/4730) */}
+				{isMenuVisible && (
+					<Box mt={4}>
+						<Menu
+							shadow={2}
+							w="150"
+							defaultIsOpen={false}
+							trigger={(triggerProps) => (
+								<Pressable accessibilityLabel="More options menu" {...triggerProps}>
+									<MaterialCommunityIcons name="dots-vertical" size={17} />
+								</Pressable>
+							)}
+						>
+							<Menu.Item onPress={showDetailsHandler}>Детали</Menu.Item>
+							<Menu.Item onPress={cloneHandler}>Создать копированием</Menu.Item>
+							<Menu.Item onPress={removeHandler}>Удалить</Menu.Item>
+						</Menu>
+					</Box>
+				)}
+			</HStack>
+		</Box>
+	);
 };
