@@ -5,20 +5,30 @@ import { garageApi } from "./rtkQuery/garageApi";
 import { transportationApi } from "./rtkQuery/transportationApi";
 import { profileApi } from "./rtkQuery/profileApi";
 import { searchApi } from "./rtkQuery/searchApi";
+import { placesApi } from "./rtkQuery/placesApi";
 import { transportationsSlice } from "./slices/transportationsSlice";
+import { searchSlice } from "./slices/searchSlice";
 
 export const store = configureStore({
-    reducer: {
-        [garageSlice.name]: garageSlice.reducer,
-        [buildTransportationSlice.name]: buildTransportationSlice.reducer,
-        [transportationsSlice.name]: transportationsSlice.reducer,
-        [garageApi.reducerPath]: garageApi.reducer,
-        [transportationApi.reducerPath]: transportationApi.reducer,
-        [profileApi.reducerPath]: profileApi.reducer,
-        [searchApi.reducerPath]: searchApi.reducer,
-    },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat([garageApi.middleware, transportationApi.middleware, profileApi.middleware, searchApi.middleware]),
+	reducer: {
+		[garageSlice.name]: garageSlice.reducer,
+		[buildTransportationSlice.name]: buildTransportationSlice.reducer,
+		[transportationsSlice.name]: transportationsSlice.reducer,
+		[searchSlice.name]: searchSlice.reducer,
+		[garageApi.reducerPath]: garageApi.reducer,
+		[transportationApi.reducerPath]: transportationApi.reducer,
+		[profileApi.reducerPath]: profileApi.reducer,
+		[searchApi.reducerPath]: searchApi.reducer,
+		[placesApi.reducerPath]: placesApi.reducer,
+	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware().concat([
+			garageApi.middleware,
+			transportationApi.middleware,
+			profileApi.middleware,
+			searchApi.middleware,
+			placesApi.middleware,
+		]),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
