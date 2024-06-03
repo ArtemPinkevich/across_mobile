@@ -20,8 +20,8 @@ import { IPlace } from "../../../api/places/Places";
 
 export default function SearchTab() {
 	const dispatch = useDispatch();
-	const loadingPlace: IPlace | undefined = useSelector((state: RootState) => state.search.placeFrom);
-	const unloadingPlace: IPlace | undefined = useSelector((state: RootState) => state.search.placeTo);
+	const loadingPlace: IPlace | undefined = useSelector((state: RootState) => state.places.searchPlaceFrom);
+	const unloadingPlace: IPlace | undefined = useSelector((state: RootState) => state.places.searchPlaceTo);
 
 	const [transportations, setTransportations] = useState<ITransportation[]>([]);
 	const [loadingDateFrom, setLoadingDateFrom] = useState<Moment | undefined>(moment());

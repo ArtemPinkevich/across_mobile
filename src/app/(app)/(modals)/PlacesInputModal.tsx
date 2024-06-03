@@ -10,7 +10,7 @@ import useDebounce from "../../../components/common/useDebounce";
 import { useLazyGetPlacesQuery } from "../../../store/rtkQuery/placesApi";
 import { IPlace, PlacesRequest } from "../../../api/places/Places";
 import { placeToDisplayStringConverter } from "../../../api/places/PlaceToDisplayStringConverter";
-import { setSearchPlaceFrom, setSearchPlaceTo } from "../../../store/slices/searchSlice";
+import { setSearchPlaceFrom, setSearchPlaceTo } from "../../../store/slices/placesSlice";
 
 export enum LocalitySearchTarget {
 	SearchFrom = "SearchFrom",

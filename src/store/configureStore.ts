@@ -7,14 +7,14 @@ import { profileApi } from "./rtkQuery/profileApi";
 import { searchApi } from "./rtkQuery/searchApi";
 import { placesApi } from "./rtkQuery/placesApi";
 import { transportationsSlice } from "./slices/transportationsSlice";
-import { searchSlice } from "./slices/searchSlice";
+import { placesSlice } from "./slices/placesSlice";
 
 export const store = configureStore({
 	reducer: {
 		[garageSlice.name]: garageSlice.reducer,
 		[buildTransportationSlice.name]: buildTransportationSlice.reducer,
 		[transportationsSlice.name]: transportationsSlice.reducer,
-		[searchSlice.name]: searchSlice.reducer,
+		[placesSlice.name]: placesSlice.reducer,
 		[garageApi.reducerPath]: garageApi.reducer,
 		[transportationApi.reducerPath]: transportationApi.reducer,
 		[profileApi.reducerPath]: profileApi.reducer,
