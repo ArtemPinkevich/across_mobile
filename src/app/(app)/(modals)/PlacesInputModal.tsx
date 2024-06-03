@@ -10,11 +10,13 @@ import useDebounce from "../../../components/common/useDebounce";
 import { useLazyGetPlacesQuery } from "../../../store/rtkQuery/placesApi";
 import { IPlace, PlacesRequest } from "../../../api/places/Places";
 import { placeToDisplayStringConverter } from "../../../api/places/PlaceToDisplayStringConverter";
-import { setSearchPlaceFrom, setSearchPlaceTo } from "../../../store/slices/placesSlice";
+import { setCargoLoadingPlace, setCargoUnloadingPlace, setSearchPlaceFrom, setSearchPlaceTo } from "../../../store/slices/placesSlice";
 
 export enum LocalitySearchTarget {
 	SearchFrom = "SearchFrom",
 	SearchTo = "SearchTo",
+	CargoLoading = "CargoLoading",
+	CargoUnloading = "CargoUnloading",
 }
 
 export default function PlacesInputModal() {
@@ -53,9 +55,14 @@ export default function PlacesInputModal() {
 			case LocalitySearchTarget.SearchFrom:
 				dispatch(setSearchPlaceFrom(item));
 				break;
-
 			case LocalitySearchTarget.SearchTo:
 				dispatch(setSearchPlaceTo(item));
+				break;
+			case LocalitySearchTarget.CargoLoading:
+				dispatch(setCargoLoadingPlace(item));
+				break;
+			case LocalitySearchTarget.CargoUnloading:
+				dispatch(setCargoUnloadingPlace(item));
 				break;
 		}
 
