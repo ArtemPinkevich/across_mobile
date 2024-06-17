@@ -8,6 +8,10 @@ export default function AppLayout() {
 			<Stack.Screen name="(garage)" options={{ headerShown: false }} />
 			<Stack.Screen name="(transportations)" options={{ headerShown: false }} />
 			<Stack.Screen name="(profile)/EditProfileModal" options={{ title: "Редактирование профиля", presentation: "modal" }} />
+			<Stack.Screen name="(profile)/ShowDocumentModal" options={{ title: "Просмотр", presentation: "modal" }} />
+			<Stack.Screen name="(profile)/DocumentRejectDetailsModal" options={{ title: "Детали", presentation: "modal" }} />
+			<Stack.Screen name="(profile)/TakeDocumentPhotoModal" options={{ title: "Предпросмотр", presentation: "modal" }} />
+			<Stack.Screen name="(profile)/DocumentsModal" options={{ title: "Документы", presentation: "modal" }} />
 			<Stack.Screen name="(modals)/PlacesInputModal" options={{ title: "Поиск населенного пункта", presentation: "modal" }} />
 		</Stack>
 	);
