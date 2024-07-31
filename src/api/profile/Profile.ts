@@ -7,7 +7,7 @@ export interface IProfile {
 	patronymic?: string;
 	birthDate?: string; // Строка ISO
 	phoneNumber: string;
-	documents: IUserDocument[];
+	documentDtos: IUserDocument[];
 }
 
 export interface IProfileResult {
@@ -17,6 +17,6 @@ export interface IProfileResult {
 
 export interface IUserDocument {
 	documentType: UserDocumentType;
-	status: UserDocumentStatus;
+	documentStatus: UserDocumentStatus;
 	comment?: string;
 }

@@ -11,11 +11,11 @@ export default function DocumentRejectDetailsModal() {
 	const [showChooseSourceModal, setShowChooseSourceModal] = useState(false);
 	const { data: profile } = useGetProfileQuery();
 
-	if (!profile?.documents) {
+	if (!profile?.documentDtos) {
 		return null;
 	}
 
-	const doc = profile.documents.find((o) => o.documentType === +docType);
+	const doc = profile.documentDtos.find((o) => o.documentType === +docType);
 
 	return (
 		<View style={{ flex: 1, alignItems: "stretch" }}>
