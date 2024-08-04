@@ -8,6 +8,7 @@ import { View } from "../../../components/Themed";
 import { TitleAndValueItem } from "../../../components/screenItems/TitleValueItem";
 import { useGetProfileQuery } from "../../../store/rtkQuery/profileApi";
 import { LeftAlignedSection } from "../../../components/screenItems/LeftAlignedSection";
+import { SHIPPER_ROLE } from "../../../api/profile/Profile";
 
 export default function ProfileTab() {
 	let content = (
@@ -26,6 +27,9 @@ export default function ProfileTab() {
 		content = (
 			<View style={{ width: "90%" }}>
 				<VStack space={3}>
+					<Text fontSize="md" color={"blue.500"} fontWeight="500" mt={5}>
+						{profile.role === SHIPPER_ROLE ? "Грузоотправитель" : "Грузоперевозчик"}
+					</Text>
 					<HStack space={5} my={3}>
 						<Center>
 							<MaterialIcons name="account-circle" size={24} color="black" />
@@ -57,6 +61,7 @@ export default function ProfileTab() {
 				<Fab
 					position="absolute"
 					placement="bottom-right"
+					bgColor={"blue.500"}
 					icon={<Icon color="white" as={<MaterialIcons name="edit" />} size="sm" />}
 					renderInPortal={false}
 				/>

@@ -20,7 +20,14 @@ export const profileApi = createApi({
 			}),
 			invalidatesTags: ["Profile"],
 		}),
+		changeRole: build.mutation<void, string>({
+			query: (body) => ({
+				url: `Profiles/change_role`,
+				method: "POST",
+				data: body,
+			}),
+		}),
 	}),
 });
 
-export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi;
+export const { useGetProfileQuery, useUpdateProfileMutation, useChangeRoleMutation, useLazyGetProfileQuery } = profileApi;

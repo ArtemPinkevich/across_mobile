@@ -12,47 +12,48 @@ import { setViewedTransportation } from "../../../store/slices/transportationsSl
 import { View } from "../../../components/Themed";
 
 export default function TransportationTab() {
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-    const { data } = useGetTransportationsQuery();
-    const filtred = data?.transportationOrderDtos.filter((o) => o.transportationStatus !== TransportationStatus.Delivered) ?? [];
+	const { data } = useGetTransportationsQuery();
+	const filtred = data?.transportationOrderDtos.filter((o) => o.transportationStatus !== TransportationStatus.Delivered) ?? [];
 
-    const itemPressHandler = (transportation: ITransportation) => {
-        dispatch(setViewedTransportation(transportation));
-        router.push("/OnlyInfoTransportationDetailsModal");
-    };
+	const itemPressHandler = (transportation: ITransportation) => {
+		dispatch(setViewedTransportation(transportation));
+		router.push("/OnlyInfoTransportationDetailsModal");
+	};
 
-    const renderItem = (item: ITransportation) => (
-        <Pressable onPress={() => itemPressHandler(item)} my={2}>
-            <TransportationItem transportation={item as ITransportation} />
-        </Pressable>
-    );
+	const renderItem = (item: ITransportation) => (
+		<Pressable onPress={() => itemPressHandler(item)} my={2}>
+			<TransportationItem transportation={item as ITransportation} />
+		</Pressable>
+	);
 
-    let content = <FlatList px={"4"} data={filtred} renderItem={(o) => renderItem(o.item)} />;
+	let content = <FlatList px={"4"} data={filtred} renderItem={(o) => renderItem(o.item)} />;
 
-    if (filtred.length === 0) {
-        content = (
-            <Center h={"100%"}>
-                <Text fontSize={"lg"}>Активных отправлений не найдено</Text>
-            </Center>
-        );
-    }
+	if (filtred.length === 0) {
+		content = (
+			<Center h={"100%"}>
+				<Text fontSize={"lg"}>Активных отправлений не найдено</Text>
+			</Center>
+		);
+	}
 
-    const addPressHandler = () => {
-        dispatch(resetEditingTransportation()); // Сбрасываем временную информацию, чтобы начать создание груза с нуля
-        router.push("/CargoEditingModal");
-    };
+	const addPressHandler = () => {
+		dispatch(resetEditingTransportation()); // Сбрасываем временную информацию, чтобы начать создание груза с нуля
+		router.push("/CargoEditingModal");
+	};
 
-    return (
-        <View style={{ flex: 1, alignItems: "stretch" }}>
-            {content}
-            <Fab
-                position="absolute"
-                placement="bottom-right"
-                icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
-                renderInPortal={false}
-                onPress={addPressHandler}
-            />
-        </View>
-    );
+	return (
+		<View style={{ flex: 1, alignItems: "stretch" }}>
+			{content}
+			<Fab
+				position="absolute"
+				placement="bottom-right"
+				bgColor={"blue.500"}
+				icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
+				renderInPortal={false}
+				onPress={addPressHandler}
+			/>
+		</View>
+	);
 }

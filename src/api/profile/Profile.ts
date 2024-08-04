@@ -1,10 +1,14 @@
 import { ApiCommonResult } from "../common/commonApi";
 import { UserDocumentStatus, UserDocumentType } from "./documentsEnums";
 
+export const DRIVER_ROLE = "Driver";
+export const SHIPPER_ROLE = "Shipper";
+
 export interface IProfile {
 	name?: string;
 	surname?: string;
 	patronymic?: string;
+	role?: string; // Может принимать только одно из двух значений: Shipper или Driver (см. константы DRIVER_ROLE и SHIPPER_ROLE)
 	birthDate?: string; // Строка ISO
 	phoneNumber: string;
 	documentDtos: IUserDocument[];

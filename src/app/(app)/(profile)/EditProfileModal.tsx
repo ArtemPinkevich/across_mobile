@@ -5,7 +5,6 @@ import { router } from "expo-router";
 import { Button, Center, ScrollView, Input, VStack, Pressable, Text } from "native-base";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
-import PhoneNumberInput from "../../../components/common/PhoneNumberInput";
 import { View } from "../../../components/Themed";
 import { useGetProfileQuery, useUpdateProfileMutation } from "../../../store/rtkQuery/profileApi";
 import { IProfile, IProfileResult } from "../../../api/profile/Profile";
@@ -55,8 +54,6 @@ export default function EditProfileModal() {
 					<Input variant="underlined" size="md" placeholder="Имя" value={name} onChangeText={setName} />
 					<Input variant="underlined" size="md" placeholder="Фамилия" value={surname} onChangeText={setSurname} />
 					<Input variant="underlined" size="md" placeholder="Отчество" value={patronymic} onChangeText={setpatronymic} />
-
-					<PhoneNumberInput value={phoneNumber ?? ""} onChange={setPhoneNumber} />
 
 					{Platform.OS === "web" ? null : (
 						<Pressable onPress={() => setShowDatePicker(true)}>

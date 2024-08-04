@@ -12,67 +12,68 @@ import { resetEditingTruсk } from "../../store/slices/garageSlice";
 import { useGetTrucksQuery } from "../../store/rtkQuery/garageApi";
 
 type TruckListProps = {
-    isSelectionMode: boolean;
+	isSelectionMode: boolean;
 };
 
 export default function TruckList(props: TruckListProps) {
-    const { isSelectionMode } = props;
+	const { isSelectionMode } = props;
 
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-    const { data } = useGetTrucksQuery();
-    const cars = data?.trucks ?? [];
+	const { data } = useGetTrucksQuery();
+	const cars = data?.trucks ?? [];
 
-    const itemPressHandler = (car: ITruck) => {
-        if (isSelectionMode) {
-            router.back();
-        }
-    };
+	const itemPressHandler = (car: ITruck) => {
+		if (isSelectionMode) {
+			router.back();
+		}
+	};
 
-    const addPressHandler = () => {
-        dispatch(resetEditingTruсk());
-        router.push("/EditTruckModal");
-    };
+	const addPressHandler = () => {
+		dispatch(resetEditingTruсk());
+		router.push("/EditTruckModal");
+	};
 
-    const renderItem = ({ item }: any) => (
-        <Pressable onPress={() => itemPressHandler(item)}>
-            <TruckItem truck={item as ITruck} />
-            <View style={styles.separator} />
-        </Pressable>
-    );
+	const renderItem = ({ item }: any) => (
+		<Pressable onPress={() => itemPressHandler(item)}>
+			<TruckItem truck={item as ITruck} />
+			<View style={styles.separator} />
+		</Pressable>
+	);
 
-    let content = <FlatList px={"4"} data={cars} renderItem={renderItem} />;
+	let content = <FlatList px={"4"} data={cars} renderItem={renderItem} />;
 
-    if (cars.length === 0) {
-        content = (
-            <Center h={"100%"}>
-                <Text fontSize={"lg"}>Список автомобилей пуст</Text>
-            </Center>
-        );
-    }
+	if (cars.length === 0) {
+		content = (
+			<Center h={"100%"}>
+				<Text fontSize={"lg"}>Список автомобилей пуст</Text>
+			</Center>
+		);
+	}
 
-    return (
-        <View style={styles.container}>
-            {content}
-            <Fab
-                position="absolute"
-                placement="bottom-right"
-                icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
-                renderInPortal={false}
-                onPress={addPressHandler}
-            />
-        </View>
-    );
+	return (
+		<View style={styles.container}>
+			{content}
+			<Fab
+				position="absolute"
+				placement="bottom-right"
+				bgColor={"blue.500"}
+				icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
+				renderInPortal={false}
+				onPress={addPressHandler}
+			/>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "stretch",
-    },
-    separator: {
-        height: 1,
-        width: "100%",
-        backgroundColor: "#ddd",
-    },
+	container: {
+		flex: 1,
+		alignItems: "stretch",
+	},
+	separator: {
+		height: 1,
+		width: "100%",
+		backgroundColor: "#ddd",
+	},
 });
