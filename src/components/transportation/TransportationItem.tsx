@@ -50,9 +50,9 @@ export const TransportationItem = (props: TransportationItemProps) => {
 						<Center>
 							<MaterialCommunityIcons name="map-marker-outline" size={17} color="blue" />
 						</Center>
-						<VStack>
+						<VStack w={"100%"}>
 							<Text w="70%" pl={5} fontSize="lg">
-								{transportation.transferInfo.loadingAddress}
+								{transportation.transferInfo.loadingPlace?.city}
 							</Text>
 							<Text pl={5} fontSize="xs">
 								{`${moment(transportation.transferInfo.loadingDateFrom).format("DD MMMM YYYY")} - ${moment(
@@ -67,7 +67,7 @@ export const TransportationItem = (props: TransportationItemProps) => {
 							<MaterialCommunityIcons name="map-marker" size={17} color="red" />
 						</Center>
 						<Text w="70%" pl={5} fontSize="lg">
-							{transportation.transferInfo.unloadingAddress}
+							{transportation.transferInfo.unloadingPlace?.city}
 						</Text>
 					</HStack>
 

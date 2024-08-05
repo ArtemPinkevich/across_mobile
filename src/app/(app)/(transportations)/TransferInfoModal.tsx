@@ -33,12 +33,22 @@ export default function TransferInfoModal() {
 	const [loadingDateTo, setLoadingDateTo] = useState<Moment | undefined>();
 
 	const saveHandler = async () => {
+		if (!cargoLoadingPlace) {
+			alert("Не удалось определить город погрузки. Попробуйте снова или позже");
+			return;
+		}
+
+		if (!cargoUnloadingPlace) {
+			alert("Не удалось определить город выгрузки. Попробуйте снова или позже");
+			return;
+		}
+
 		const newTransferInfo: ITransferInfo = {
 			loadingDateFrom: loadingDateFrom?.toISOString() ?? "",
 			loadingDateTo: loadingDateTo?.toISOString() ?? "",
-			loadingLocalityName: "",
+			loadingPlace: cargoLoadingPlace,
 			loadingAddress: loadingAddress,
-			unloadingLocalityName: "",
+			unloadingPlace: cargoUnloadingPlace,
 			unloadingAddress: unloadingAddress,
 		};
 

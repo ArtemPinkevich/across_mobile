@@ -37,9 +37,17 @@ const DEFAULT_EDITING_TRANSPORTATION: ITransportation = {
 	transferInfo: {
 		loadingDateFrom: "",
 		loadingDateTo: "",
-		loadingLocalityName: "",
+		loadingPlace: {
+			country: "",
+			region: "",
+			city: "",
+		},
 		loadingAddress: "",
-		unloadingLocalityName: "",
+		unloadingPlace: {
+			country: "",
+			region: "",
+			city: "",
+		},
 		unloadingAddress: "",
 	},
 	cargo: DEFAULT_EDITING_CARGO,

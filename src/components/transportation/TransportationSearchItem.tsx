@@ -4,40 +4,42 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ITransportation } from "../../api/transportation/Transportation";
 
 type TransportationSearchItemProps = {
-    transportation: ITransportation;
+	transportation: ITransportation;
 };
 
 export const TransportationSearchItem = (props: TransportationSearchItemProps) => {
-    const { transportation } = props;
+	const { transportation } = props;
 
-    return (
-        <Box overflow="hidden" borderColor="coolGray.200" borderWidth="1" shadow={1} borderRadius={5}>
-            <HStack my={1} pl={4}>
-                <VStack w="90%">
-                    <Text bold fontSize="md">
-                        {transportation.cargo.name}
-                    </Text>
-                    <Text fontSize="xs">{`${transportation.cargo.weight}т ${transportation.cargo.volume}м³`}</Text>
+	return (
+		<Box overflow="hidden" borderColor="coolGray.200" borderWidth="1" shadow={1} borderRadius={5}>
+			<HStack my={1} pl={4}>
+				<VStack w="90%">
+					<Text bold fontSize="md">
+						{transportation.cargo.name}
+					</Text>
+					<Text fontSize="xs">{`${transportation.cargo.weight}т ${transportation.cargo.volume}м³`}</Text>
 
-                    <HStack>
-                        <Center>
-                            <MaterialCommunityIcons name="map-marker-outline" size={12} color="blue" />
-                        </Center>
-                        <Text ml={5} fontSize="xs">
-                            {transportation.transferInfo.loadingAddress}
-                        </Text>
-                    </HStack>
+					<HStack>
+						<Center>
+							<MaterialCommunityIcons name="map-marker-outline" size={12} color="blue" />
+						</Center>
+						<Text ml={5} fontSize="xs">
+							<Text bold>{transportation.transferInfo.loadingPlace?.city}</Text>, {transportation.transferInfo.loadingPlace?.country},{" "}
+							{transportation.transferInfo.loadingPlace?.region}
+						</Text>
+					</HStack>
 
-                    <HStack>
-                        <Center>
-                            <MaterialCommunityIcons name="map-marker" size={12} color="red" />
-                        </Center>
-                        <Text ml={5} fontSize="xs">
-                            {transportation.transferInfo.unloadingAddress}
-                        </Text>
-                    </HStack>
-                </VStack>
-            </HStack>
-        </Box>
-    );
+					<HStack>
+						<Center>
+							<MaterialCommunityIcons name="map-marker" size={12} color="red" />
+						</Center>
+						<Text ml={5} fontSize="xs">
+							<Text bold>{transportation.transferInfo.unloadingPlace?.city}</Text>, {transportation.transferInfo.unloadingPlace?.country},{" "}
+							{transportation.transferInfo.unloadingPlace?.region}
+						</Text>
+					</HStack>
+				</VStack>
+			</HStack>
+		</Box>
+	);
 };
