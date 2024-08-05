@@ -242,7 +242,13 @@ export default function SearchTab() {
 						Найти
 					</Button>
 				</Center>
-				<FlatList data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />
+				{transportations?.length > 0 ? (
+					<FlatList data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />
+				) : (
+					<Text textAlign={"center"} color={"red.500"}>
+						По данному запросу отправления не найдены.
+					</Text>
+				)}
 			</ScrollView>
 		</View>
 	);

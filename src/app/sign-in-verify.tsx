@@ -44,6 +44,7 @@ export default function SignInVerify() {
 			<Input
 				variant="underlined"
 				size="md"
+				w={200}
 				placeholder="Код подтверждения"
 				value={verificationCode}
 				onChangeText={handleVerificationCodeChange}
