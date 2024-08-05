@@ -5,6 +5,7 @@ import { useLocalSearchParams } from "expo-router";
 import { Button, Input, Text } from "native-base";
 import { AuthorizationService } from "../services/AuthorizationService";
 import { useLazyGetProfileQuery } from "../store/rtkQuery/profileApi";
+import { SHIPPER_ROLE } from "../api/profile/Profile";
 
 export default function SignInVerify() {
 	const { phoneNumber } = useLocalSearchParams<{ phoneNumber: string }>();
@@ -29,7 +30,7 @@ export default function SignInVerify() {
 				if (profile.name == undefined) {
 					router.replace("/InitialEntryPersonalInfo");
 				} else {
-					router.replace("/");
+					profile.role === SHIPPER_ROLE ? router.replace("/TransportationTab") : router.replace("/DriverOrdersTab");
 				}
 			} else {
 				setErrorText("Не удалась загрузить пользовательские данные. Пожалуйста, перезапустите приложение и попробуйте еще раз.");

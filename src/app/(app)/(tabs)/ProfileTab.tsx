@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from "react-native";
 import { Link, router } from "expo-router";
-import { Text, Center, HStack, VStack, Fab, Icon, Pressable } from "native-base";
+import { Text, Center, HStack, VStack, Fab, Icon, Pressable, Button } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import moment from "moment";
@@ -9,6 +9,7 @@ import { TitleAndValueItem } from "../../../components/screenItems/TitleValueIte
 import { useGetProfileQuery } from "../../../store/rtkQuery/profileApi";
 import { LeftAlignedSection } from "../../../components/screenItems/LeftAlignedSection";
 import { SHIPPER_ROLE } from "../../../api/profile/Profile";
+import { AuthorizationService } from "../../../services/AuthorizationService";
 
 export default function ProfileTab() {
 	let content = (
@@ -50,6 +51,9 @@ export default function ProfileTab() {
 						<LeftAlignedSection title={"Документы"} value={"Необходимо загрузить фото документов для подтверждения личности"} />
 					</Pressable>
 				</VStack>
+				<Button variant="outline" minW={200} size={"lg"} onPress={() => AuthorizationService.signOut()}>
+					Выйти
+				</Button>
 			</View>
 		);
 	}
