@@ -8,27 +8,27 @@ import { useGetTransportationsQuery } from "../../../store/rtkQuery/transportati
 import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
 
 export default function JournalTab() {
-    const { data } = useGetTransportationsQuery();
-    const filtred = data?.transportationOrderDtos.filter((o) => o.transportationStatus === TransportationStatus.Delivered) ?? [];
+	const { data } = useGetTransportationsQuery();
+	const filtred = data?.transportationOrderDtos.filter((o) => o.transportationStatus === TransportationStatus.delivered) ?? [];
 
-    const renderItem = ({ item }: any) => <TransportationJournalItem transportation={item as ITransportation} />;
+	const renderItem = ({ item }: any) => <TransportationJournalItem transportation={item as ITransportation} />;
 
-    return (
-        <View style={styles.container}>
-            {filtred?.length === 0 ? (
-                <Center h={"100%"}>
-                    <Text fontSize={"lg"}>Отправлений не найдено</Text>
-                </Center>
-            ) : (
-                <FlatList data={filtred} renderItem={renderItem} />
-            )}
-        </View>
-    );
+	return (
+		<View style={styles.container}>
+			{filtred?.length === 0 ? (
+				<Center h={"100%"}>
+					<Text fontSize={"lg"}>Отправлений не найдено</Text>
+				</Center>
+			) : (
+				<FlatList data={filtred} renderItem={renderItem} />
+			)}
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "stretch",
-    },
+	container: {
+		flex: 1,
+		alignItems: "stretch",
+	},
 });

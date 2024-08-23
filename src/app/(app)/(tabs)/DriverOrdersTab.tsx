@@ -13,7 +13,7 @@ export default function DriverOrdersTab() {
 	const dispatch = useDispatch();
 
 	const { data } = useGetTransportationsQuery();
-	const filtred = data?.transportationOrderDtos.filter((o) => o.transportationStatus !== TransportationStatus.Delivered) ?? [];
+	const filtred = data?.transportationOrderDtos.filter((o) => o.transportationStatus !== TransportationStatus.delivered) ?? [];
 
 	const itemPressHandler = (transportation: ITransportation) => {
 		dispatch(setViewedTransportation(transportation));

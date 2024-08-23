@@ -4,5 +4,5 @@ export enum TransportationStatus {
     carrierFinding,
     waitingForLoading,
     transporting,
-    Delivered
+    delivered
 }

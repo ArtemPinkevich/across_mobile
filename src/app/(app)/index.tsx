@@ -10,8 +10,6 @@ export default function Index() {
 		const replaceByRoleAsync = async () => {
 			const result = await trigger();
 
-			console.log(result);
-
 			if (result.isSuccess) {
 				const profile = result.data;
 				profile.role === SHIPPER_ROLE ? router.replace("/TransportationTab") : router.replace("/DriverOrdersTab");

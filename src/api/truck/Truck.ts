@@ -19,9 +19,9 @@ export interface IDangerousGoods {
 }
 
 export interface ITruckBase {
-    hasLtl: boolean; // догруз
+    hasLtl: boolean; // Догруз
     hasLiftgate: boolean; // Гидролифт
-    hasStanchionTrailer: boolean; // коники
+    hasStanchionTrailer: boolean; // Коники
     carryingCapacity: number; // грузоподъемность, т (макс. 9999)
 }
 
