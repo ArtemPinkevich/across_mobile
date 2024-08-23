@@ -64,3 +64,8 @@ export interface TransportationOrderResult {
 	result: ApiCommonResult;
 	reasons: string[];
 }
+
+export interface TryTakeOrderRequest {
+	truckId: number;
+	transportationOrderId: number;
+}
