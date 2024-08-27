@@ -2,7 +2,7 @@ import { TransportationStatus } from "./TransportationStatus";
 
 export const TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP = new Map<Object, string>([
 	[TransportationStatus.notPublished, "Не опублекованно"],
-	[TransportationStatus.carrierFinding, "Поиск перевозчика"],
+	[TransportationStatus.carrierFinding, "В заявке"],
 	[TransportationStatus.waitingForLoading, "Отгрузка"],
 	[TransportationStatus.transporting, "В дороге"],
 	[TransportationStatus.delivered, "Доставлено"],

@@ -10,6 +10,7 @@ import { useDeleteTransportationMutation } from "../../store/rtkQuery/transporta
 import { setViewedTransportation } from "../../store/slices/transportationsSlice";
 import { router } from "expo-router";
 import { setEditingTransportation } from "../../store/slices/buildTransportationSlice";
+import { TransportationStatus } from "../../api/transportation/TransportationStatus";
 
 type TransportationItemProps = {
 	transportation: ITransportation;
@@ -38,7 +39,13 @@ export const TransportationItem = (props: TransportationItemProps) => {
 	};
 
 	return (
-		<Box rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" shadow={1}>
+		<Box
+			rounded="lg"
+			overflow="hidden"
+			borderWidth="1"
+			borderColor={transportation.transportationStatus === TransportationStatus.carrierFinding ? "coolGray.200" : "blue.100"}
+			shadow={transportation.transportationStatus === TransportationStatus.carrierFinding ? 1 : 3}
+		>
 			<HStack my={4} pl={4}>
 				<VStack w="90%">
 					<Text bold fontSize="xl">
@@ -55,9 +62,9 @@ export const TransportationItem = (props: TransportationItemProps) => {
 								{transportation.transferInfo.loadingPlace?.city}
 							</Text>
 							<Text pl={5} fontSize="xs">
-								{`${moment(transportation.transferInfo.loadingDateFrom).format("DD MMMM YYYY")} - ${moment(
-									transportation.transferInfo.loadingDateTo,
-								).format("DD MMMM YYYY")}`}
+								{`${moment(transportation.transferInfo.loadingDateFrom).format("DD MMMM YYYY")}${
+									transportation.transferInfo?.loadingDateTo && " - " + moment(transportation.transferInfo.loadingDateTo).format("DD MMMM YYYY")
+								}`}
 							</Text>
 						</VStack>
 					</HStack>
@@ -71,7 +78,7 @@ export const TransportationItem = (props: TransportationItemProps) => {
 						</Text>
 					</HStack>
 
-					<Center mt={4} background={"blueGray.100"}>
+					<Center mt={4} background={transportation.transportationStatus === TransportationStatus.carrierFinding ? "blueGray.50" : "blue.100"}>
 						<Text fontSize="xs" px={5} py={1}>
 							{TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationStatus)}
 						</Text>
