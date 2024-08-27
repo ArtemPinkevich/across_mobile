@@ -23,7 +23,7 @@ export default function SearchTab() {
 	const loadingPlace: IPlace | undefined = useSelector((state: RootState) => state.places.searchPlaceFrom);
 	const unloadingPlace: IPlace | undefined = useSelector((state: RootState) => state.places.searchPlaceTo);
 
-	const [transportations, setTransportations] = useState<ITransportation[]>([]);
+	const [transportations, setTransportations] = useState<ITransportation[]>();
 	const [loadingDateFrom, setLoadingDateFrom] = useState<Moment | undefined>(moment());
 	const [isFiltredExpanded, setIsFiltredExpanded] = useState<boolean>(false);
 	const [weightMin, setWeightMin] = useState<number | undefined>();
@@ -242,7 +242,7 @@ export default function SearchTab() {
 						Найти
 					</Button>
 				</Center>
-				{transportations?.length > 0 ? (
+				{!transportations ? null : transportations?.length > 0 ? (
 					<FlatList data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />
 				) : (
 					<Text textAlign={"center"} color={"red.500"}>

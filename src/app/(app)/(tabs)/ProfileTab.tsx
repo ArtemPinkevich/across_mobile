@@ -50,10 +50,11 @@ export default function ProfileTab() {
 					<Pressable onPress={() => router.push("/DocumentsModal")} my={1}>
 						<LeftAlignedSection title={"Документы"} value={"Необходимо загрузить фото документов для подтверждения личности"} />
 					</Pressable>
+
+					<Button variant="outline" minW={200} size={"lg"} onPress={() => AuthorizationService.signOut()}>
+						Выйти
+					</Button>
 				</VStack>
-				<Button variant="outline" minW={200} size={"lg"} onPress={() => AuthorizationService.signOut()}>
-					Выйти
-				</Button>
 			</View>
 		);
 	}

@@ -32,7 +32,7 @@ export default function InitialEntryPersonalInfo() {
 			await сhangeRole(role);
 		}
 
-		router.replace("/(app)/(tabs)");
+		router.replace("/");
 	};
 
 	return (
