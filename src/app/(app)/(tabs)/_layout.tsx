@@ -93,6 +93,13 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
+				name="RecommendationsTab"
+				options={{
+					title: "Предложения",
+					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="store-plus-outline" size={30} color={color} />,
+				}}
+			/>
+			<Tabs.Screen
 				name="JournalTab"
 				options={{
 					title: "Журнал",

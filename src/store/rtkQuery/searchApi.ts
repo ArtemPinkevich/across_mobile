@@ -13,7 +13,12 @@ export const searchApi = createApi({
 				)}`,
 			}),
 		}),
+		searchRecommendationsByTruck: build.query<SearchResponse, number>({
+			query: (truckId) => ({
+				url: `Search/search_recommendations_by_truck/${truckId}`,
+			}),
+		}),
 	}),
 });
 
-export const { useLazySearchTransportationsQuery } = searchApi;
+export const { useLazySearchTransportationsQuery, useLazySearchRecommendationsByTruckQuery } = searchApi;
