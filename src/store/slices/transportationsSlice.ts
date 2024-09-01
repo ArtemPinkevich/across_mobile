@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ITransportation } from "../../api/transportation/Transportation";
+import { ICorrelation, ITransportation } from "../../api/transportation/Transportation";
 
 interface ILoadState {
 	viewedTransportation?: ITransportation;
+	viewedCorrelation?: ICorrelation;
 }
 
 const initialState: ILoadState = {
 	viewedTransportation: undefined,
+	viewedCorrelation: undefined,
 };
 
 export const transportationsSlice = createSlice({
@@ -16,9 +18,12 @@ export const transportationsSlice = createSlice({
 		setViewedTransportation: (state, action) => {
 			state.viewedTransportation = action.payload;
 		},
+		setViewedCorrelation: (state, action) => {
+			state.viewedCorrelation = action.payload;
+		},
 	},
 });
 
-export const { setViewedTransportation } = transportationsSlice.actions;
+export const { setViewedTransportation, setViewedCorrelation } = transportationsSlice.actions;
 
 export default transportationsSlice.reducer;

@@ -1,17 +1,20 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
 import { ScrollView, Center, VStack, Text, Heading, Box, HStack, View } from "native-base";
 import moment from "moment";
 import { CARBODY_DISPLAY_NAME_MAP } from "../../api/transportation/toDisplayNameMappers/CarBodyToDisplayNameMap";
 import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../../api/transportation/toDisplayNameMappers/LoadingTypeToDisplayNameMap";
 import { PACKAGING_TYPE_DISPLAY_NAME_MAP } from "../../api/transportation/toDisplayNameMappers/PackagingTypeToDisplayNameMap";
-import { RootState } from "../../store/configureStore";
 import { useMemo } from "react";
+import { ITransportation } from "../../api/transportation/Transportation";
 
-export default function TransportationDetailsModal() {
-	const viewedTransportation = useSelector((state: RootState) => state.transportations.viewedTransportation);
+type Props = {
+	transportation: ITransportation;
+};
 
-	if (!viewedTransportation) {
+export default function TransportationDetailsModal(props: Props) {
+	const { transportation } = props;
+
+	if (!transportation) {
 		return (
 			<View style={{ flex: 1, alignItems: "stretch" }}>
 				<Center>
@@ -21,21 +24,21 @@ export default function TransportationDetailsModal() {
 		);
 	}
 
-	const loadingPlace = viewedTransportation.transferInfo.loadingPlace;
-	const unloadingPlace = viewedTransportation.transferInfo.unloadingPlace;
+	const loadingPlace = transportation.transferInfo.loadingPlace;
+	const unloadingPlace = transportation.transferInfo.unloadingPlace;
 
-	const truckRequirements = viewedTransportation?.cargo?.truckRequirements;
+	const truckRequirements = transportation?.cargo?.truckRequirements;
 
 	const carBodiesDisplayName = truckRequirements?.carBodies?.map((o) => CARBODY_DISPLAY_NAME_MAP.get(o) ?? "").filter((s) => s) ?? [];
 	const loadingTypeDisplayNames = truckRequirements?.loadingTypeDtos?.map((o) => LOADING_TYPE_DISPLAY_NAME_MAP.get(o) ?? "").filter((s) => s) ?? [];
 	const unloadingTypesDisplayNames =
 		truckRequirements?.unloadingTypeDtos?.map((o) => LOADING_TYPE_DISPLAY_NAME_MAP.get(o) ?? "").filter((s) => s) ?? [];
-	const packagingTypeDisplayName = viewedTransportation?.cargo?.packagingType
-		? PACKAGING_TYPE_DISPLAY_NAME_MAP.get(viewedTransportation.cargo.packagingType)
+	const packagingTypeDisplayName = transportation?.cargo?.packagingType
+		? PACKAGING_TYPE_DISPLAY_NAME_MAP.get(transportation.cargo.packagingType)
 		: undefined;
 
-	const loadingDateFrom = moment(viewedTransportation.transferInfo?.loadingDateFrom, moment.ISO_8601);
-	const loadingDateTo = moment(viewedTransportation.transferInfo?.loadingDateTo, moment.ISO_8601);
+	const loadingDateFrom = moment(transportation.transferInfo?.loadingDateFrom, moment.ISO_8601);
+	const loadingDateTo = moment(transportation.transferInfo?.loadingDateTo, moment.ISO_8601);
 	const loadingDisplayDateRange = useMemo(() => {
 		return loadingDateFrom.isValid()
 			? loadingDateTo.isValid()
@@ -63,7 +66,7 @@ export default function TransportationDetailsModal() {
 	if (truckRequirements?.ekmt) dangerousGoodsRequirements.push("EKMT");
 
 	return (
-		<View my={1} style={{ flex: 1, alignItems: "stretch" }}>
+		<View my={1}>
 			<ScrollView px={4}>
 				<VStack>
 					<Heading my={2} size="sm">
@@ -82,44 +85,44 @@ export default function TransportationDetailsModal() {
 						</Text>
 					</Box>
 
-					{viewedTransportation.cargo && (
+					{transportation.cargo && (
 						<Box mt={4}>
 							<Heading size="sm">Груз</Heading>
 							<Box ml={4}>
 								<Center>
 									<Text mt={2} fontSize="lg" lineHeight={"xs"}>
-										{viewedTransportation.cargo.name}
+										{transportation.cargo.name}
 									</Text>
 								</Center>
 								<Text mt={2} fontWeight="500" color={"darkBlue.500"}>
 									Вес
 								</Text>
-								<Text>{viewedTransportation.cargo.weight}т</Text>
+								<Text>{transportation.cargo.weight}т</Text>
 
 								<Text mt={2} fontWeight="500" color={"darkBlue.500"}>
 									Объем
 								</Text>
-								<Text>{viewedTransportation.cargo.volume}м³</Text>
+								<Text>{transportation.cargo.volume}м³</Text>
 
-								{((viewedTransportation.cargo.length !== undefined && viewedTransportation.cargo.length > 0) ||
-									(viewedTransportation.cargo.width !== undefined && viewedTransportation.cargo.width > 0) ||
-									(viewedTransportation.cargo.height !== undefined && viewedTransportation.cargo.height > 0)) && (
+								{((transportation.cargo.length !== undefined && transportation.cargo.length > 0) ||
+									(transportation.cargo.width !== undefined && transportation.cargo.width > 0) ||
+									(transportation.cargo.height !== undefined && transportation.cargo.height > 0)) && (
 									<Box>
 										<Text mt={2} fontWeight="500" color={"darkBlue.500"}>
 											Длина/Ширина/Ввысота
 										</Text>
 										<Text>
-											{viewedTransportation.cargo.length}/{viewedTransportation.cargo.width}/{viewedTransportation.cargo.height}
+											{transportation.cargo.length}/{transportation.cargo.width}/{transportation.cargo.height}
 										</Text>
 									</Box>
 								)}
 
-								{viewedTransportation.cargo.diameter !== undefined && viewedTransportation.cargo.diameter > 0 && (
+								{transportation.cargo.diameter !== undefined && transportation.cargo.diameter > 0 && (
 									<Box>
 										<Text mt={2} fontWeight="500" color={"darkBlue.500"}>
 											Диаметр
 										</Text>
-										<Text>{viewedTransportation.cargo.diameter}м</Text>
+										<Text>{transportation.cargo.diameter}м</Text>
 									</Box>
 								)}
 
@@ -130,8 +133,8 @@ export default function TransportationDetailsModal() {
 										</Text>
 										<HStack space={1}>
 											<Text>{packagingTypeDisplayName}</Text>
-											{viewedTransportation.cargo.packagingQuantity !== undefined && viewedTransportation.cargo.packagingQuantity > 0 && (
-												<Text>{viewedTransportation.cargo.packagingQuantity} шт.</Text>
+											{transportation.cargo.packagingQuantity !== undefined && transportation.cargo.packagingQuantity > 0 && (
+												<Text>{transportation.cargo.packagingQuantity} шт.</Text>
 											)}
 										</HStack>
 									</Box>
@@ -142,7 +145,7 @@ export default function TransportationDetailsModal() {
 
 					{truckRequirements && (
 						<Box mt={4}>
-							<Heading size="sm">Транспорт</Heading>
+							<Heading size="sm">Требования к транспорту</Heading>
 							<Box ml={4}>
 								<Box>
 									<Text mt={2} fontWeight="500" color={"darkBlue.500"}>

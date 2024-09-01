@@ -59,7 +59,7 @@ export default function OfferedTransportationDetailsModal() {
 
 	return (
 		<View style={{ flex: 1, alignItems: "stretch" }}>
-			<TransportationDetails />
+			<TransportationDetails transportation={viewedTransportation} />
 			<Center my={2}>
 				<HStack space={10}>
 					<Button minW={120} size={"md"} variant="outline" onPress={backHandler}>

@@ -1,8 +1,9 @@
 import { ApiCommonResult } from "../common/commonApi";
 import { IPlace } from "../places/Places";
+import { IProfile } from "../profile/Profile";
 import { CarBodyType } from "../truck/CarBodyType";
 import { LoadingType } from "../truck/LoadingType";
-import { IDangerousGoods, ITruckBase } from "../truck/Truck";
+import { IDangerousGoods, ITruck, ITruckBase } from "../truck/Truck";
 import { PackagingType } from "./PackagingType";
 import { TransportationStatus } from "./TransportationStatus";
 
@@ -68,4 +69,22 @@ export interface TransportationOrderResult {
 export interface TryTakeOrderRequest {
 	truckId: number;
 	transportationOrderId: number;
+}
+
+export interface IAssignTruckRequest {
+	truckId?: number;
+	transportationOrderId?: number;
+}
+
+export interface CorrelationsResponse {
+	result: ApiCommonResult;
+	reasons: string[];
+	ordersInProgress: ICorrelation[];
+}
+
+export interface ICorrelation {
+	shipper: IProfile;
+	driver: IProfile;
+	truck: ITruck;
+	transportationOrder: ITransportation;
 }

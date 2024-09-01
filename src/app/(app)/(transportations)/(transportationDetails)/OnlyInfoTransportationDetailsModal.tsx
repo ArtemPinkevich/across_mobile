@@ -6,21 +6,21 @@ import { View } from "../../../../components/Themed";
 import TransportationDetails from "../../../../components/transportation/TransportationDetails";
 
 export default function OnlyInfoTransportationDetailsModal() {
-    const viewedTransportation = useSelector((state: RootState) => state.transportations.viewedTransportation);
+	const viewedTransportation = useSelector((state: RootState) => state.transportations.viewedTransportation);
 
-    if (!viewedTransportation) {
-        return (
-            <View style={{ flex: 1, alignItems: "stretch" }}>
-                <Center>
-                    <Text>Информация отсутствует</Text>
-                </Center>
-            </View>
-        );
-    }
+	if (!viewedTransportation) {
+		return (
+			<View style={{ flex: 1, alignItems: "stretch" }}>
+				<Center>
+					<Text>Информация отсутствует</Text>
+				</Center>
+			</View>
+		);
+	}
 
-    return (
-        <View style={{ flex: 1, alignItems: "stretch" }}>
-            <TransportationDetails />
-        </View>
-    );
+	return (
+		<View style={{ flex: 1, alignItems: "stretch" }}>
+			<TransportationDetails transportation={viewedTransportation} />
+		</View>
+	);
 }

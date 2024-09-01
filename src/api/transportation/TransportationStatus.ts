@@ -2,7 +2,9 @@
 export enum TransportationStatus {
     notPublished,
     carrierFinding,
-    waitingForLoading,
+    managerApproving,
+    shipperApproving,
     transporting,
-    delivered
+    delivered,
+    done,
 }

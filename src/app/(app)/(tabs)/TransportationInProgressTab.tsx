@@ -5,23 +5,17 @@ import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { ITransportation } from "../../../api/transportation/Transportation";
 import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
-import { TransportationItem } from "../../../components/transportation/TransportationItem";
 import { useGetTransportationsQuery } from "../../../store/rtkQuery/transportationApi";
 import { resetEditingTransportation } from "../../../store/slices/buildTransportationSlice";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { View } from "../../../components/Themed";
+import { TransportationJournalItem } from "../../../components/transportation/TransportationJournalItem";
 
-export default function TransportationTab() {
+export default function TransportationInProgressTab() {
 	const dispatch = useDispatch();
 
 	const { data } = useGetTransportationsQuery();
-	const filtred =
-		data?.transportationOrderDtos.filter(
-			(o) =>
-				o.transportationStatus === TransportationStatus.notPublished ||
-				o.transportationStatus === TransportationStatus.carrierFinding ||
-				o.transportationStatus === TransportationStatus.managerApproving,
-		) ?? [];
+	const filtred = data?.transportationOrderDtos.filter((o) => o.transportationStatus === TransportationStatus.transporting) ?? [];
 
 	const itemPressHandler = (transportation: ITransportation) => {
 		dispatch(setViewedTransportation(transportation));
@@ -30,7 +24,7 @@ export default function TransportationTab() {
 
 	const renderItem = (item: ITransportation) => (
 		<Pressable onPress={() => itemPressHandler(item)} my={2}>
-			<TransportationItem transportation={item as ITransportation} />
+			<TransportationJournalItem transportation={item as ITransportation} />
 		</Pressable>
 	);
 
@@ -39,7 +33,7 @@ export default function TransportationTab() {
 	if (filtred.length === 0) {
 		content = (
 			<Center h={"100%"}>
-				<Text fontSize={"lg"}>Заявок на перевозку груза не найдено</Text>
+				<Text fontSize={"lg"}>Активных отправлений не найдено</Text>
 			</Center>
 		);
 	}
