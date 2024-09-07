@@ -1,15 +1,12 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { Text, FlatList, Pressable, Fab, Icon, Center } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
+import { Text, FlatList, Pressable, Center } from "native-base";
 import { router } from "expo-router";
 import { ITransportation } from "../../../api/transportation/Transportation";
 import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
 import { useGetTransportationsQuery } from "../../../store/rtkQuery/transportationApi";
-import { resetEditingTransportation } from "../../../store/slices/buildTransportationSlice";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { View } from "../../../components/Themed";
-import { TransportationJournalItem } from "../../../components/transportation/TransportationJournalItem";
 import { TransportationItem } from "../../../components/transportation/TransportationItem";
 
 export default function TransportationInProgressTab() {
@@ -18,7 +15,12 @@ export default function TransportationInProgressTab() {
 	const { data } = useGetTransportationsQuery();
 	const filtred =
 		data?.transportationOrderDtos.filter(
-			(o) => o.transportationOrderStatus === TransportationStatus.transporting || o.transportationOrderStatus === TransportationStatus.delivered,
+			(o) =>
+				o.transportationOrderStatus === TransportationStatus.waitingForLoading ||
+				o.transportationOrderStatus === TransportationStatus.loading ||
+				o.transportationOrderStatus === TransportationStatus.transporting ||
+				o.transportationOrderStatus === TransportationStatus.unloading ||
+				o.transportationOrderStatus === TransportationStatus.delivered,
 		) ?? [];
 
 	const itemPressHandler = (transportation: ITransportation) => {

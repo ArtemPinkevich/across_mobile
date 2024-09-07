@@ -5,7 +5,7 @@ import { router } from "expo-router";
 import { ITransportation } from "../../../api/transportation/Transportation";
 import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
 import { TransportationItem } from "../../../components/transportation/TransportationItem";
-import { useGetAssignedOrdersQuery, useGetRequestedOrdersQuery } from "../../../store/rtkQuery/transportationApi";
+import { useGetAssignedOrdersQuery } from "../../../store/rtkQuery/transportationApi";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { View } from "../../../components/Themed";
 
@@ -18,7 +18,12 @@ export default function DriverOrdersTab() {
 	const itemPressHandler = (transportation: ITransportation) => {
 		dispatch(setViewedTransportation(transportation));
 
-		if (transportation.transportationOrderStatus === TransportationStatus.transporting) {
+		if (
+			transportation.transportationOrderStatus === TransportationStatus.waitingForLoading ||
+			transportation.transportationOrderStatus === TransportationStatus.loading ||
+			transportation.transportationOrderStatus === TransportationStatus.transporting ||
+			transportation.transportationOrderStatus === TransportationStatus.unloading
+		) {
 			router.push("/InProgressTransportationDetailsModal");
 		} else {
 			router.push("/OnlyInfoTransportationDetailsModal");
