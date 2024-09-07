@@ -60,6 +60,14 @@ export default function TabLayout() {
 					}}
 				/>
 				<Tabs.Screen
+					name="DriverRequestsTab"
+					options={{
+						title: "Заявки",
+						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="progress-question" size={30} color={color} />,
+						href: null,
+					}}
+				/>
+				<Tabs.Screen
 					name="RecommendationsTab"
 					options={{
 						title: "Предложения",
@@ -128,6 +136,13 @@ export default function TabLayout() {
 				options={{
 					title: "Перевозки",
 					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="truck-delivery-outline" size={30} color={color} />,
+				}}
+			/>
+			<Tabs.Screen
+				name="DriverRequestsTab"
+				options={{
+					title: "Заявки",
+					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="progress-question" size={30} color={color} />,
 				}}
 			/>
 			<Tabs.Screen

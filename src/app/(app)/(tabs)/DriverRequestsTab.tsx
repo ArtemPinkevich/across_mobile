@@ -5,29 +5,19 @@ import { router } from "expo-router";
 import { ITransportation } from "../../../api/transportation/Transportation";
 import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
 import { TransportationItem } from "../../../components/transportation/TransportationItem";
-import { useGetAssignedOrdersQuery } from "../../../store/rtkQuery/transportationApi";
+import { useGetRequestedOrdersQuery } from "../../../store/rtkQuery/transportationApi";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { View } from "../../../components/Themed";
 
-export default function DriverOrdersTab() {
+export default function DriverRequestsTab() {
 	const dispatch = useDispatch();
 
-	const { data } = useGetAssignedOrdersQuery();
-	const filtred = data?.transportationOrderDtos?.filter((o) => o?.transportationOrderStatus !== TransportationStatus.done) ?? [];
+	const { data } = useGetRequestedOrdersQuery();
+	const filtred = data?.transportationOrderDtos?.filter((o) => o.transportationOrderStatus !== TransportationStatus.done) ?? [];
 
 	const itemPressHandler = (transportation: ITransportation) => {
 		dispatch(setViewedTransportation(transportation));
-
-		if (
-			transportation.transportationOrderStatus === TransportationStatus.waitingForLoading ||
-			transportation.transportationOrderStatus === TransportationStatus.loading ||
-			transportation.transportationOrderStatus === TransportationStatus.transporting ||
-			transportation.transportationOrderStatus === TransportationStatus.unloading
-		) {
-			router.push("/InProgressTransportationDetailsModal");
-		} else {
-			router.push("/OnlyInfoTransportationDetailsModal");
-		}
+		router.push("/OnlyInfoTransportationDetailsModal");
 	};
 
 	const renderItem = (item: ITransportation) => (
@@ -41,7 +31,7 @@ export default function DriverOrdersTab() {
 	if (filtred.length === 0) {
 		content = (
 			<Center h={"100%"}>
-				<Text fontSize={"lg"}>Активных перевозок не найдено</Text>
+				<Text fontSize={"lg"}>Заявок не найдено</Text>
 			</Center>
 		);
 	}
