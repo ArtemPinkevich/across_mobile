@@ -108,6 +108,22 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
+				name="TransportationOnApprovingTab"
+				options={{
+					title: "Согласование",
+					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
+					href: null,
+				}}
+			/>
+			<Tabs.Screen
+				name="TransportationInProgressTab"
+				options={{
+					title: "В пути",
+					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
+					href: null,
+				}}
+			/>
+			<Tabs.Screen
 				name="DriverOrdersTab"
 				options={{
 					title: "Перевозки",

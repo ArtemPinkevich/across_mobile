@@ -28,11 +28,6 @@ export const TransportationItem = (props: TransportationItemProps) => {
 		}
 	};
 
-	const showDetailsHandler = () => {
-		dispatch(setViewedTransportation(transportation));
-		router.push("/OnlyInfoTransportationDetailsModal");
-	};
-
 	const cloneHandler = () => {
 		dispatch(setEditingTransportation(transportation));
 		router.push("/CargoEditingModal");
@@ -43,8 +38,8 @@ export const TransportationItem = (props: TransportationItemProps) => {
 			rounded="lg"
 			overflow="hidden"
 			borderWidth="1"
-			borderColor={transportation.transportationStatus === TransportationStatus.carrierFinding ? "coolGray.200" : "blue.100"}
-			shadow={transportation.transportationStatus === TransportationStatus.carrierFinding ? 1 : 3}
+			borderColor={transportation.transportationOrderStatus === TransportationStatus.carrierFinding ? "coolGray.200" : "blue.100"}
+			shadow={transportation.transportationOrderStatus === TransportationStatus.carrierFinding ? 1 : 3}
 		>
 			<HStack my={4} pl={4}>
 				<VStack w="90%">
@@ -78,9 +73,9 @@ export const TransportationItem = (props: TransportationItemProps) => {
 						</Text>
 					</HStack>
 
-					<Center mt={4} background={transportation.transportationStatus === TransportationStatus.carrierFinding ? "blueGray.50" : "blue.100"}>
+					<Center mt={4} background={transportation.transportationOrderStatus === TransportationStatus.carrierFinding ? "blueGray.50" : "blue.100"}>
 						<Text fontSize="xs" px={5} py={1}>
-							{TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationStatus)}
+							{TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationOrderStatus)}
 						</Text>
 					</Center>
 				</VStack>
@@ -98,7 +93,6 @@ export const TransportationItem = (props: TransportationItemProps) => {
 								</Pressable>
 							)}
 						>
-							<Menu.Item onPress={showDetailsHandler}>Детали</Menu.Item>
 							<Menu.Item onPress={cloneHandler}>Создать копированием</Menu.Item>
 							<Menu.Item onPress={removeHandler}>Удалить</Menu.Item>
 						</Menu>

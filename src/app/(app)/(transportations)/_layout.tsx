@@ -13,6 +13,10 @@ export default function LoadLayout() {
 			<Stack.Screen name="(transportationDetails)/OfferedTransportationDetailsModal" options={{ title: "Описание заказа", presentation: "modal" }} />
 			<Stack.Screen name="(transportationDetails)/OnlyInfoTransportationDetailsModal" options={{ title: "Описание заказа", presentation: "modal" }} />
 			<Stack.Screen
+				name="(transportationDetails)/InProgressTransportationDetailsModal"
+				options={{ title: "Описание заказа", presentation: "modal" }}
+			/>
+			<Stack.Screen
 				name="(transportationDetails)/ShipperApprovingTransportationDetailsModal"
 				options={{ title: "Описание предложения", presentation: "modal" }}
 			/>

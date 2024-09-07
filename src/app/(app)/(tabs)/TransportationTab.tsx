@@ -18,9 +18,9 @@ export default function TransportationTab() {
 	const filtred =
 		data?.transportationOrderDtos.filter(
 			(o) =>
-				o.transportationStatus === TransportationStatus.notPublished ||
-				o.transportationStatus === TransportationStatus.carrierFinding ||
-				o.transportationStatus === TransportationStatus.managerApproving,
+				o.transportationOrderStatus === TransportationStatus.notPublished ||
+				o.transportationOrderStatus === TransportationStatus.carrierFinding ||
+				o.transportationOrderStatus === TransportationStatus.managerApproving,
 		) ?? [];
 
 	const itemPressHandler = (transportation: ITransportation) => {

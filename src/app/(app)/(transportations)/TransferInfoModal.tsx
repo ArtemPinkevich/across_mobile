@@ -57,7 +57,7 @@ export default function TransferInfoModal() {
 		const transportation: ITransportation = {
 			transferInfo: newTransferInfo,
 			cargo: editingCargo,
-			transportationStatus: TransportationStatus.carrierFinding,
+			transportationOrderStatus: TransportationStatus.carrierFinding,
 		};
 
 		const responce: TransportationOrderResult = await addOrUpdateTransportation(transportation).unwrap();

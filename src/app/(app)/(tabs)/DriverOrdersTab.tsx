@@ -1,23 +1,28 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { Text, FlatList, Pressable, Fab, Icon, Center } from "native-base";
+import { Text, FlatList, Pressable, Center } from "native-base";
 import { router } from "expo-router";
 import { ITransportation } from "../../../api/transportation/Transportation";
 import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
 import { TransportationItem } from "../../../components/transportation/TransportationItem";
-import { useGetTransportationsQuery } from "../../../store/rtkQuery/transportationApi";
+import { useGetAssignedOrdersQuery, useGetRequestedOrdersQuery } from "../../../store/rtkQuery/transportationApi";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { View } from "../../../components/Themed";
 
 export default function DriverOrdersTab() {
 	const dispatch = useDispatch();
 
-	const { data } = useGetTransportationsQuery();
-	const filtred = data?.transportationOrderDtos.filter((o) => o.transportationStatus !== TransportationStatus.delivered) ?? [];
+	const { data } = useGetAssignedOrdersQuery();
+	const filtred = data?.transportationOrderDtos?.filter((o) => o.transportationOrderStatus !== TransportationStatus.done) ?? [];
 
 	const itemPressHandler = (transportation: ITransportation) => {
 		dispatch(setViewedTransportation(transportation));
-		router.push("/OnlyInfoTransportationDetailsModal");
+
+		if (transportation.transportationOrderStatus === TransportationStatus.transporting) {
+			router.push("/InProgressTransportationDetailsModal");
+		} else {
+			router.push("/OnlyInfoTransportationDetailsModal");
+		}
 	};
 
 	const renderItem = (item: ITransportation) => (

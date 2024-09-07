@@ -15,8 +15,9 @@ export default function TransportationOnApprovingTab() {
 	const { data: correlationsResponse } = useGetOrdersInShipperApprovingQuery();
 
 	const correlations: ICorrelation[] =
-		correlationsResponse?.ordersInProgress?.filter((o) => o.transportationOrder?.transportationStatus === TransportationStatus.shipperApproving) ??
-		[];
+		correlationsResponse?.ordersInProgress?.filter(
+			(o) => o.transportationOrder?.transportationOrderStatus === TransportationStatus.shipperApproving,
+		) ?? [];
 
 	const itemPressHandler = (correlation: ICorrelation) => {
 		dispatch(setViewedCorrelation(correlation));

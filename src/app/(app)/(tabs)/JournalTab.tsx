@@ -9,7 +9,7 @@ import { TransportationStatus } from "../../../api/transportation/Transportation
 
 export default function JournalTab() {
 	const { data } = useGetTransportationsQuery();
-	const filtred = data?.transportationOrderDtos.filter((o) => o.transportationStatus === TransportationStatus.delivered) ?? [];
+	const filtred = data?.transportationOrderDtos.filter((o) => o.transportationOrderStatus === TransportationStatus.done) ?? [];
 
 	const renderItem = ({ item }: any) => <TransportationJournalItem transportation={item as ITransportation} />;
 

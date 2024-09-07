@@ -10,12 +10,16 @@ import { resetEditingTransportation } from "../../../store/slices/buildTransport
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { View } from "../../../components/Themed";
 import { TransportationJournalItem } from "../../../components/transportation/TransportationJournalItem";
+import { TransportationItem } from "../../../components/transportation/TransportationItem";
 
 export default function TransportationInProgressTab() {
 	const dispatch = useDispatch();
 
 	const { data } = useGetTransportationsQuery();
-	const filtred = data?.transportationOrderDtos.filter((o) => o.transportationStatus === TransportationStatus.transporting) ?? [];
+	const filtred =
+		data?.transportationOrderDtos.filter(
+			(o) => o.transportationOrderStatus === TransportationStatus.transporting || o.transportationOrderStatus === TransportationStatus.delivered,
+		) ?? [];
 
 	const itemPressHandler = (transportation: ITransportation) => {
 		dispatch(setViewedTransportation(transportation));
@@ -24,7 +28,7 @@ export default function TransportationInProgressTab() {
 
 	const renderItem = (item: ITransportation) => (
 		<Pressable onPress={() => itemPressHandler(item)} my={2}>
-			<TransportationJournalItem transportation={item as ITransportation} />
+			<TransportationItem transportation={item as ITransportation} />
 		</Pressable>
 	);
 
@@ -38,22 +42,5 @@ export default function TransportationInProgressTab() {
 		);
 	}
 
-	const addPressHandler = () => {
-		dispatch(resetEditingTransportation()); // Сбрасываем временную информацию, чтобы начать создание груза с нуля
-		router.push("/CargoEditingModal");
-	};
-
-	return (
-		<View style={{ flex: 1, alignItems: "stretch" }}>
-			{content}
-			<Fab
-				position="absolute"
-				placement="bottom-right"
-				bgColor={"blue.500"}
-				icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
-				renderInPortal={false}
-				onPress={addPressHandler}
-			/>
-		</View>
-	);
+	return <View style={{ flex: 1, alignItems: "stretch" }}>{content}</View>;
 }

@@ -57,7 +57,7 @@ export const searchResponseFake: SearchResponse = {
 					ekmt: true,
 				},
 			},
-			transportationStatus: TransportationStatus.carrierFinding,
+			transportationOrderStatus: TransportationStatus.carrierFinding,
 		},
 		{
 			transferInfo: {
@@ -75,7 +75,7 @@ export const searchResponseFake: SearchResponse = {
 				volume: 30,
 				packagingType: PackagingType.bags,
 			},
-			transportationStatus: TransportationStatus.carrierFinding,
+			transportationOrderStatus: TransportationStatus.carrierFinding,
 		},
 		{
 			transferInfo: {
@@ -93,7 +93,7 @@ export const searchResponseFake: SearchResponse = {
 				volume: 30,
 				packagingType: PackagingType.bags,
 			},
-			transportationStatus: TransportationStatus.carrierFinding,
+			transportationOrderStatus: TransportationStatus.carrierFinding,
 		},
 	],
 };

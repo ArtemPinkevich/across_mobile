@@ -51,7 +51,7 @@ const DEFAULT_EDITING_TRANSPORTATION: ITransportation = {
 		unloadingAddress: "",
 	},
 	cargo: DEFAULT_EDITING_CARGO,
-	transportationStatus: TransportationStatus.notPublished,
+	transportationOrderStatus: TransportationStatus.notPublished,
 };
 
 interface IBuildTransportationState {

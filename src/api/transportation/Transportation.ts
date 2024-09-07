@@ -52,7 +52,7 @@ export interface ITransportation {
 	transportationOrderId?: number;
 	transferInfo: ITransferInfo;
 	cargo: ICargo;
-	transportationStatus: TransportationStatus;
+	transportationOrderStatus: TransportationStatus;
 }
 
 export interface ITransportationResult {

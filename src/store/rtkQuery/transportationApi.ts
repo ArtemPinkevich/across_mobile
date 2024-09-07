@@ -53,12 +53,38 @@ export const transportationApi = createApi({
 			}),
 			invalidatesTags: ["Transportations"],
 		}),
+		deliveredTransportation: build.mutation<TransportationOrderResult, number>({
+			query: (id) => ({
+				url: `TransportationOrder/delivered_transportation/${id}`,
+				method: "POST",
+				data: id,
+			}),
+			invalidatesTags: ["Transportations"],
+		}),
 		getOrdersInShipperApproving: build.query<CorrelationsResponse, void>({
 			query: () => ({ url: `Search/search_orders_in_shipper_approving` }),
 			providesTags: (result) =>
 				result && Array.isArray(result)
 					? [...result.map(({ id }: any) => ({ type: "Correlations" as const, id })), { type: "Correlations", id: "LIST" }]
 					: [{ type: "Correlations", id: "LIST" }],
+		}),
+
+		// Водительские запросы
+		getRequestedOrders: build.query<ITransportationResult, void>({
+			query: () => ({ url: `TransportationOrder/get_requested_orders` }),
+			providesTags: (result) =>
+				result && Array.isArray(result)
+					? [...result.map(({ id }: any) => ({ type: "Transportations" as const, id })), { type: "Transportations", id: "LIST" }]
+					: [{ type: "Transportations", id: "LIST" }],
+		}),
+
+		// Водительские запросы
+		getAssignedOrders: build.query<ITransportationResult, void>({
+			query: () => ({ url: `TransportationOrder/get_assigned_orders` }),
+			providesTags: (result) =>
+				result && Array.isArray(result)
+					? [...result.map(({ id }: any) => ({ type: "Transportations" as const, id })), { type: "Transportations", id: "LIST" }]
+					: [{ type: "Transportations", id: "LIST" }],
 		}),
 	}),
 });
@@ -70,4 +96,7 @@ export const {
 	useTryTakeOrderMutation,
 	useAssignTruckMutation,
 	useGetOrdersInShipperApprovingQuery,
+	useDeliveredTransportationMutation,
+	useGetRequestedOrdersQuery,
+	useGetAssignedOrdersQuery,
 } = transportationApi;

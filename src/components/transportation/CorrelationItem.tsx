@@ -19,8 +19,8 @@ export const CorrelationItem = (props: CorrelationItemProps) => {
 			rounded="lg"
 			overflow="hidden"
 			borderWidth="1"
-			borderColor={transportation.transportationStatus === TransportationStatus.carrierFinding ? "coolGray.200" : "blue.100"}
-			shadow={transportation.transportationStatus === TransportationStatus.carrierFinding ? 1 : 3}
+			borderColor={transportation.transportationOrderStatus === TransportationStatus.carrierFinding ? "coolGray.200" : "blue.100"}
+			shadow={transportation.transportationOrderStatus === TransportationStatus.carrierFinding ? 1 : 3}
 		>
 			<HStack my={4} pl={4}>
 				<VStack w="90%">
@@ -54,9 +54,9 @@ export const CorrelationItem = (props: CorrelationItemProps) => {
 						</Text>
 					</HStack>
 
-					<Center mt={4} background={transportation.transportationStatus === TransportationStatus.carrierFinding ? "blueGray.50" : "blue.100"}>
+					<Center mt={4} background={transportation.transportationOrderStatus === TransportationStatus.carrierFinding ? "blueGray.50" : "blue.100"}>
 						<Text fontSize="xs" px={5} py={1}>
-							{TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationStatus)}
+							{TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationOrderStatus)}
 						</Text>
 					</Center>
 				</VStack>

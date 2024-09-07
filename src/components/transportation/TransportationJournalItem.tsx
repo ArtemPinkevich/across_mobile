@@ -22,11 +22,6 @@ export const TransportationJournalItem = (props: TransportationJournalItemProps)
 		router.push("/CargoEditingModal");
 	};
 
-	const showDetailsHandler = () => {
-		dispatch(setViewedTransportation(transportation));
-		router.push("/OnlyInfoTransportationDetailsModal");
-	};
-
 	return (
 		<Box overflow="hidden" borderColor="coolGray.200" borderWidth="1" shadow={1}>
 			<HStack my={1} pl={4}>
@@ -78,7 +73,6 @@ export const TransportationJournalItem = (props: TransportationJournalItemProps)
 							</Pressable>
 						)}
 					>
-						<Menu.Item onPress={showDetailsHandler}>Детали</Menu.Item>
 						<Menu.Item onPress={cloneHandler}>Создать копированием</Menu.Item>
 					</Menu>
 				</Box>
