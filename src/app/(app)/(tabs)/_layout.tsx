@@ -3,7 +3,8 @@ import { Tabs } from "expo-router";
 import { useColorScheme } from "react-native";
 
 import Colors from "../../../constants/Colors";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { useGetProfileQuery } from "../../../store/rtkQuery/profileApi";
 import { SHIPPER_ROLE } from "../../../api/profile/Profile";
 
@@ -20,20 +21,20 @@ export default function TabLayout() {
 			<Tabs
 				screenOptions={{
 					tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+					tabBarLabelPosition: "below-icon",
 				}}
 			>
 				<Tabs.Screen
-					name="SearchTab"
+					name="TransportationInProgressTab"
 					options={{
-						title: "Поиск",
-						tabBarIcon: ({ color }) => <FontAwesome name="search" size={24} color={color} />,
-						href: null,
+						title: "В пути",
+						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="truck-delivery-outline" size={30} color={color} />,
 					}}
 				/>
 				<Tabs.Screen
 					name="TransportationTab"
 					options={{
-						title: "Груз",
+						title: "Заявки",
 						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
 					}}
 				/>
@@ -41,14 +42,22 @@ export default function TabLayout() {
 					name="TransportationOnApprovingTab"
 					options={{
 						title: "Согласование",
-						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
+						tabBarIcon: ({ color }) => <FontAwesome6 name="handshake" size={30} color={color} />,
 					}}
 				/>
 				<Tabs.Screen
-					name="TransportationInProgressTab"
+					name="ProfileTab"
 					options={{
-						title: "В пути",
-						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
+						title: "Профиль",
+						tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+					}}
+				/>
+				<Tabs.Screen
+					name="SearchTab"
+					options={{
+						title: "Поиск",
+						tabBarIcon: ({ color }) => <FontAwesome name="search" size={24} color={color} />,
+						href: null,
 					}}
 				/>
 				<Tabs.Screen
@@ -75,28 +84,6 @@ export default function TabLayout() {
 						href: null,
 					}}
 				/>
-				<Tabs.Screen
-					name="JournalTab"
-					options={{
-						title: "Журнал",
-						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="history" size={30} color={color} />,
-					}}
-				/>
-				<Tabs.Screen
-					name="GarageTab"
-					options={{
-						title: "Гараж",
-						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="garage-variant" size={30} color={color} />,
-						href: null,
-					}}
-				/>
-				<Tabs.Screen
-					name="ProfileTab"
-					options={{
-						title: "Профиль",
-						tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
-					}}
-				/>
 			</Tabs>
 		);
 	}
@@ -107,30 +94,6 @@ export default function TabLayout() {
 				tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
 			}}
 		>
-			<Tabs.Screen
-				name="TransportationTab"
-				options={{
-					title: "Груз",
-					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
-					href: null,
-				}}
-			/>
-			<Tabs.Screen
-				name="TransportationOnApprovingTab"
-				options={{
-					title: "Согласование",
-					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
-					href: null,
-				}}
-			/>
-			<Tabs.Screen
-				name="TransportationInProgressTab"
-				options={{
-					title: "В пути",
-					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
-					href: null,
-				}}
-			/>
 			<Tabs.Screen
 				name="DriverOrdersTab"
 				options={{
@@ -153,13 +116,6 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name="JournalTab"
-				options={{
-					title: "Журнал",
-					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="history" size={30} color={color} />,
-				}}
-			/>
-			<Tabs.Screen
 				name="SearchTab"
 				options={{
 					title: "Поиск",
@@ -167,17 +123,34 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name="GarageTab"
-				options={{
-					title: "Гараж",
-					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="garage-variant" size={30} color={color} />,
-				}}
-			/>
-			<Tabs.Screen
 				name="ProfileTab"
 				options={{
 					title: "Профиль",
 					tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+				}}
+			/>
+			<Tabs.Screen
+				name="TransportationTab"
+				options={{
+					title: "Груз",
+					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
+					href: null,
+				}}
+			/>
+			<Tabs.Screen
+				name="TransportationOnApprovingTab"
+				options={{
+					title: "Согласование",
+					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
+					href: null,
+				}}
+			/>
+			<Tabs.Screen
+				name="TransportationInProgressTab"
+				options={{
+					title: "В пути",
+					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
+					href: null,
 				}}
 			/>
 		</Tabs>

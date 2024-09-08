@@ -7,7 +7,7 @@ import { TransportationJournalItem } from "../../../components/transportation/Tr
 import { useGetTransportationsQuery } from "../../../store/rtkQuery/transportationApi";
 import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
 
-export default function JournalTab() {
+export default function JournalModal() {
 	const { data } = useGetTransportationsQuery();
 	const filtred = data?.transportationOrderDtos.filter((o) => o.transportationOrderStatus === TransportationStatus.done) ?? [];
 

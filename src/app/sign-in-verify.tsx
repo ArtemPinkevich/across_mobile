@@ -30,7 +30,7 @@ export default function SignInVerify() {
 				if (profile.name == undefined) {
 					router.replace("/InitialEntryPersonalInfo");
 				} else {
-					profile.role === SHIPPER_ROLE ? router.replace("/TransportationTab") : router.replace("/DriverOrdersTab");
+					profile.role === SHIPPER_ROLE ? router.replace("/TransportationInProgressTab") : router.replace("/DriverOrdersTab");
 				}
 			} else {
 				setErrorText("Не удалась загрузить пользовательские данные. Пожалуйста, перезапустите приложение и попробуйте еще раз.");
