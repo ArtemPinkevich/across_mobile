@@ -73,12 +73,28 @@ export default function TransportationDetailsModal(props: Props) {
 						Маршрут
 					</Heading>
 					<Box ml={4}>
-						<Text fontSize="lg">{loadingPlace?.city}</Text>
+						<HStack>
+							<Text fontSize="lg">{loadingPlace?.city}</Text>
+							{transportation.transferInfo.loadingAddress && (
+								<Center>
+									<Text fontSize="md">{`, ${transportation.transferInfo.loadingAddress}`}</Text>
+								</Center>
+							)}
+						</HStack>
 						<Text fontSize="xs">{`${loadingPlace?.country} - ${loadingPlace?.region}`}</Text>
 						<Text fontSize="lg" ml={10}>
 							↓
 						</Text>
-						<Text fontSize="lg">{unloadingPlace?.city}</Text>
+
+						<HStack>
+							<Text fontSize="lg">{unloadingPlace?.city}</Text>
+							{transportation.transferInfo.unloadingAddress && (
+								<Center>
+									<Text fontSize="md">{`, ${transportation.transferInfo.unloadingAddress}`}</Text>
+								</Center>
+							)}
+						</HStack>
+
 						<Text fontSize="xs">{`${unloadingPlace?.country} - ${unloadingPlace?.region}`}</Text>
 						<Text mt={4} fontSize="md">
 							{loadingDisplayDateRange}
