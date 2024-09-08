@@ -2,36 +2,42 @@ import * as React from "react";
 import { useState } from "react";
 import { Platform, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import { Button, Center, ScrollView, Input, VStack, Pressable, Text } from "native-base";
+import { Button, Center, ScrollView, Input, VStack, Pressable, Text, FormControl } from "native-base";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import { View } from "../../../components/Themed";
 import { useGetProfileQuery, useUpdateProfileMutation } from "../../../store/rtkQuery/profileApi";
 import { IProfile, IProfileResult } from "../../../api/profile/Profile";
 import { ApiCommonResult } from "../../../api/common/commonApi";
+import PhoneNumberInput from "../../../components/common/PhoneNumberInput";
 
 export default function EditProfileModal() {
 	const [updateProfile, { isLoading, error }] = useUpdateProfileMutation();
 	const { data: profile } = useGetProfileQuery();
 
-	const [name, setName] = useState(profile?.name);
-	const [surname, setSurname] = useState(profile?.surname);
-	const [patronymic, setpatronymic] = useState(profile?.patronymic);
-	const [phoneNumber, setPhoneNumber] = useState<string | undefined>(profile?.phoneNumber);
+	if (!profile) {
+		return null;
+	}
+
+	const [name, setName] = useState(profile.name);
+	const [surname, setSurname] = useState(profile.surname);
+	const [patronymic, setpatronymic] = useState(profile.patronymic);
+	const [whatsAppPhoneNumber, setWhatsAppPhoneNumber] = useState<string>(profile.reservePhoneNumber ?? "");
 	const [birthday, setBirthday] = useState(profile?.birthDate);
 	const [showDatePicker, setShowDatePicker] = useState(false);
 
 	const saveHandler = async () => {
-		const profile: IProfile = {
+		const newProfile: IProfile = {
 			name: name?.trim(),
 			surname: surname?.trim(),
 			patronymic: patronymic?.trim(),
-			phoneNumber: phoneNumber ?? "",
+			phoneNumber: profile.phoneNumber ?? "",
+			reservePhoneNumber: whatsAppPhoneNumber ?? "",
 			birthDate: birthday,
 			documentDtos: [],
 		};
 
-		const responce: IProfileResult = await updateProfile(profile).unwrap();
+		const responce: IProfileResult = await updateProfile(newProfile).unwrap();
 		if (responce?.result === ApiCommonResult.Ok) {
 			router.back();
 		} else {
@@ -54,6 +60,11 @@ export default function EditProfileModal() {
 					<Input variant="underlined" size="md" placeholder="Имя" value={name} onChangeText={setName} />
 					<Input variant="underlined" size="md" placeholder="Фамилия" value={surname} onChangeText={setSurname} />
 					<Input variant="underlined" size="md" placeholder="Отчество" value={patronymic} onChangeText={setpatronymic} />
+
+					<FormControl my={4}>
+						<FormControl.Label>WhatsApp номер</FormControl.Label>
+						<PhoneNumberInput value={whatsAppPhoneNumber} onChange={setWhatsAppPhoneNumber} />
+					</FormControl>
 
 					{Platform.OS === "web" ? null : (
 						<Pressable onPress={() => setShowDatePicker(true)}>

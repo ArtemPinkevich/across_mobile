@@ -43,6 +43,7 @@ export default function ProfileTab() {
 						</VStack>
 					</HStack>
 					<TitleAndValueItem title={"Номер телефона"} value={!phoneNumber || phoneNumber === "" ? "Не указано" : phoneNumber} />
+					{profile.reservePhoneNumber && <TitleAndValueItem title={"WhatsApp номер"} value={profile.reservePhoneNumber} />}
 					{Platform.OS === "web" ? null : (
 						<TitleAndValueItem title={"Дата рождения"} value={isBirthdayValid ? birthdayMoment.format("DD MMMM YYYY") : "Не указано"} />
 					)}

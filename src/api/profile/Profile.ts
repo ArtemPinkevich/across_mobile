@@ -11,6 +11,7 @@ export interface IProfile {
 	role?: string; // Может принимать только одно из двух значений: Shipper или Driver (см. константы DRIVER_ROLE и SHIPPER_ROLE)
 	birthDate?: string; // Строка ISO
 	phoneNumber: string;
+	reservePhoneNumber: string;
 	documentDtos: IUserDocument[];
 }
 
