@@ -50,7 +50,7 @@ export const getImageFromBackend = async (documentType: UserDocumentType): Promi
 			responseType: "blob",
 		};
 
-		const response = await axios.get(`${SERVER_ADDRESS}/File/get-image/${documentType}`, config);
+		const response = await axios.get(`${SERVER_ADDRESS}/File/get-image?documentType=${documentType}`, config);
 
 		if (response.status) {
 			const base64 = await convertBlobToBase64(response.data);

@@ -17,6 +17,11 @@ export default function DocumentRejectDetailsModal() {
 
 	const doc = profile.documentDtos.find((o) => o.documentType === +docType);
 
+	const modalOnclose = () => {
+		setShowChooseSourceModal(false);
+		router.back();
+	};
+
 	return (
 		<View style={{ flex: 1, alignItems: "stretch" }}>
 			<Text m={4}>{doc?.comment ?? ""}</Text>
@@ -30,7 +35,7 @@ export default function DocumentRejectDetailsModal() {
 				</Button>
 			</Button.Group>
 
-			<ChooseSourceAndUploadModal documentType={+docType} showModal={showChooseSourceModal} onCancel={() => setShowChooseSourceModal(false)} />
+			<ChooseSourceAndUploadModal documentType={+docType} showModal={showChooseSourceModal} onClose={modalOnclose} />
 		</View>
 	);
 }

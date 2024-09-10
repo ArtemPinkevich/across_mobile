@@ -10,6 +10,7 @@ import { useGetProfileQuery, useUpdateProfileMutation } from "../../../store/rtk
 import { IProfile, IProfileResult } from "../../../api/profile/Profile";
 import { ApiCommonResult } from "../../../api/common/commonApi";
 import PhoneNumberInput from "../../../components/common/PhoneNumberInput";
+import UserAvatar from "../../../components/profile/Avatar";
 
 export default function EditProfileModal() {
 	const [updateProfile, { isLoading, error }] = useUpdateProfileMutation();
@@ -57,6 +58,9 @@ export default function EditProfileModal() {
 		<View style={styles.container}>
 			<ScrollView px={4}>
 				<VStack mx={"4"}>
+					<Center my={2}>
+						<UserAvatar />
+					</Center>
 					<Input variant="underlined" size="md" placeholder="Имя" value={name} onChangeText={setName} />
 					<Input variant="underlined" size="md" placeholder="Фамилия" value={surname} onChangeText={setSurname} />
 					<Input variant="underlined" size="md" placeholder="Отчество" value={patronymic} onChangeText={setpatronymic} />

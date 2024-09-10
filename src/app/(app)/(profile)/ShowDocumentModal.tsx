@@ -24,6 +24,11 @@ export default function ShowDocumentModal() {
 		setBase64FromServer(base64);
 	};
 
+	const modalOnclose = () => {
+		setShowChooseSourceModal(false);
+		router.back();
+	};
+
 	return (
 		<View style={{ flex: 1, alignItems: "stretch" }}>
 			<Image style={{ flex: 1, width: "100%" }} source={base64FromServer} />
@@ -63,7 +68,7 @@ export default function ShowDocumentModal() {
 				</Modal.Content>
 			</Modal>
 
-			<ChooseSourceAndUploadModal documentType={+docType} showModal={showChooseSourceModal} onCancel={() => setShowChooseSourceModal(false)} />
+			<ChooseSourceAndUploadModal documentType={+docType} showModal={showChooseSourceModal} onClose={modalOnclose} />
 		</View>
 	);
 }

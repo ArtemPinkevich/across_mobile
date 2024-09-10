@@ -7,19 +7,19 @@ import { uploadDocumentFromGallery } from "../../services/ImageHelper";
 type Props = {
 	documentType: UserDocumentType;
 	showModal: boolean;
-	onCancel: () => void;
+	onClose: () => void;
 };
 
 export default function ChooseSourceAndUploadModal(props: Props) {
-	const { documentType, showModal, onCancel } = props;
+	const { documentType, showModal, onClose } = props;
 
 	const onFromGalleryPress = async () => {
 		await uploadDocumentFromGallery(documentType);
-		router.back();
+		onClose();
 	};
 
 	return (
-		<Modal isOpen={showModal} onClose={onCancel}>
+		<Modal isOpen={showModal} onClose={onClose}>
 			<Modal.Content maxWidth="400px">
 				<Modal.Header>Выберите источник</Modal.Header>
 				<Modal.Body>
@@ -35,7 +35,7 @@ export default function ChooseSourceAndUploadModal(props: Props) {
 					</Button>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button minW={100} onPress={onCancel}>
+					<Button minW={100} onPress={onClose}>
 						Отмена
 					</Button>
 				</Modal.Footer>

@@ -1,5 +1,6 @@
 // Не менять последовательность. Перечисление используется для генерации пути до картинки в хранилище
 export enum UserDocumentType {
+	AVATAR,
 	PASSPORT_MAIN,
 	PASSPORT_REGISTRATION,
 	DRIVER_LICENSE,
