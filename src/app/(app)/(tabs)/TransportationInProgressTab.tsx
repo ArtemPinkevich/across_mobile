@@ -12,7 +12,9 @@ import { TransportationItem } from "../../../components/transportation/Transport
 export default function TransportationInProgressTab() {
 	const dispatch = useDispatch();
 
-	const { data } = useGetTransportationsQuery();
+	const { data } = useGetTransportationsQuery(undefined, {
+		pollingInterval: 10000,
+	});
 	const filtred =
 		data?.transportationOrderDtos.filter(
 			(o) =>

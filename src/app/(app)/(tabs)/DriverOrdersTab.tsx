@@ -12,7 +12,9 @@ import { View } from "../../../components/Themed";
 export default function DriverOrdersTab() {
 	const dispatch = useDispatch();
 
-	const { data } = useGetAssignedOrdersQuery();
+	const { data } = useGetAssignedOrdersQuery(undefined, {
+		pollingInterval: 10000,
+	});
 	const filtred = data?.transportationOrderDtos?.filter((o) => o?.transportationOrderStatus !== TransportationStatus.done) ?? [];
 
 	const itemPressHandler = (transportation: ITransportation) => {

@@ -12,7 +12,9 @@ import { TransportationItem } from "../../../components/transportation/Transport
 export default function TransportationOnApprovingTab() {
 	const dispatch = useDispatch();
 
-	const { data: correlationsResponse } = useGetOrdersInShipperApprovingQuery();
+	const { data: correlationsResponse } = useGetOrdersInShipperApprovingQuery(undefined, {
+		pollingInterval: 20000,
+	});
 
 	const correlations: ICorrelation[] =
 		correlationsResponse?.ordersInProgress?.filter(
