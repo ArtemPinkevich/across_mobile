@@ -32,7 +32,12 @@ export const TransportationJournalItem = (props: TransportationJournalItemProps)
 					<Text bold fontSize="md">
 						{transportation.cargo.name}
 					</Text>
-					<Text fontSize="xs">{`${transportation.cargo.weight}т ${transportation.cargo.volume}м³`}</Text>
+
+					<HStack space={5}>
+						<Text fontSize="xs">{`${transportation.price} ₸`}</Text>
+						<Text fontSize="xs">{`${transportation.cargo.weight}т`}</Text>
+						<Text fontSize="xs">{`${transportation.cargo.volume}м³`}</Text>
+					</HStack>
 
 					<HStack>
 						<Center>

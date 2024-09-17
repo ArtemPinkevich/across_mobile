@@ -52,6 +52,7 @@ const DEFAULT_EDITING_TRANSPORTATION: ITransportation = {
 	},
 	cargo: DEFAULT_EDITING_CARGO,
 	transportationOrderStatus: TransportationStatus.notPublished,
+	price: 0,
 };
 
 interface IBuildTransportationState {
@@ -74,6 +75,9 @@ export const buildTransportationSlice = createSlice({
 		},
 		setEditingCargo: (state, action) => {
 			state.editingTransportation.cargo = action.payload;
+		},
+		setEditingPrice: (state, action) => {
+			state.editingTransportation.price = action.payload;
 		},
 		setEditingTransferInfo: (state, action) => {
 			state.editingTransportation.transferInfo = action.payload;
@@ -100,6 +104,7 @@ export const {
 	setEditingTransportation,
 	resetEditingTransportation,
 	setEditingCargo,
+	setEditingPrice,
 	setEditingTransferInfo,
 	setPackagingType,
 	setTruckRequirements,

@@ -17,7 +17,12 @@ export const TransportationSearchItem = (props: TransportationSearchItemProps) =
 					<Text bold fontSize="md">
 						{transportation.cargo.name}
 					</Text>
-					<Text fontSize="xs">{`${transportation.cargo.weight}т ${transportation.cargo.volume}м³`}</Text>
+
+					<HStack space={5} alignSelf={"center"}>
+						<Text fontSize="xs" color={"blue.500"}>{`${transportation.price} ₸`}</Text>
+						<Text fontSize="xs">{`${transportation.cargo.weight}т`}</Text>
+						<Text fontSize="xs">{`${transportation.cargo.volume}м³`}</Text>
+					</HStack>
 
 					<HStack>
 						<Center>

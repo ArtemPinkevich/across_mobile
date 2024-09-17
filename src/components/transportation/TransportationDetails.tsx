@@ -111,6 +111,11 @@ export default function TransportationDetailsModal(props: Props) {
 									</Text>
 								</Center>
 								<Text mt={2} fontWeight="500" color={"darkBlue.500"}>
+									Ставка
+								</Text>
+								<Text>{transportation.price} ₸</Text>
+
+								<Text mt={2} fontWeight="500" color={"darkBlue.500"}>
 									Вес
 								</Text>
 								<Text>{transportation.cargo.weight}т</Text>

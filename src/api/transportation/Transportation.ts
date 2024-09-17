@@ -53,6 +53,7 @@ export interface ITransportation {
 	transferInfo: ITransferInfo;
 	cargo: ICargo;
 	transportationOrderStatus: TransportationStatus;
+	price: number;
 }
 
 export interface ITransportationResult {

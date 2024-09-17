@@ -7,7 +7,6 @@ import { ITransportation } from "../../api/transportation/Transportation";
 import moment from "moment";
 import { TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP } from "../../api/transportation/TransportationStatusToDisplayNameMap";
 import { useDeleteTransportationMutation } from "../../store/rtkQuery/transportationApi";
-import { setViewedTransportation } from "../../store/slices/transportationsSlice";
 import { router } from "expo-router";
 import { setEditingTransportation } from "../../store/slices/buildTransportationSlice";
 import { TransportationStatus } from "../../api/transportation/TransportationStatus";
@@ -46,9 +45,27 @@ export const TransportationItem = (props: TransportationItemProps) => {
 					<Text bold fontSize="xl">
 						{transportation.cargo.name}
 					</Text>
-					<Text fontSize="sm">{`${transportation.cargo.weight}т ${transportation.cargo.volume}м³`}</Text>
+					<HStack space={3} my={1}>
+						<Box m={"1"} minW={10} borderWidth="1" borderColor={"#bdbdbd"} rounded="md">
+							<Text fontSize="xs" mx={1} color={"blue.500"} alignSelf={"center"}>
+								{`${transportation.price} ₸`}
+							</Text>
+						</Box>
 
-					<HStack mt={4}>
+						<Box m={"1"} minW={10} borderWidth="1" borderColor={"#bdbdbd"} rounded="md">
+							<Text fontSize="xs" mx={1} alignSelf={"center"}>
+								{`${transportation.cargo.weight}т`}
+							</Text>
+						</Box>
+
+						<Box m={"1"} minW={10} borderWidth="1" borderColor={"#bdbdbd"} rounded="md">
+							<Text fontSize="xs" mx={1} alignSelf={"center"}>
+								{`${transportation.cargo.volume}м³`}
+							</Text>
+						</Box>
+					</HStack>
+
+					<HStack mt={0}>
 						<Center>
 							<MaterialCommunityIcons name="map-marker-outline" size={17} color="blue" />
 						</Center>
