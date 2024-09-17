@@ -1,26 +1,41 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Text, FlatList, Center } from "native-base";
+import { Text, FlatList, Center, Pressable } from "native-base";
 import { ITransportation } from "../../../api/transportation/Transportation";
 import { View } from "../../../components/Themed";
 import { TransportationJournalItem } from "../../../components/transportation/TransportationJournalItem";
-import { useGetTransportationsQuery } from "../../../store/rtkQuery/transportationApi";
-import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
+import { useGetOrdersHistoryQuery } from "../../../store/rtkQuery/transportationApi";
+import { useDispatch } from "react-redux";
+import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
+import { router } from "expo-router";
 
 export default function JournalModal() {
-	const { data } = useGetTransportationsQuery();
-	const filtred = data?.transportationOrderDtos.filter((o) => o.transportationOrderStatus === TransportationStatus.done) ?? [];
+	const { data: orders } = useGetOrdersHistoryQuery();
+	const dispatch = useDispatch();
 
-	const renderItem = ({ item }: any) => <TransportationJournalItem transportation={item as ITransportation} />;
+	if (!orders?.transportationOrderDtos) {
+		return null;
+	}
+
+	const itemPressHandler = (transportation: ITransportation) => {
+		dispatch(setViewedTransportation(transportation));
+		router.push("/OnlyInfoTransportationDetailsModal");
+	};
+
+	const renderItem = ({ item }: any) => (
+		<Pressable onPress={() => itemPressHandler(item)} my={2}>
+			<TransportationJournalItem transportation={item as ITransportation} />
+		</Pressable>
+	);
 
 	return (
 		<View style={styles.container}>
-			{filtred?.length === 0 ? (
+			{orders.transportationOrderDtos.length === 0 ? (
 				<Center h={"100%"}>
 					<Text fontSize={"lg"}>Отправлений не найдено</Text>
 				</Center>
 			) : (
-				<FlatList data={filtred} renderItem={renderItem} />
+				<FlatList data={orders.transportationOrderDtos} renderItem={renderItem} />
 			)}
 		</View>
 	);

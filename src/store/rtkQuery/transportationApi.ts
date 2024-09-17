@@ -61,6 +61,13 @@ export const transportationApi = createApi({
 					: [{ type: "Correlations", id: "LIST" }],
 		}),
 
+		// Далее общие запросы и водителя и отправителя
+
+		getOrdersHistory: build.query<ITransportationResult, void>({
+			query: () => ({ url: `TransportationOrder/get_orders_history` }),
+			keepUnusedDataFor: 5,
+		}),
+
 		// Далее водительские запросы
 
 		getRequestedOrders: build.query<ITransportationResult, void>({
@@ -122,6 +129,7 @@ export const {
 	useDeliveredTransportationMutation,
 	useGetRequestedOrdersQuery,
 	useGetAssignedOrdersQuery,
+	useGetOrdersHistoryQuery,
 	useInformArrivalForLoadingMutation,
 	useStartTransportationMutation,
 	useInformArrivalForUnloadingMutation,

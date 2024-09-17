@@ -5,9 +5,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ITransportation } from "../../api/transportation/Transportation";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { setViewedTransportation } from "../../store/slices/transportationsSlice";
 import { router } from "expo-router";
 import { setEditingTransportation } from "../../store/slices/buildTransportationSlice";
+import { useGetProfileQuery } from "../../store/rtkQuery/profileApi";
+import { SHIPPER_ROLE } from "../../api/profile/Profile";
 
 type TransportationJournalItemProps = {
 	transportation: ITransportation;
@@ -16,6 +17,8 @@ type TransportationJournalItemProps = {
 export const TransportationJournalItem = (props: TransportationJournalItemProps) => {
 	const { transportation } = props;
 	const dispatch = useDispatch();
+
+	const { data: profile } = useGetProfileQuery();
 
 	const cloneHandler = () => {
 		dispatch(setEditingTransportation(transportation));
@@ -62,20 +65,22 @@ export const TransportationJournalItem = (props: TransportationJournalItemProps)
 				</VStack>
 
 				{/* defaultIsOpen={false} чтобы не фризился экран (по мотивам https://github.com/GeekyAnts/NativeBase/issues/4730) */}
-				<Box mt={4}>
-					<Menu
-						shadow={2}
-						w="150"
-						defaultIsOpen={false}
-						trigger={(triggerProps) => (
-							<Pressable accessibilityLabel="More options menu" {...triggerProps}>
-								<MaterialCommunityIcons name="dots-vertical" size={17} />
-							</Pressable>
-						)}
-					>
-						<Menu.Item onPress={cloneHandler}>Создать копированием</Menu.Item>
-					</Menu>
-				</Box>
+				{profile?.role === SHIPPER_ROLE && (
+					<Box mt={4}>
+						<Menu
+							shadow={2}
+							w="150"
+							defaultIsOpen={false}
+							trigger={(triggerProps) => (
+								<Pressable accessibilityLabel="More options menu" {...triggerProps}>
+									<MaterialCommunityIcons name="dots-vertical" size={17} />
+								</Pressable>
+							)}
+						>
+							<Menu.Item onPress={cloneHandler}>Создать копированием</Menu.Item>
+						</Menu>
+					</Box>
+				)}
 			</HStack>
 		</Box>
 	);
