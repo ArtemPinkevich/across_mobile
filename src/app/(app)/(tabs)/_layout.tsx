@@ -25,14 +25,14 @@ export default function TabLayout() {
 				}}
 			>
 				<Tabs.Screen
-					name="TransportationInProgressTab"
+					name="ShipperOrdersInProgressTab"
 					options={{
 						title: "В пути",
 						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="truck-delivery-outline" size={30} color={color} />,
 					}}
 				/>
 				<Tabs.Screen
-					name="TransportationTab"
+					name="FreeTransportationsTab"
 					options={{
 						title: "Заявки",
 						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
@@ -130,7 +130,7 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name="TransportationTab"
+				name="FreeTransportationsTab"
 				options={{
 					title: "Груз",
 					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,
@@ -146,7 +146,7 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name="TransportationInProgressTab"
+				name="ShipperOrdersInProgressTab"
 				options={{
 					title: "В пути",
 					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="package-variant-closed" size={30} color={color} />,

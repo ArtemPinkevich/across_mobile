@@ -4,15 +4,15 @@ import { Text, FlatList, Pressable, Center } from "native-base";
 import { router } from "expo-router";
 import { ITransportation } from "../../../api/transportation/Transportation";
 import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
-import { useGetTransportationsQuery } from "../../../store/rtkQuery/transportationApi";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { View } from "../../../components/Themed";
 import { TransportationItem } from "../../../components/transportation/TransportationItem";
+import { useGetShipperTransportationsQuery } from "../../../store/rtkQuery/transportationApi";
 
-export default function TransportationInProgressTab() {
+export default function ShipperOrdersInProgressTab() {
 	const dispatch = useDispatch();
 
-	const { data } = useGetTransportationsQuery(undefined, {
+	const { data } = useGetShipperTransportationsQuery(undefined, {
 		pollingInterval: 10000,
 	});
 	const filtred =

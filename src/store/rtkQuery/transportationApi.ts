@@ -14,7 +14,7 @@ export const transportationApi = createApi({
 	tagTypes: ["Transportations", "Correlations"],
 	baseQuery: axiosBaseQuery(),
 	endpoints: (build) => ({
-		getTransportations: build.query<ITransportationResult, void>({
+		getShipperTransportations: build.query<ITransportationResult, void>({
 			query: () => ({ url: `TransportationOrder/get_orders` }),
 			providesTags: (result) =>
 				result && Array.isArray(result)
@@ -45,14 +45,6 @@ export const transportationApi = createApi({
 			}),
 			invalidatesTags: ["Transportations", "Correlations"],
 		}),
-		tryTakeOrder: build.mutation<TransportationOrderResult, TryTakeOrderRequest>({
-			query: (body) => ({
-				url: `TransportationOrder/try_take_order`,
-				method: "POST",
-				data: body,
-			}),
-			invalidatesTags: ["Transportations"],
-		}),
 		getOrdersInShipperApproving: build.query<CorrelationsResponse, void>({
 			query: () => ({ url: `Search/search_orders_in_shipper_approving` }),
 			providesTags: (result) =>
@@ -70,6 +62,14 @@ export const transportationApi = createApi({
 
 		// Далее водительские запросы
 
+		tryTakeOrder: build.mutation<TransportationOrderResult, TryTakeOrderRequest>({
+			query: (body) => ({
+				url: `TransportationOrder/try_take_order`,
+				method: "POST",
+				data: body,
+			}),
+			invalidatesTags: ["Transportations"],
+		}),
 		getRequestedOrders: build.query<ITransportationResult, void>({
 			query: () => ({ url: `TransportationOrder/get_requested_orders` }),
 			providesTags: (result) =>
@@ -120,7 +120,7 @@ export const transportationApi = createApi({
 });
 
 export const {
-	useGetTransportationsQuery,
+	useGetShipperTransportationsQuery,
 	useAddOrUpdateTransportationMutation,
 	useDeleteTransportationMutation,
 	useTryTakeOrderMutation,

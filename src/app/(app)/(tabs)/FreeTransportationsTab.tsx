@@ -6,15 +6,15 @@ import { router } from "expo-router";
 import { ITransportation } from "../../../api/transportation/Transportation";
 import { TransportationStatus } from "../../../api/transportation/TransportationStatus";
 import { TransportationItem } from "../../../components/transportation/TransportationItem";
-import { useGetTransportationsQuery } from "../../../store/rtkQuery/transportationApi";
 import { resetEditingTransportation } from "../../../store/slices/buildTransportationSlice";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { View } from "../../../components/Themed";
+import { useGetShipperTransportationsQuery } from "../../../store/rtkQuery/transportationApi";
 
-export default function TransportationTab() {
+export default function FreeTransportationsTab() {
 	const dispatch = useDispatch();
 
-	const { data } = useGetTransportationsQuery();
+	const { data } = useGetShipperTransportationsQuery();
 	const filtred =
 		data?.transportationOrderDtos.filter(
 			(o) =>

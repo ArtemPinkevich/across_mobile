@@ -62,7 +62,7 @@ export default function TransferInfoModal() {
 
 		const responce: TransportationOrderResult = await addOrUpdateTransportation(transportation).unwrap();
 		if (responce?.result === ApiCommonResult.Ok) {
-			router.replace("/TransportationTab");
+			router.replace("/FreeTransportationsTab");
 		} else {
 			alert("Не удалось сохранить информацию в базе. Попробуйте снова или позже");
 			console.log(responce?.reasons);

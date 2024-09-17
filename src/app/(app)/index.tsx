@@ -12,7 +12,7 @@ export default function Index() {
 
 			if (result.isSuccess) {
 				const profile = result.data;
-				profile.role === SHIPPER_ROLE ? router.replace("/TransportationTab") : router.replace("/DriverOrdersTab");
+				profile.role === SHIPPER_ROLE ? router.replace("/FreeTransportationsTab") : router.replace("/DriverOrdersTab");
 			}
 		};
 
