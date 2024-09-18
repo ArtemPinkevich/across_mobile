@@ -18,9 +18,14 @@ export default function UserAvatar() {
 		setBase64FromServer(base64);
 	};
 
+	const uploadModalOnClose = () => {
+		setShowUploadModal(false);
+		getImageFromBackendAsync(UserDocumentType.AVATAR);
+	};
+
 	return (
 		<Box>
-			<ChooseSourceAndUploadModal documentType={UserDocumentType.AVATAR} showModal={showUploadModal} onClose={() => setShowUploadModal(false)} />
+			<ChooseSourceAndUploadModal documentType={UserDocumentType.AVATAR} showModal={showUploadModal} onClose={uploadModalOnClose} />
 			<Pressable onPress={() => setShowUploadModal(true)} my={2}>
 				<Avatar
 					bg="blueGray.500"

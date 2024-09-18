@@ -46,7 +46,7 @@ export const getImageFromBackend = async (documentType: UserDocumentType): Promi
 		const accessToken = await JwtTokenService.getAccessToken();
 		const config: AxiosRequestConfig = {
 			method: "GET",
-			headers: { Authorization: `Bearer ${accessToken}` },
+			headers: { Authorization: `Bearer ${accessToken}`, "Cache-Control": "no-cache" },
 			responseType: "blob",
 		};
 
