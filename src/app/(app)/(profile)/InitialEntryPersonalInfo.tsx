@@ -24,6 +24,7 @@ export default function InitialEntryPersonalInfo() {
 			patronymic: patronymic?.trim(),
 			phoneNumber: "",
 			documentDtos: [],
+			reservePhoneNumber: "",
 		};
 
 		await updateProfile(profile);
