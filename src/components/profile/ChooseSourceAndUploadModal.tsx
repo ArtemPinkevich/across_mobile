@@ -1,20 +1,21 @@
 import * as React from "react";
 import { Button, Modal } from "native-base";
 import { router } from "expo-router";
-import { UserDocumentType } from "../../api/profile/documentsEnums";
-import { uploadDocumentFromGallery } from "../../services/ImageHelper";
+import { UserContentType } from "../../api/profile/documentsEnums";
+import { uploadUserContentFromGallery } from "../../services/ImageHelper";
 
 type Props = {
-	documentType: UserDocumentType;
+	documentType: UserContentType;
+	sectionKey?: string; // Раздел, в который складывать фото, например, ID грузовика
 	showModal: boolean;
 	onClose: () => void;
 };
 
 export default function ChooseSourceAndUploadModal(props: Props) {
-	const { documentType, showModal, onClose } = props;
+	const { documentType, sectionKey, showModal, onClose } = props;
 
 	const onFromGalleryPress = async () => {
-		await uploadDocumentFromGallery(documentType);
+		await uploadUserContentFromGallery(documentType, sectionKey);
 		onClose();
 	};
 
@@ -29,7 +30,7 @@ export default function ChooseSourceAndUploadModal(props: Props) {
 					<Button
 						variant={"ghost"}
 						size={"lg"}
-						onPress={() => router.replace({ pathname: "/TakeDocumentPhotoModal", params: { docType: documentType } })}
+						onPress={() => router.replace({ pathname: "/TakeDocumentPhotoModal", params: { docType: documentType, sectionKey: sectionKey ?? "" } })}
 					>
 						Сделать фото
 					</Button>

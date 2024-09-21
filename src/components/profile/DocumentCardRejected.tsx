@@ -1,12 +1,12 @@
 import { HStack, Flex, Box, Text, Center, Icon, Spacer } from "native-base";
-import { UserDocumentType } from "../../api/profile/documentsEnums";
+import { UserContentType } from "../../api/profile/documentsEnums";
 import { documentTypeToDisplayStringConverter } from "../../api/profile/DocumentTypeToDisplayStringConverter";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 
 type Props = {
-	documentType: UserDocumentType;
+	documentType: UserContentType;
 };
 
 export default function DocumentCardRejected(props: Props) {

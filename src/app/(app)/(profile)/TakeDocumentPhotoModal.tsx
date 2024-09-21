@@ -5,10 +5,11 @@ import { Button } from "native-base";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { View } from "../../../components/Themed";
-import { sendImageToBackend } from "../../../services/ImageHelper";
+import { sendUserContentToBackend } from "../../../services/ImageHelper";
 
 export default function TakeDocumentPhotoModal() {
 	const { docType } = useLocalSearchParams<{ docType: string }>();
+	const { sectionKey } = useLocalSearchParams<{ sectionKey: string }>();
 
 	const [uriFromCamera, setUriFromCamera] = useState("");
 	const [imgAsset, setImgAsset] = useState<ImagePicker.ImagePickerAsset>();
@@ -41,7 +42,7 @@ export default function TakeDocumentPhotoModal() {
 
 	const onUploadPressHandle = async () => {
 		if (imgAsset) {
-			sendImageToBackend(+docType, imgAsset);
+			sendUserContentToBackend(+docType, imgAsset, sectionKey);
 			router.back();
 		}
 	};

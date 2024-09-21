@@ -1,5 +1,5 @@
 import { ApiCommonResult } from "../common/commonApi";
-import { UserDocumentStatus, UserDocumentType } from "./documentsEnums";
+import { UserDocumentStatus, UserContentType } from "./documentsEnums";
 
 export const DRIVER_ROLE = "Driver";
 export const SHIPPER_ROLE = "Shipper";
@@ -21,7 +21,7 @@ export interface IProfileResult {
 }
 
 export interface IUserDocument {
-	documentType: UserDocumentType;
+	documentType: UserContentType;
 	documentStatus: UserDocumentStatus;
 	comment?: string;
 }

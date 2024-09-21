@@ -1,18 +1,30 @@
-import { UserDocumentType } from "./documentsEnums";
+import { UserContentType } from "./documentsEnums";
 
-export const documentTypeToDisplayStringConverter = (documentType?: UserDocumentType) => {
+export const documentTypeToDisplayStringConverter = (documentType?: UserContentType) => {
 	switch (documentType) {
-		case UserDocumentType.PASSPORT_MAIN:
+		case UserContentType.PASSPORT_MAIN:
 			return "Паспорт (главная)";
 
-		case UserDocumentType.PASSPORT_REGISTRATION:
+		case UserContentType.PASSPORT_REGISTRATION:
 			return "Паспорт (регистрация)";
 
-		case UserDocumentType.DRIVER_LICENSE:
+		case UserContentType.DRIVER_LICENSE:
 			return "Водительское удостоверение";
 
-		case UserDocumentType.TAXPAYER_IDENTIFICATION_NUMBER:
+		case UserContentType.TAXPAYER_IDENTIFICATION_NUMBER:
 			return "ИНН";
+
+		case UserContentType.TRUCK_PHOTO_FRONT:
+			return "Спереди";
+
+		case UserContentType.TRUCK_PHOTO_BACK:
+			return "Сзади";
+
+		case UserContentType.TRUCK_PHOTO_LEFT:
+			return "Слева";
+
+		case UserContentType.TRUCK_PHOTO_RIGHT:
+			return "Справа";
 		default:
 			return "";
 	}

@@ -7,6 +7,7 @@ export default function GarageLayout() {
 			<Stack.Screen name="GarageModal" options={{ title: "Гараж", presentation: "modal" }} />
 			<Stack.Screen name="CarBodySelectListModal" options={{ title: "Выбор типа кузова", presentation: "modal" }} />
 			<Stack.Screen name="LoadingTypeSelectListModal" options={{ title: "Выбор типа загрузки", presentation: "modal" }} />
+			<Stack.Screen name="TruckPhotosModal" options={{ title: "Фото грузовика", presentation: "modal" }} />
 		</Stack>
 	);
 }

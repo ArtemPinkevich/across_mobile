@@ -3,8 +3,8 @@ import { View } from "../../../components/Themed";
 import { Image } from "expo-image";
 import { Button, Text, Modal } from "native-base";
 import { useEffect, useState } from "react";
-import { UserDocumentType } from "../../../api/profile/documentsEnums";
-import { getImageFromBackend } from "../../../services/ImageHelper";
+import { UserContentType } from "../../../api/profile/documentsEnums";
+import { getUserContentFromBackend } from "../../../services/ImageHelper";
 import { router, useLocalSearchParams } from "expo-router";
 import ChooseSourceAndUploadModal from "../../../components/profile/ChooseSourceAndUploadModal";
 
@@ -19,8 +19,8 @@ export default function ShowDocumentModal() {
 		getImageFromBackendAsync(+docType);
 	}, []);
 
-	const getImageFromBackendAsync = async (docType: UserDocumentType) => {
-		const base64 = await getImageFromBackend(docType);
+	const getImageFromBackendAsync = async (docType: UserContentType) => {
+		const base64 = await getUserContentFromBackend(docType);
 		setBase64FromServer(base64);
 	};
 
