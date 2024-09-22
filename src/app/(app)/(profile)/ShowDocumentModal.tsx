@@ -68,7 +68,7 @@ export default function ShowDocumentModal() {
 				</Modal.Content>
 			</Modal>
 
-			<ChooseSourceAndUploadModal documentType={+docType} showModal={showChooseSourceModal} onClose={modalOnclose} />
+			<ChooseSourceAndUploadModal userContentType={+docType} showModal={showChooseSourceModal} onClose={modalOnclose} />
 		</View>
 	);
 }

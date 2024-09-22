@@ -4,16 +4,16 @@ import { SERVER_ADDRESS } from "../constants/GlobalConstants";
 import { UserContentType } from "../api/profile/documentsEnums";
 import { JwtTokenService } from "./JwtTokenService";
 
-export const uploadUserContentFromGallery = async (documentType: UserContentType, sectionKey?: string) => {
+export const uploadUserContentFromGallery = async (userContentType: UserContentType, sectionKey?: string) => {
 	const imageAsset: ImagePicker.ImagePickerAsset | undefined = await getImageAssetFromGallery();
 	if (!imageAsset) {
 		return;
 	}
 
-	await sendUserContentToBackend(documentType, imageAsset, sectionKey);
+	await sendUserContentToBackend(userContentType, imageAsset, sectionKey);
 };
 
-export const sendUserContentToBackend = async (documentType: UserContentType, img: ImagePicker.ImagePickerAsset, sectionKey?: string) => {
+export const sendUserContentToBackend = async (userContentType: UserContentType, img: ImagePicker.ImagePickerAsset, sectionKey?: string) => {
 	try {
 		const formData = await createFormDataFromImageAsset(img);
 
@@ -22,13 +22,13 @@ export const sendUserContentToBackend = async (documentType: UserContentType, im
 			headers: { Authorization: `Bearer ${accessToken}` },
 		};
 
-		await axios.post(SERVER_ADDRESS + `/File/upload-user-content?documentType=${documentType}&SectionKey=${sectionKey ?? ""}`, formData, config);
+		await axios.post(SERVER_ADDRESS + `/File/upload-user-content?ContentType=${userContentType}&SectionKey=${sectionKey ?? ""}`, formData, config);
 	} catch (err) {
 		console.error(err);
 	}
 };
 
-export const getUserContentFromBackend = async (documentType: UserContentType, sectionKey?: string): Promise<string | undefined> => {
+export const getUserContentFromBackend = async (userContentType: UserContentType, sectionKey?: string): Promise<string | undefined> => {
 	try {
 		const accessToken = await JwtTokenService.getAccessToken();
 		const config: AxiosRequestConfig = {
@@ -37,7 +37,7 @@ export const getUserContentFromBackend = async (documentType: UserContentType, s
 			responseType: "blob",
 		};
 
-		const response = await axios.get(`${SERVER_ADDRESS}/File/get-user-content?documentType=${documentType}&SectionKey=${sectionKey ?? ""}`, config);
+		const response = await axios.get(`${SERVER_ADDRESS}/File/get-user-content?ContentType=${userContentType}&SectionKey=${sectionKey ?? ""}`, config);
 
 		if (response.status) {
 			const base64 = await convertBlobToBase64(response.data);

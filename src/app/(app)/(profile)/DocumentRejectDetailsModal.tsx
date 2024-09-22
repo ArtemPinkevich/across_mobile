@@ -35,7 +35,7 @@ export default function DocumentRejectDetailsModal() {
 				</Button>
 			</Button.Group>
 
-			<ChooseSourceAndUploadModal documentType={+docType} showModal={showChooseSourceModal} onClose={modalOnclose} />
+			<ChooseSourceAndUploadModal userContentType={+docType} showModal={showChooseSourceModal} onClose={modalOnclose} />
 		</View>
 	);
 }

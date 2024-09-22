@@ -28,7 +28,7 @@ export default function UserAvatar() {
 
 	return (
 		<Box>
-			<ChooseSourceAndUploadModal documentType={UserContentType.AVATAR} showModal={showUploadModal} onClose={uploadModalOnClose} />
+			<ChooseSourceAndUploadModal userContentType={UserContentType.AVATAR} showModal={showUploadModal} onClose={uploadModalOnClose} />
 			<Pressable onPress={() => setShowUploadModal(true)} my={2}>
 				<Avatar
 					bg="blueGray.500"

@@ -5,17 +5,17 @@ import { UserContentType } from "../../api/profile/documentsEnums";
 import { uploadUserContentFromGallery } from "../../services/ImageHelper";
 
 type Props = {
-	documentType: UserContentType;
+	userContentType: UserContentType;
 	sectionKey?: string; // Раздел, в который складывать фото, например, ID грузовика
 	showModal: boolean;
 	onClose: () => void;
 };
 
 export default function ChooseSourceAndUploadModal(props: Props) {
-	const { documentType, sectionKey, showModal, onClose } = props;
+	const { userContentType, sectionKey, showModal, onClose } = props;
 
 	const onFromGalleryPress = async () => {
-		await uploadUserContentFromGallery(documentType, sectionKey);
+		await uploadUserContentFromGallery(userContentType, sectionKey);
 		onClose();
 	};
 
@@ -30,7 +30,9 @@ export default function ChooseSourceAndUploadModal(props: Props) {
 					<Button
 						variant={"ghost"}
 						size={"lg"}
-						onPress={() => router.replace({ pathname: "/TakeDocumentPhotoModal", params: { docType: documentType, sectionKey: sectionKey ?? "" } })}
+						onPress={() =>
+							router.replace({ pathname: "/TakeDocumentPhotoModal", params: { docType: userContentType, sectionKey: sectionKey ?? "" } })
+						}
 					>
 						Сделать фото
 					</Button>

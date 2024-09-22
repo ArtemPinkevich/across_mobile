@@ -2,7 +2,7 @@ import { VStack } from "native-base";
 import { useState } from "react";
 import { UserContentType } from "../../api/profile/documentsEnums";
 import { SectionDashedHoc } from "../screenItems/SectionDashedHoc";
-import { documentTypeToDisplayStringConverter } from "../../api/profile/DocumentTypeToDisplayStringConverter";
+import { userContentTypeToDisplayStringConverter } from "../../api/profile/DocumentTypeToDisplayStringConverter";
 import { Text } from "../Themed";
 import { TouchableOpacity } from "react-native";
 import ChooseSourceAndUploadModal from "./ChooseSourceAndUploadModal";
@@ -24,10 +24,10 @@ export default function NoneDocumentCard(props: Props) {
 
 	return (
 		<TouchableOpacity onPress={() => setShowUploadModal(true)}>
-			<SectionDashedHoc title={documentTypeToDisplayStringConverter(documentType)}>
+			<SectionDashedHoc title={userContentTypeToDisplayStringConverter(documentType)}>
 				<VStack>
 					<Text lightColor="#999">{"Нажмите, чтобы загрузить"}</Text>
-					<ChooseSourceAndUploadModal documentType={documentType} sectionKey={sectionKey} showModal={showUploadModal} onClose={onModalClosed} />
+					<ChooseSourceAndUploadModal userContentType={documentType} sectionKey={sectionKey} showModal={showUploadModal} onClose={onModalClosed} />
 				</VStack>
 			</SectionDashedHoc>
 		</TouchableOpacity>

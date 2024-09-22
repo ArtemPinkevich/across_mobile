@@ -1,6 +1,6 @@
 import { HStack, Flex, Box, Text, Center, Icon, Spacer } from "native-base";
 import { UserContentType } from "../../api/profile/documentsEnums";
-import { documentTypeToDisplayStringConverter } from "../../api/profile/DocumentTypeToDisplayStringConverter";
+import { userContentTypeToDisplayStringConverter } from "../../api/profile/DocumentTypeToDisplayStringConverter";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
@@ -25,7 +25,7 @@ export default function VerificationDocumentCard(props: Props) {
 						color: "blue.400",
 					}}
 				>
-					{documentTypeToDisplayStringConverter(documentType)}
+					{userContentTypeToDisplayStringConverter(documentType)}
 				</Text>
 				<HStack my={2} px={2}>
 					<Center>

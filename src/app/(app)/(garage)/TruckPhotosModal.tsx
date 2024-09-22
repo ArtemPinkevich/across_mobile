@@ -22,7 +22,7 @@ export default function TruckPhotosModal() {
 	const [rightTruckPhoto, setRightTruckPhoto] = useState<string>();
 
 	const [showUploadModal, setShowUploadModal] = useState(false);
-	const [selectedDocumentType, setSelectedDocumentType] = useState<UserContentType>();
+	const [selectedUserContentType, setSelectedUserContentType] = useState<UserContentType>();
 
 	useEffect(() => {
 		getImageFromBackendAsync();
@@ -59,16 +59,16 @@ export default function TruckPhotosModal() {
 	const uploadModalOnClose = async () => {
 		setShowUploadModal(false);
 
-		if (selectedDocumentType) {
-			const base64 = await getUserContentFromBackend(selectedDocumentType, truckId);
+		if (selectedUserContentType) {
+			const base64 = await getUserContentFromBackend(selectedUserContentType, truckId);
 			if (base64) {
-				setImgSourceByDocType(selectedDocumentType, base64);
+				setImgSourceByDocType(selectedUserContentType, base64);
 			}
 		}
 	};
 
 	const photoOnClick = async (docType: UserContentType) => {
-		setSelectedDocumentType(docType);
+		setSelectedUserContentType(docType);
 		setShowUploadModal(true);
 	};
 
@@ -101,9 +101,9 @@ export default function TruckPhotosModal() {
 					{getPressableTruckPhoto(UserContentType.TRUCK_PHOTO_LEFT, leftTruckPhoto)}
 					{getPressableTruckPhoto(UserContentType.TRUCK_PHOTO_RIGHT, rightTruckPhoto)}
 				</VStack>
-				{selectedDocumentType && (
+				{selectedUserContentType && (
 					<ChooseSourceAndUploadModal
-						documentType={selectedDocumentType}
+						userContentType={selectedUserContentType}
 						sectionKey={truckId}
 						showModal={showUploadModal}
 						onClose={uploadModalOnClose}
