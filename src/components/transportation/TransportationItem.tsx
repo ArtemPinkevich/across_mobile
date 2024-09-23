@@ -75,11 +75,24 @@ export const TransportationItem = (props: TransportationItemProps) => {
 									transportation.transferInfo.loadingAddress ? ", " + transportation.transferInfo.loadingAddress : ""
 								}`}
 							</Text>
-							<Text pl={5} fontSize="xs">
-								{`${moment(transportation.transferInfo.loadingDateFrom).format("DD MMMM YYYY")}${
-									transportation.transferInfo?.loadingDateTo && " - " + moment(transportation.transferInfo.loadingDateTo).format("DD MMMM YYYY")
-								}`}
-							</Text>
+							<HStack pl={5}>
+								<Center>
+									<Text fontSize="xs">
+										{`${moment(transportation.transferInfo.loadingDateFrom).format("DD MMMM YYYY")}${
+											transportation.transferInfo?.loadingDateTo && " - " + moment(transportation.transferInfo.loadingDateTo).format("DD MMMM YYYY")
+										}`}
+									</Text>
+								</Center>
+
+								{transportation.contactInfoDto?.loadingTime && (
+									<Center>
+										<Text fontSize="xs">
+											{" - "}
+											<Text color={"orange.500"}>{transportation.contactInfoDto.loadingTime}</Text>
+										</Text>
+									</Center>
+								)}
+							</HStack>
 						</VStack>
 					</HStack>
 

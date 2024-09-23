@@ -52,8 +52,17 @@ export interface ITransportation {
 	transportationOrderId?: number;
 	transferInfo: ITransferInfo;
 	cargo: ICargo;
+	contactInfoDto?: IContactInfo;
 	transportationOrderStatus: TransportationStatus;
 	price: number;
+}
+
+export interface IContactInfo {
+	loadingTime: string;
+	loadingContactPerson: string;
+	loadingContactPhone: string;
+	unloadingContactPerson: string;
+	unloadingContactPhone: string;
 }
 
 export interface ITransportationResult {
