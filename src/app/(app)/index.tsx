@@ -1,7 +1,7 @@
 import { Redirect, router } from "expo-router";
 import { useLazyGetProfileQuery } from "../../store/rtkQuery/profileApi";
 import { useEffect } from "react";
-import { SHIPPER_ROLE } from "../../api/profile/Profile";
+import { DRIVER_ROLE } from "../../api/profile/Profile";
 
 export default function Index() {
 	const [trigger] = useLazyGetProfileQuery();
@@ -12,7 +12,7 @@ export default function Index() {
 
 			if (result.isSuccess) {
 				const profile = result.data;
-				profile.role === SHIPPER_ROLE ? router.replace("/FreeTransportationsTab") : router.replace("/DriverOrdersTab");
+				profile.role === DRIVER_ROLE ? router.replace("/location-permission") : router.replace("/FreeTransportationsTab");
 			}
 		};
 

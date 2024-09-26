@@ -8,6 +8,8 @@ import {
 	TransportationOrderResult,
 	TryTakeOrderRequest,
 } from "../../api/transportation/Transportation";
+import { TransportationStatus } from "../../api/transportation/TransportationStatus";
+import { AsyncStorageKeys, saveInAsyncStorage } from "../../services/AsyncStorageService";
 
 export const transportationApi = createApi({
 	reducerPath: "transportationApi",
@@ -79,6 +81,12 @@ export const transportationApi = createApi({
 		}),
 		getAssignedOrders: build.query<ITransportationResult, void>({
 			query: () => ({ url: `TransportationOrder/get_assigned_orders` }),
+			transformResponse: (response: ITransportationResult) => {
+				// TODO Это сделано, чтобы понимать по какому грузу отправлять координаты в LOCATION_TASK_NAME
+				const orderAtWork = response?.transportationOrderDtos?.findLast((o) => o.transportationOrderStatus === TransportationStatus.transporting);
+				saveInAsyncStorage(AsyncStorageKeys.TRANSPORTING_ORDER_ID, orderAtWork?.transportationOrderId?.toString() ?? "");
+				return response;
+			},
 			providesTags: (result) =>
 				result && Array.isArray(result)
 					? [...result.map(({ id }: any) => ({ type: "Transportations" as const, id })), { type: "Transportations", id: "LIST" }]

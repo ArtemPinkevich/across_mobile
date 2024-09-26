@@ -1,6 +1,6 @@
 {
 	"expo": {
-		"name": "y",
+		"name": "Across",
 		"slug": "across",
 		"version": "1.0.0",
 		"orientation": "portrait",
@@ -14,14 +14,19 @@
 		},
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"infoPlist": {
+				"NSLocationAlwaysAndWhenInUseUsageDescription": "Доступ к местоположению",
+				"UIBackgroundModes": ["location", "fetch", "remote-notification"]
+			}
 		},
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/images/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
 			},
-			"package": "com.pinkevichav.across"
+			"package": "com.pinkevichav.across",
+			"permissions": ["ACCESS_BACKGROUND_LOCATION"]
 		},
 		"web": {
 			"bundler": "metro",
@@ -35,6 +40,14 @@
 				{
 					"photosPermission": "The app accesses your photos to let you share them with your friends.",
 					"cameraPermission": "Allow Across to access your camera"
+				}
+			],
+			[
+				"expo-location",
+				{
+					"locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location.",
+					"isIosBackgroundLocationEnabled": true,
+					"isAndroidBackgroundLocationEnabled": true
 				}
 			]
 		],
