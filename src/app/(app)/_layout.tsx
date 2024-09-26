@@ -14,6 +14,7 @@ export default function AppLayout() {
 			<Stack.Screen name="(profile)/DocumentsModal" options={{ title: "Документы", presentation: "modal" }} />
 			<Stack.Screen name="(profile)/InitialEntryPersonalInfo" options={{ title: "Персональная информация", headerShown: false }} />
 			<Stack.Screen name="(modals)/PlacesInputModal" options={{ title: "Поиск населенного пункта", presentation: "modal" }} />
+			<Stack.Screen name="(location)/LocationModal" options={{ title: "Маршрут", presentation: "modal" }} />
 		</Stack>
 	);
 }

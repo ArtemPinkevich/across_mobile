@@ -16,7 +16,7 @@ export default function ShipperOrdersInProgressTab() {
 		pollingInterval: 10000,
 	});
 	const filtred =
-		data?.transportationOrderDtos.filter(
+		data?.transportationOrderDtos?.filter(
 			(o) =>
 				o.transportationOrderStatus === TransportationStatus.waitingForLoading ||
 				o.transportationOrderStatus === TransportationStatus.loading ||

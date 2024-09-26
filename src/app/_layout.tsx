@@ -8,8 +8,6 @@ import { NativeBaseProvider } from "native-base";
 import { Provider } from "react-redux";
 import { store } from "../store/configureStore";
 import { AuthorizationService } from "../services/AuthorizationService";
-import * as Location from "expo-location";
-import { startBackgroundTracking } from "../services/LocationBackgroundService";
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -53,25 +51,6 @@ function RootLayoutNav() {
 
 	useEffect(() => {
 		AuthorizationService.checkAuthorization();
-
-		(async () => {
-			const isGpsEnabled = await Location.hasServicesEnabledAsync();
-			if (!isGpsEnabled) {
-				router.replace("/location-permission");
-			}
-
-			const { status } = await Location.requestForegroundPermissionsAsync();
-			if (status !== "granted") {
-				router.replace("/location-permission");
-			} else {
-				const { status: backgroundStatus } = await Location.requestBackgroundPermissionsAsync();
-				if (backgroundStatus !== "granted") {
-					router.replace("/location-permission");
-				}
-
-				startBackgroundTracking();
-			}
-		})();
 	}, []);
 
 	return (

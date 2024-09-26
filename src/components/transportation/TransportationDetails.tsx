@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ScrollView, Center, VStack, Text, Heading, Box, HStack, View, IconButton, Spacer } from "native-base";
+import { ScrollView, Center, VStack, Text, Heading, Box, HStack, View, IconButton, Spacer, Button } from "native-base";
 import MaterialIcons from "@expo/vector-icons/build/MaterialIcons";
 import * as Linking from "expo-linking";
 import moment from "moment";
@@ -8,6 +8,7 @@ import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../../api/transportation/toDispla
 import { PACKAGING_TYPE_DISPLAY_NAME_MAP } from "../../api/transportation/toDisplayNameMappers/PackagingTypeToDisplayNameMap";
 import { useMemo } from "react";
 import { ITransportation } from "../../api/transportation/Transportation";
+import { router } from "expo-router";
 
 type Props = {
 	transportation: ITransportation;
@@ -111,6 +112,10 @@ export default function TransportationDetailsModal(props: Props) {
 						)}
 					</HStack>
 					<Text fontSize="xs">{`${unloadingPlace?.country} - ${unloadingPlace?.region}`}</Text>
+
+					<Button mt={2} variant="link" alignSelf={"flex-start"} onPress={() => router.navigate("/LocationModal")}>
+						Посмотреть на карте
+					</Button>
 				</Box>
 
 				{transportation.contactInfoDto && (

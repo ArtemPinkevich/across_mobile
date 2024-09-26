@@ -16,7 +16,7 @@ export default function FreeTransportationsTab() {
 
 	const { data } = useGetShipperTransportationsQuery();
 	const filtred =
-		data?.transportationOrderDtos.filter(
+		data?.transportationOrderDtos?.filter(
 			(o) =>
 				o.transportationOrderStatus === TransportationStatus.notPublished ||
 				o.transportationOrderStatus === TransportationStatus.carrierFinding ||
