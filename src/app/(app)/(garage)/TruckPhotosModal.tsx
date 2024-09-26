@@ -111,7 +111,7 @@ export default function TruckPhotosModal() {
 				)}
 			</ScrollView>
 			<Center my={2}>
-				<Button minW={200} size={"lg"} variant="outline" onPress={() => router.replace("/GarageModal")}>
+				<Button minW={200} size={"lg"} variant="outline" onPress={() => router.replace("/")}>
 					ОК
 				</Button>
 			</Center>
