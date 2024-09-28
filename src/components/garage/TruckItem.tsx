@@ -7,6 +7,7 @@ import { CARBODY_DISPLAY_NAME_MAP } from "../../api/transportation/toDisplayName
 import { TRAILER_TYPE_DISPLAY_NAME_MAP } from "../../api/transportation/toDisplayNameMappers/TrailerTypeToDisplayNameMap";
 import { useDeleteTruckMutation } from "../../store/rtkQuery/garageApi";
 import { router } from "expo-router";
+import TruckSvg from "../svg/TruckSvg";
 
 type CarProps = {
 	truck: ITruck;
@@ -28,7 +29,7 @@ export const TruckItem = (props: CarProps) => {
 	return (
 		<HStack py={4} pl={4}>
 			<Center>
-				<MaterialCommunityIcons name="truck-outline" size={17} />
+				<TruckSvg color={"#000"} />
 			</Center>
 			<VStack pl={5} w="80%">
 				<Text bold fontSize="xl">

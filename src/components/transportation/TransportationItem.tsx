@@ -10,6 +10,8 @@ import { useDeleteTransportationMutation } from "../../store/rtkQuery/transporta
 import { router } from "expo-router";
 import { setEditingTransportation } from "../../store/slices/buildTransportationSlice";
 import { TransportationStatus } from "../../api/transportation/TransportationStatus";
+import MapMarkerSvg from "../svg/MapMarkerSvg";
+import { MAP_MARKER_BLACK, MAP_MARKER_BLUE } from "../../constants/Colors";
 
 type TransportationItemProps = {
 	transportation: ITransportation;
@@ -67,7 +69,7 @@ export const TransportationItem = (props: TransportationItemProps) => {
 
 					<HStack mt={0}>
 						<Center>
-							<MaterialCommunityIcons name="map-marker-outline" size={17} color="blue" />
+							<MapMarkerSvg color={MAP_MARKER_BLUE} />
 						</Center>
 						<VStack w={"100%"}>
 							<Text w="70%" pl={5} fontSize="lg">
@@ -98,7 +100,7 @@ export const TransportationItem = (props: TransportationItemProps) => {
 
 					<HStack mt={4}>
 						<Center>
-							<MaterialCommunityIcons name="map-marker" size={17} color="red" />
+							<MapMarkerSvg color={MAP_MARKER_BLACK} />
 						</Center>
 						<Text w="70%" pl={5} fontSize="lg">
 							{`${transportation.transferInfo.unloadingPlace?.city}${
