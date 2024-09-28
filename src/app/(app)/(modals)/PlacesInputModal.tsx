@@ -102,10 +102,7 @@ export default function PlacesInputModal() {
 							pr="5"
 							py="4"
 						>
-							<HStack space={3}>
-								{" "}
-								<Text px="4">{placeToDisplayStringConverter(item)}</Text>
-							</HStack>
+							<Text px="4">{item.mapDisplayName || placeToDisplayStringConverter(item)}</Text>
 						</Box>
 					</Pressable>
 				)}
