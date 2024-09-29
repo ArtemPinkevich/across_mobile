@@ -1,6 +1,11 @@
 export const MAP_MARKER_BLUE = "#2C64E3";
 export const MAP_MARKER_BLACK = "#000000";
 
+export const APPROVING_ORDER_STATUS_COLOR = "#F3F35D";
+export const TO_LOADING_ORDER_STATUS_COLOR = "#25A8E9";
+export const TRANSPORTING_ORDER_STATUS_COLOR = "#5D73F3";
+export const UNLOADING_ORDER_STATUS_COLOR = "#25E9A8";
+
 const tintColorLight = "#2f95dc";
 const tintColorDark = "#fff";
 

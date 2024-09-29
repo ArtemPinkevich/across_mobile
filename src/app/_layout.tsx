@@ -1,13 +1,24 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { router, SplashScreen, Stack } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
-import { useColorScheme } from "react-native";
 import { NativeBaseProvider } from "native-base";
 import { Provider } from "react-redux";
 import { store } from "../store/configureStore";
 import { AuthorizationService } from "../services/AuthorizationService";
+import {
+	Inter_100Thin,
+	Inter_200ExtraLight,
+	Inter_300Light,
+	Inter_400Regular,
+	Inter_500Medium,
+	Inter_600SemiBold,
+	Inter_700Bold,
+	Inter_800ExtraBold,
+	Inter_900Black,
+} from "@expo-google-fonts/inter";
+import React from "react";
+import { customTheme } from "../theme/customTheme";
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -47,7 +58,21 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-	const colorScheme = useColorScheme();
+	const [fontsLoaded] = useFonts({
+		Inter_100Thin,
+		Inter_200ExtraLight,
+		Inter_300Light,
+		Inter_400Regular,
+		Inter_500Medium,
+		Inter_600SemiBold,
+		Inter_700Bold,
+		Inter_800ExtraBold,
+		Inter_900Black,
+	});
+
+	if (!fontsLoaded) {
+		return null;
+	}
 
 	useEffect(() => {
 		AuthorizationService.checkAuthorization();
@@ -55,20 +80,18 @@ function RootLayoutNav() {
 
 	return (
 		<Provider store={store}>
-			<NativeBaseProvider>
-				<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-					<Stack>
-						<Stack.Screen name="(app)" options={{ headerShown: false }} />
-						<Stack.Screen name="location-permission" options={{ headerShown: false }} />
-						<Stack.Screen name="sign-in" options={{ headerShown: false }} />
-						<Stack.Screen
-							name="sign-in-verify"
-							options={{
-								headerShown: false,
-							}}
-						/>
-					</Stack>
-				</ThemeProvider>
+			<NativeBaseProvider theme={customTheme}>
+				<Stack>
+					<Stack.Screen name="(app)" options={{ headerShown: false }} />
+					<Stack.Screen name="location-permission" options={{ headerShown: false }} />
+					<Stack.Screen name="sign-in" options={{ headerShown: false }} />
+					<Stack.Screen
+						name="sign-in-verify"
+						options={{
+							headerShown: false,
+						}}
+					/>
+				</Stack>
 			</NativeBaseProvider>
 		</Provider>
 	);

@@ -8,14 +8,16 @@ import { TransportationItem } from "../../../components/transportation/Transport
 import { useGetAssignedOrdersQuery } from "../../../store/rtkQuery/transportationApi";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { View } from "../../../components/Themed";
+import { TRANSPORTATION_FAKE } from "../../../api/search/SearchResponceFake";
+import { FAKE_TRANSPORTATION_LONG } from "../../../api/search/FakeTransportationLong";
 
 export default function DriverOrdersTab() {
 	const dispatch = useDispatch();
 
-	const { data } = useGetAssignedOrdersQuery(undefined, {
-		pollingInterval: 10000,
-	});
+	const { data } = useGetAssignedOrdersQuery();
 	const filtred = data?.transportationOrderDtos?.filter((o) => o?.transportationOrderStatus !== TransportationStatus.done) ?? [];
+
+	//const filtred = [TRANSPORTATION_FAKE, FAKE_TRANSPORTATION_LONG];
 
 	const itemPressHandler = (transportation: ITransportation) => {
 		dispatch(setViewedTransportation(transportation));
@@ -33,7 +35,7 @@ export default function DriverOrdersTab() {
 	};
 
 	const renderItem = (item: ITransportation) => (
-		<Pressable onPress={() => itemPressHandler(item)} my={2}>
+		<Pressable onPress={() => itemPressHandler(item)} my={1}>
 			<TransportationItem transportation={item as ITransportation} isMenuVisible={false} />
 		</Pressable>
 	);

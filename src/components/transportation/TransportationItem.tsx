@@ -1,11 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Pressable } from "react-native";
-import { HStack, Center, Menu, Text, VStack, Box } from "native-base";
+import { HStack, Center, Menu, Text, VStack, Box, Badge, Spacer } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ITransportation } from "../../api/transportation/Transportation";
 import moment from "moment";
-import { TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP } from "../../api/transportation/TransportationStatusToDisplayNameMap";
+import {
+	TRANSPORTATION_STATUS_TO_BGCOLOR_MAP,
+	TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP,
+	TRANSPORTATION_STATUS_TO_TEXTCOLOR_MAP,
+} from "../../api/transportation/TransportationStatusToDisplayNameMap";
 import { useDeleteTransportationMutation } from "../../store/rtkQuery/transportationApi";
 import { router } from "expo-router";
 import { setEditingTransportation } from "../../store/slices/buildTransportationSlice";
@@ -35,85 +39,73 @@ export const TransportationItem = (props: TransportationItemProps) => {
 	};
 
 	return (
-		<Box
-			rounded="lg"
-			overflow="hidden"
-			borderWidth="1"
-			borderColor={transportation.transportationOrderStatus === TransportationStatus.carrierFinding ? "coolGray.200" : "blue.100"}
-			shadow={transportation.transportationOrderStatus === TransportationStatus.carrierFinding ? 1 : 3}
-		>
+		<Box variant={"gray_card"}>
 			<HStack my={4} pl={4}>
-				<VStack w="90%">
-					<Text bold fontSize="xl">
-						{transportation.cargo.name}
-					</Text>
-					<HStack space={3} my={1}>
-						<Box m={"1"} minW={10} borderWidth="1" borderColor={"#bdbdbd"} rounded="md">
-							<Text fontSize="xs" mx={1} color={"blue.500"} alignSelf={"center"}>
-								{`${transportation.price} ₸`}
-							</Text>
-						</Box>
+				<VStack w="90%" space={1}>
+					<Text variant={"header17"}>{transportation.cargo.name}</Text>
+					{transportation.price && <Text mt={1} variant={"header15"}>{`${transportation.price?.toLocaleString()} ₸`}</Text>}
+					<HStack mt={1}>
+						<Text variant={"body15_gray"}>Вес</Text>
+						<Text variant={"body15_black"} ml={2}>
+							{`${transportation.cargo.weight} т`}
+						</Text>
 
-						<Box m={"1"} minW={10} borderWidth="1" borderColor={"#bdbdbd"} rounded="md">
-							<Text fontSize="xs" mx={1} alignSelf={"center"}>
-								{`${transportation.cargo.weight}т`}
-							</Text>
-						</Box>
-
-						<Box m={"1"} minW={10} borderWidth="1" borderColor={"#bdbdbd"} rounded="md">
-							<Text fontSize="xs" mx={1} alignSelf={"center"}>
-								{`${transportation.cargo.volume}м³`}
-							</Text>
-						</Box>
+						<Text variant={"body15_gray"} ml={8}>
+							Объем
+						</Text>
+						<Text variant={"body15_black"} ml={2}>
+							{`${transportation.cargo.volume}м³`}
+						</Text>
 					</HStack>
 
-					<HStack mt={0}>
+					<Badge
+						variant={"status_badge"}
+						mt={1}
+						bgColor={TRANSPORTATION_STATUS_TO_BGCOLOR_MAP.get(transportation.transportationOrderStatus)}
+						alignSelf={"start"}
+					>
+						<Text variant={"body12"} color={TRANSPORTATION_STATUS_TO_TEXTCOLOR_MAP.get(transportation.transportationOrderStatus)}>
+							{TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationOrderStatus)}
+						</Text>
+					</Badge>
+
+					<HStack mt={3} space={3}>
 						<Center>
 							<MapMarkerSvg color={MAP_MARKER_BLUE} />
 						</Center>
 						<VStack w={"100%"}>
-							<Text w="70%" pl={5} fontSize="lg">
-								{`${transportation.transferInfo.loadingPlace?.city}${
-									transportation.transferInfo.loadingAddress ? ", " + transportation.transferInfo.loadingAddress : ""
-								}`}
-							</Text>
-							<HStack pl={5}>
-								<Center>
-									<Text fontSize="xs">
-										{`${moment(transportation.transferInfo.loadingDateFrom).format("DD MMMM YYYY")}${
-											transportation.transferInfo?.loadingDateTo && " - " + moment(transportation.transferInfo.loadingDateTo).format("DD MMMM YYYY")
-										}`}
-									</Text>
-								</Center>
-
-								{transportation.contactInfoDto?.loadingTime && (
-									<Center>
-										<Text fontSize="xs">
-											{" - "}
-											<Text color={"orange.500"}>{transportation.contactInfoDto.loadingTime}</Text>
-										</Text>
-									</Center>
-								)}
+							<HStack>
+								<Text variant={"header15"}>{`${transportation.transferInfo.loadingPlace?.city}`}</Text>
+								<Spacer />
+								<Text ml={5} variant={"body13"}>{`${moment(transportation.transferInfo.loadingDateFrom).format("DD MMMM YYYY")}`}</Text>
 							</HStack>
+
+							<HStack>
+								<Text variant={"body13"}>
+									{`${transportation.transferInfo.loadingPlace?.country}, ${transportation.transferInfo.loadingPlace?.region}`}
+								</Text>
+								<Spacer />
+								<Text ml={5} variant={"body13"}>
+									{transportation.contactInfoDto?.loadingTime ?? ""}
+								</Text>
+							</HStack>
+
+							<Text variant={"body13"}>{transportation.transferInfo.loadingAddress}</Text>
 						</VStack>
 					</HStack>
 
-					<HStack mt={4}>
+					<HStack mt={4} space={3}>
 						<Center>
 							<MapMarkerSvg color={MAP_MARKER_BLACK} />
 						</Center>
-						<Text w="70%" pl={5} fontSize="lg">
-							{`${transportation.transferInfo.unloadingPlace?.city}${
-								transportation.transferInfo.unloadingAddress ? ", " + transportation.transferInfo.unloadingAddress : ""
-							}`}
-						</Text>
+						<VStack w={"100%"}>
+							<Text variant={"header15"}>{`${transportation.transferInfo.unloadingPlace?.city}`}</Text>
+							<Text variant={"body13"}>
+								{`${transportation.transferInfo.unloadingPlace?.country}, ${transportation.transferInfo.unloadingPlace?.region}`}
+							</Text>
+							<Text variant={"body13"}>{transportation.transferInfo.unloadingAddress}</Text>
+						</VStack>
 					</HStack>
-
-					<Center mt={4} background={transportation.transportationOrderStatus === TransportationStatus.carrierFinding ? "blueGray.50" : "blue.100"}>
-						<Text fontSize="xs" px={5} py={1}>
-							{TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationOrderStatus)}
-						</Text>
-					</Center>
 				</VStack>
 
 				{/* defaultIsOpen={false} чтобы не фризился экран (по мотивам https://github.com/GeekyAnts/NativeBase/issues/4730) */}

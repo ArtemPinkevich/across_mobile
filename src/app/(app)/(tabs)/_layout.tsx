@@ -1,16 +1,15 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
-import { useColorScheme } from "react-native";
-
-import Colors from "../../../constants/Colors";
+import { Platform, useColorScheme } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import Colors from "../../../constants/Colors";
 import { useGetProfileQuery } from "../../../store/rtkQuery/profileApi";
 import { SHIPPER_ROLE } from "../../../api/profile/Profile";
-
-function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>["name"]; color: string }) {
-	return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+import TruckSvg from "../../../components/svg/TruckSvg";
+import DriverRequestsTabSvg from "../../../components/svg/DriverRequestsTabSvg";
+import DriverRecommendationsTabSvg from "../../../components/svg/DriverRecommendationsTabSvg";
+import SearchSvg from "../../../components/svg/SearchSvg";
+import UserSvg from "../../../components/svg/UserSvg";
 
 export default function TabLayout() {
 	const colorScheme = useColorScheme();
@@ -22,6 +21,24 @@ export default function TabLayout() {
 				screenOptions={{
 					tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
 					tabBarLabelPosition: "below-icon",
+					tabBarLabelStyle: {
+						marginTop: -5,
+						marginBottom: 5,
+					},
+					headerTitleAlign: "center",
+					headerStyle: { height: 44 },
+					headerTitleStyle: {
+						color: "#000",
+						fontWeight: "600",
+						fontSize: 17,
+						lineHeight: 22,
+						letterSpacing: -0.43,
+						fontFamily: Platform.select({
+							web: "Inter_400Regular",
+							android: "Inter_400Regular",
+							ios: "Inter-Black",
+						}),
+					},
 				}}
 			>
 				<Tabs.Screen
@@ -49,14 +66,14 @@ export default function TabLayout() {
 					name="ProfileTab"
 					options={{
 						title: "Профиль",
-						tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+						tabBarIcon: ({ color }) => <UserSvg color={color} />,
 					}}
 				/>
 				<Tabs.Screen
 					name="SearchTab"
 					options={{
 						title: "Поиск",
-						tabBarIcon: ({ color }) => <FontAwesome name="search" size={24} color={color} />,
+						tabBarIcon: ({ color }) => <SearchSvg color={color} />,
 						href: null,
 					}}
 				/>
@@ -64,7 +81,8 @@ export default function TabLayout() {
 					name="DriverOrdersTab"
 					options={{
 						title: "Перевозки",
-						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="truck-delivery-outline" size={30} color={color} />,
+						headerTitleAlign: "center",
+						tabBarIcon: ({ color }) => <TruckSvg color={color} />,
 						href: null,
 					}}
 				/>
@@ -72,7 +90,7 @@ export default function TabLayout() {
 					name="DriverRequestsTab"
 					options={{
 						title: "Заявки",
-						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="progress-question" size={30} color={color} />,
+						tabBarIcon: ({ color }) => <DriverRequestsTabSvg color={color} />,
 						href: null,
 					}}
 				/>
@@ -80,7 +98,7 @@ export default function TabLayout() {
 					name="RecommendationsTab"
 					options={{
 						title: "Предложения",
-						tabBarIcon: ({ color }) => <MaterialCommunityIcons name="store-plus-outline" size={30} color={color} />,
+						tabBarIcon: ({ color }) => <DriverRecommendationsTabSvg color={color} />,
 						href: null,
 					}}
 				/>
@@ -92,41 +110,60 @@ export default function TabLayout() {
 		<Tabs
 			screenOptions={{
 				tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+				tabBarLabelPosition: "below-icon",
+				tabBarLabelStyle: {
+					marginTop: -5,
+					marginBottom: 5,
+				},
+				headerTitleAlign: "center",
+				headerStyle: { height: 44 },
+				headerTitleStyle: {
+					color: "#000",
+					fontWeight: "600",
+					fontSize: 17,
+					lineHeight: 22,
+					letterSpacing: -0.43,
+					fontFamily: Platform.select({
+						web: "Inter_400Regular",
+						android: "Inter_400Regular",
+						ios: "Inter-Black",
+					}),
+				},
 			}}
 		>
 			<Tabs.Screen
 				name="DriverOrdersTab"
 				options={{
 					title: "Перевозки",
-					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="truck-delivery-outline" size={30} color={color} />,
+					tabBarIcon: ({ color }) => <TruckSvg color={color} />,
 				}}
 			/>
 			<Tabs.Screen
 				name="DriverRequestsTab"
 				options={{
 					title: "Заявки",
-					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="progress-question" size={30} color={color} />,
+					tabBarIcon: ({ color }) => <DriverRequestsTabSvg color={color} />,
 				}}
 			/>
 			<Tabs.Screen
 				name="RecommendationsTab"
 				options={{
 					title: "Предложения",
-					tabBarIcon: ({ color }) => <MaterialCommunityIcons name="store-plus-outline" size={30} color={color} />,
+					tabBarIcon: ({ color }) => <DriverRecommendationsTabSvg color={color} />,
 				}}
 			/>
 			<Tabs.Screen
 				name="SearchTab"
 				options={{
 					title: "Поиск",
-					tabBarIcon: ({ color }) => <FontAwesome name="search" size={24} color={color} />,
+					tabBarIcon: ({ color }) => <SearchSvg color={color} />,
 				}}
 			/>
 			<Tabs.Screen
 				name="ProfileTab"
 				options={{
 					title: "Профиль",
-					tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+					tabBarIcon: ({ color }) => <UserSvg color={color} />,
 				}}
 			/>
 			<Tabs.Screen
