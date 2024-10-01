@@ -1,9 +1,31 @@
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
+import BackButtonSvg from "../../components/svg/BackButtonSvg";
+import { Pressable } from "native-base";
+import { Platform } from "react-native";
 
 // Отсюда https://docs.expo.dev/router/reference/authentication/
 export default function AppLayout() {
 	return (
-		<Stack>
+		<Stack
+			screenOptions={{
+				headerTitleAlign: "center",
+				headerTitleStyle: {
+					color: "#000",
+					fontWeight: "600",
+					fontSize: 17,
+					fontFamily: Platform.select({
+						web: "Inter_400Regular",
+						android: "Inter_400Regular",
+						ios: "Inter-Black",
+					}),
+				},
+				headerLeft: () => (
+					<Pressable pr={3} py={1} onPress={() => router.back()}>
+						<BackButtonSvg />
+					</Pressable>
+				),
+			}}
+		>
 			<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 			<Stack.Screen name="(garage)" options={{ headerShown: false }} />
 			<Stack.Screen name="(transportations)" options={{ headerShown: false }} />

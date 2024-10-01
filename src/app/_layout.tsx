@@ -1,8 +1,9 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import { router, SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
-import { NativeBaseProvider } from "native-base";
+import { Platform } from "react-native";
+import { NativeBaseProvider, Pressable } from "native-base";
 import { Provider } from "react-redux";
 import { store } from "../store/configureStore";
 import { AuthorizationService } from "../services/AuthorizationService";
@@ -19,6 +20,7 @@ import {
 } from "@expo-google-fonts/inter";
 import React from "react";
 import { customTheme } from "../theme/customTheme";
+import BackButtonSvg from "../components/svg/BackButtonSvg";
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -81,7 +83,26 @@ function RootLayoutNav() {
 	return (
 		<Provider store={store}>
 			<NativeBaseProvider theme={customTheme}>
-				<Stack>
+				<Stack
+					screenOptions={{
+						headerTitleAlign: "center",
+						headerTitleStyle: {
+							color: "#000",
+							fontWeight: "600",
+							fontSize: 17,
+							fontFamily: Platform.select({
+								web: "Inter_400Regular",
+								android: "Inter_400Regular",
+								ios: "Inter-Black",
+							}),
+						},
+						headerLeft: () => (
+							<Pressable pr={3} py={1} onPress={() => router.back()}>
+								<BackButtonSvg />
+							</Pressable>
+						),
+					}}
+				>
 					<Stack.Screen name="(app)" options={{ headerShown: false }} />
 					<Stack.Screen name="location-permission" options={{ headerShown: false }} />
 					<Stack.Screen name="sign-in" options={{ headerShown: false }} />
