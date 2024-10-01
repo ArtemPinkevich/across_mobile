@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { router } from "expo-router";
-import { Center, Button, Text, HStack } from "native-base";
+import { Center, Button, Text, HStack, Spacer } from "native-base";
 import { RootState } from "../../../../store/configureStore";
 import { View } from "../../../../components/Themed";
 import TransportationDetails from "../../../../components/transportation/TransportationDetails";
@@ -76,11 +76,12 @@ export default function InProgressTransportationDetailsModal() {
 	return (
 		<View style={{ flex: 1, alignItems: "stretch" }}>
 			<TransportationDetails transportation={viewedTransportation} />
-			<Center my={2}>
-				<HStack space={10}>
+			<Center m={4}>
+				<HStack>
 					<Button minW={120} size={"md"} variant="outline" onPress={() => router.back()}>
 						Назад
 					</Button>
+					<Spacer />
 					<Button
 						minW={120}
 						size={"md"}

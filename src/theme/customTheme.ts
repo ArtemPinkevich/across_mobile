@@ -69,6 +69,24 @@ export const customTheme = extendTheme({
 						letterSpacing: -0.23,
 					};
 				},
+				header15_gray: () => {
+					return {
+						color: "#737E86",
+						fontWeight: "500",
+						fontSize: 15,
+						lineHeight: 20,
+						letterSpacing: -0.23,
+					};
+				},
+				body17_black: () => {
+					return {
+						color: "#000",
+						fontWeight: "400",
+						fontSize: 17,
+						lineHeight: 22,
+						letterSpacing: -0.43,
+					};
+				},
 				body15_black: () => {
 					return {
 						color: "#000",

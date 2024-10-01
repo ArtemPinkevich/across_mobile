@@ -9,12 +9,12 @@ import { TransportationStatus } from "./TransportationStatus";
 export const TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP = new Map<Object, string>([
 	[TransportationStatus.notPublished, "Не опублекованно"],
 	[TransportationStatus.carrierFinding, "В заявке"],
-	[TransportationStatus.managerApproving, "на рассмотрении"],
-	[TransportationStatus.shipperApproving, "на согласовании"],
+	[TransportationStatus.managerApproving, "Ожидание подтверждения"],
+	[TransportationStatus.shipperApproving, "Ожидание подтверждения"],
 	[TransportationStatus.waitingForLoading, "В пути на загрузку"],
 	[TransportationStatus.loading, "Загрузка"],
-	[TransportationStatus.transporting, "В дороге"],
-	[TransportationStatus.unloading, "Выгрузка"],
+	[TransportationStatus.transporting, "В пути"],
+	[TransportationStatus.unloading, "На выгрузке"],
 	[TransportationStatus.delivered, "Выгружено"],
 	[TransportationStatus.done, "Доставлено"],
 ]);

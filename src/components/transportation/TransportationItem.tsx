@@ -54,7 +54,7 @@ export const TransportationItem = (props: TransportationItemProps) => {
 							Объем
 						</Text>
 						<Text variant={"body15_black"} ml={2}>
-							{`${transportation.cargo.volume}м³`}
+							{`${transportation.cargo.volume} м³`}
 						</Text>
 					</HStack>
 
@@ -62,7 +62,7 @@ export const TransportationItem = (props: TransportationItemProps) => {
 						variant={"status_badge"}
 						mt={1}
 						bgColor={TRANSPORTATION_STATUS_TO_BGCOLOR_MAP.get(transportation.transportationOrderStatus)}
-						alignSelf={"start"}
+						alignSelf={"flex-start"}
 					>
 						<Text variant={"body12"} color={TRANSPORTATION_STATUS_TO_TEXTCOLOR_MAP.get(transportation.transportationOrderStatus)}>
 							{TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationOrderStatus)}
@@ -77,7 +77,7 @@ export const TransportationItem = (props: TransportationItemProps) => {
 							<HStack>
 								<Text variant={"header15"}>{`${transportation.transferInfo.loadingPlace?.city}`}</Text>
 								<Spacer />
-								<Text ml={5} variant={"body13"}>{`${moment(transportation.transferInfo.loadingDateFrom).format("DD MMMM YYYY")}`}</Text>
+								<Text mr={2} variant={"body13"}>{`${moment(transportation.transferInfo.loadingDateFrom).format("DD MMMM YYYY")}`}</Text>
 							</HStack>
 
 							<HStack>
@@ -85,7 +85,7 @@ export const TransportationItem = (props: TransportationItemProps) => {
 									{`${transportation.transferInfo.loadingPlace?.country}, ${transportation.transferInfo.loadingPlace?.region}`}
 								</Text>
 								<Spacer />
-								<Text ml={5} variant={"body13"}>
+								<Text mr={2} variant={"body13"}>
 									{transportation.contactInfoDto?.loadingTime ?? ""}
 								</Text>
 							</HStack>

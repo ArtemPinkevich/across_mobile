@@ -115,8 +115,12 @@ export default function TabLayout() {
 					marginTop: -5,
 					marginBottom: 5,
 				},
+				headerShadowVisible: true,
+				headerStyle: {
+					borderBottomWidth: 1,
+					height: 80,
+				},
 				headerTitleAlign: "center",
-				headerStyle: { height: 44 },
 				headerTitleStyle: {
 					color: "#000",
 					fontWeight: "600",
