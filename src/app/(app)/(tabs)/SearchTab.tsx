@@ -1,51 +1,40 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FlatList } from "react-native";
 import { router } from "expo-router";
-import { Text, ScrollView, Button, Center, FormControl, Input, Pressable, IconButton, HStack, Box, VStack, Badge } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
+import { Text, ScrollView, Button, Center, Input, Pressable, HStack, Box, VStack, Divider, Spacer } from "native-base";
 import { View } from "../../../components/Themed";
-import DateTimePickerWrapper from "../../../components/common/DateTimePickerWrapper";
 import moment, { Moment } from "moment";
 import { useLazySearchTransportationsQuery } from "../../../store/rtkQuery/searchApi";
 import { SearchRequest } from "../../../api/search/Search";
 import { ITransportation } from "../../../api/transportation/Transportation";
-import { TransportationSearchItem } from "../../../components/transportation/TransportationSearchItem";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { LocalitySearchTarget } from "../(modals)/PlacesInputModal";
 import { RootState } from "../../../store/configureStore";
-import { placeToDisplayStringConverter } from "../../../api/places/PlaceToDisplayStringConverter";
 import { IPlace } from "../../../api/places/Places";
+import MapMarkerSvg from "../../../components/svg/MapMarkerSvg";
+import { ELEMENTS_BG_COLOR, MAP_MARKER_BLACK, MAP_MARKER_BLUE } from "../../../constants/Colors";
+import { TransportationItem } from "../../../components/transportation/TransportationItem";
 
 export default function SearchTab() {
 	const dispatch = useDispatch();
 	const loadingPlace: IPlace | undefined = useSelector((state: RootState) => state.places.searchPlaceFrom);
 	const unloadingPlace: IPlace | undefined = useSelector((state: RootState) => state.places.searchPlaceTo);
 
+	// const loadingPlace: IPlace | undefined = FAKE_PLACE_FROM;
+	// const unloadingPlace: IPlace | undefined = FAKE_PLACE_TO_LONG;
+
 	const [transportations, setTransportations] = useState<ITransportation[]>();
 	const [loadingDateFrom, setLoadingDateFrom] = useState<Moment | undefined>(moment());
-	const [isFiltredExpanded, setIsFiltredExpanded] = useState<boolean>(false);
 	const [weightMin, setWeightMin] = useState<number | undefined>();
 	const [weightMax, setWeightMax] = useState<number>();
 	const [volumeMin, setVolumeMin] = useState<number>();
 	const [volumeMax, setVolumeMax] = useState<number>();
-	const [filterCount, setFilterCount] = useState<number>();
 
 	const [trigger, { data: searchResponse }] = useLazySearchTransportationsQuery();
 	// let searchResponse: SearchResponse = searchResponseFake;
 	// const [transportations, setTransportations] = useState<ITransportation[]>(searchResponse.transportationOrders);
-
-	useEffect(() => {
-		let newFilterCount = 0;
-		if ((weightMin && weightMin > 0) || (weightMax && weightMax > 0)) {
-			newFilterCount++;
-		}
-		if ((volumeMin && volumeMin > 0) || (volumeMax && volumeMax > 0)) {
-			newFilterCount++;
-		}
-		setFilterCount(newFilterCount);
-	}, [weightMin, weightMax, volumeMin, volumeMax]);
 
 	const resetFiltersHandler = () => {
 		setWeightMin(undefined);
@@ -102,7 +91,7 @@ export default function SearchTab() {
 
 	const renderItem = (item: ITransportation) => (
 		<Pressable onPress={() => itemPressHandler(item)} my={1}>
-			<TransportationSearchItem transportation={item} />
+			<TransportationItem transportation={item} isMenuVisible={false} isStatusVisible={false} />
 		</Pressable>
 	);
 
@@ -116,139 +105,175 @@ export default function SearchTab() {
 
 	return (
 		<View style={{ flex: 1, alignItems: "stretch" }}>
-			<ScrollView px={4}>
-				<FormControl isRequired my={2}>
-					<Pressable onPress={loadingPlacePressHandler}>
-						<Input
-							maxLength={300}
-							variant="underlined"
-							placeholder="Откуда"
-							size="md"
-							value={loadingPlace ? placeToDisplayStringConverter(loadingPlace) : ""}
-						/>
-					</Pressable>
-					<Pressable onPress={unloadingPlacePressHandler}>
-						<Input
-							maxLength={300}
-							variant="underlined"
-							placeholder="Куда"
-							size="md"
-							value={unloadingPlace ? placeToDisplayStringConverter(unloadingPlace) : ""}
-						/>
-					</Pressable>
-				</FormControl>
+			<ScrollView p={4}>
+				{/* На смартфоне (expo) почему-то снизу нет отступа. Пришлось сделать <VStack mb={6} */}
+				<VStack mb={6} space={4}>
+					<Box p={4} variant={"gray_card"}>
+						<Text variant={"header20"}>Откуда и куда</Text>
 
-				<FormControl my={2}>
-					<FormControl.Label>Дата загрузки</FormControl.Label>
-					<DateTimePickerWrapper date={loadingDateFrom} placeholder="Дата загрузки" onChanged={(o) => setLoadingDateFrom(o)} />
-				</FormControl>
+						<HStack mt={6} space={3}>
+							<Center>
+								<MapMarkerSvg color={MAP_MARKER_BLUE} />
+							</Center>
+							{loadingPlace ? (
+								<Pressable onPress={loadingPlacePressHandler}>
+									<VStack w={"100%"}>
+										<Text variant={"header15"}>{loadingPlace.city}</Text>
+										<Text variant={"body13"}>{`${loadingPlace.country}, ${loadingPlace.region}`}</Text>
+									</VStack>
+								</Pressable>
+							) : (
+								<Pressable onPress={loadingPlacePressHandler}>
+									<Center>
+										<Text variant={"body15_gray"}>Откуда</Text>
+									</Center>
+								</Pressable>
+							)}
+						</HStack>
 
-				<Pressable my={2} onPress={() => setIsFiltredExpanded(!isFiltredExpanded)}>
-					<HStack>
-						<VStack>
-							{filterCount && filterCount > 0 ? (
-								<Badge
-									colorScheme="red"
-									rounded="full"
-									mb={-4}
-									mr={-4}
-									zIndex={1}
-									variant="solid"
-									alignSelf="flex-end"
-									_text={{
-										fontSize: 12,
-									}}
-								>
-									{filterCount}
-								</Badge>
-							) : null}
+						<Divider mt={6} />
 
-							<IconButton variant={"outline"} _icon={{ as: AntDesign, name: "filter" }} size={7} />
-						</VStack>
+						<HStack mt={6} mb={2} space={3}>
+							<Center>
+								<MapMarkerSvg color={MAP_MARKER_BLACK} />
+							</Center>
+							{unloadingPlace ? (
+								<Pressable onPress={unloadingPlacePressHandler}>
+									<VStack w={"100%"}>
+										<Text variant={"header15"}>{unloadingPlace.city}</Text>
+										<Text variant={"body13"}>{`${unloadingPlace.country}, ${unloadingPlace.region}`}</Text>
+									</VStack>
+								</Pressable>
+							) : (
+								<Pressable onPress={unloadingPlacePressHandler}>
+									<Center>
+										<Text variant={"body15_gray"}>Куда</Text>
+									</Center>
+								</Pressable>
+							)}
+						</HStack>
+					</Box>
+					{/* 
+					<Box p={4} variant={"gray_card"}>
+						<Text variant={"header20"}>Когда</Text>
+						<DateTimePickerWrapper date={loadingDateFrom} placeholder="Дата загрузки" onChanged={(o) => setLoadingDateFrom(o)} />
+					</Box> */}
 
-						<Center>
-							<Text ml={5} fontSize="sm" color={"blueGray.500"}>
-								Параметры
-							</Text>
-						</Center>
-					</HStack>
-				</Pressable>
-
-				{isFiltredExpanded ? (
-					<Box>
-						<Center alignItems={"end"}>
-							<Button size={"sm"} variant="link" onPress={resetFiltersHandler}>
-								Сбросить фильтры
-							</Button>
-						</Center>
-						<FormControl.Label mt={2}>Вес, т</FormControl.Label>
+					<Box p={4} variant={"gray_card"}>
 						<HStack>
+							<Center>
+								<Text variant={"header20"}>Фильтры</Text>
+							</Center>
+							<Spacer />
+							<Center>
+								<Button size={"sm"} variant="link" onPress={resetFiltersHandler}>
+									Сбросить фильтры
+								</Button>
+							</Center>
+						</HStack>
+
+						<Text mt={2} variant={"body16_gray"}>
+							Вес, т
+						</Text>
+						<HStack mt={1}>
 							<Input
 								inputMode="numeric"
+								w={"50%"}
+								bg={ELEMENTS_BG_COLOR}
 								mr={1}
 								maxLength={4}
 								variant="filled"
-								size="xs"
-								placeholder="Вес, от"
+								rounded={"xl"}
+								placeholder="0"
+								fontSize={17}
 								value={weightMin?.toString() ?? ""}
 								onBlur={applyFiltersHandler}
 								onChangeText={(o) => setWeightMin(+o)}
+								leftElement={
+									<Text variant={"body17_gray"} ml={3}>
+										от
+									</Text>
+								}
 							/>
-							{"_"}
 							<Input
 								inputMode="numeric"
+								w={"50%"}
+								bg={ELEMENTS_BG_COLOR}
 								ml={1}
 								maxLength={4}
 								variant="filled"
-								size="xs"
-								placeholder="Вес, до"
+								rounded={"xl"}
+								placeholder="9999"
+								fontSize={17}
 								value={weightMax?.toString() ?? ""}
 								onBlur={applyFiltersHandler}
 								onChangeText={(o) => setWeightMax(+o)}
+								leftElement={
+									<Text variant={"body17_gray"} ml={3}>
+										до
+									</Text>
+								}
 							/>
 						</HStack>
 
-						<FormControl.Label mt={2}>Объем, м3</FormControl.Label>
-						<HStack>
+						<Text mt={4} variant={"body16_gray"}>
+							Объем, м3
+						</Text>
+						<HStack mt={1}>
 							<Input
 								inputMode="numeric"
+								w={"50%"}
+								bg={ELEMENTS_BG_COLOR}
 								mr={1}
 								maxLength={4}
 								variant="filled"
-								size="xs"
-								placeholder="Объем, от"
+								rounded={"xl"}
+								placeholder="0"
+								fontSize={17}
 								value={volumeMin?.toString() ?? ""}
 								onBlur={applyFiltersHandler}
 								onChangeText={(o) => setVolumeMin(+o)}
+								leftElement={
+									<Text variant={"body17_gray"} ml={3}>
+										от
+									</Text>
+								}
 							/>
-							{"_"}
 							<Input
 								inputMode="numeric"
+								w={"50%"}
+								bg={ELEMENTS_BG_COLOR}
 								ml={1}
 								maxLength={4}
 								variant="filled"
-								size="xs"
-								placeholder="Объем, до"
-								value={volumeMax?.toString() ?? ""}
+								rounded={"xl"}
+								placeholder="9999"
+								fontSize={17}
+								value={weightMax?.toString() ?? ""}
 								onBlur={applyFiltersHandler}
-								onChangeText={(o) => setVolumeMax(+o)}
+								onChangeText={(o) => setWeightMax(+o)}
+								leftElement={
+									<Text variant={"body17_gray"} ml={3}>
+										до
+									</Text>
+								}
 							/>
 						</HStack>
 					</Box>
-				) : null}
 
-				<Center my={4}>
-					<Button minW={200} size={"md"} variant="outline" onPress={searchHandler}>
-						Найти
-					</Button>
-				</Center>
-				{!transportations ? null : transportations?.length > 0 ? (
-					<FlatList data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />
-				) : (
-					<Text textAlign={"center"} color={"red.500"}>
-						По данному запросу отправления не найдены.
-					</Text>
-				)}
+					<Center>
+						<Button minW={200} size={"md"} variant="outline" onPress={searchHandler}>
+							Найти
+						</Button>
+					</Center>
+					{!transportations ? null : transportations?.length > 0 ? (
+						<FlatList data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />
+					) : (
+						<Text textAlign={"center"} color={"red.500"}>
+							По данному запросу отправления не найдены.
+						</Text>
+					)}
+				</VStack>
 			</ScrollView>
 		</View>
 	);

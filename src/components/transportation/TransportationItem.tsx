@@ -20,10 +20,11 @@ import { MAP_MARKER_BLACK, MAP_MARKER_BLUE } from "../../constants/Colors";
 type TransportationItemProps = {
 	transportation: ITransportation;
 	isMenuVisible?: boolean;
+	isStatusVisible?: boolean;
 };
 
 export const TransportationItem = (props: TransportationItemProps) => {
-	const { transportation, isMenuVisible = true } = props;
+	const { transportation, isMenuVisible = true, isStatusVisible = true } = props;
 	const dispatch = useDispatch();
 	const [deleteTransportation] = useDeleteTransportationMutation();
 
@@ -58,16 +59,18 @@ export const TransportationItem = (props: TransportationItemProps) => {
 						</Text>
 					</HStack>
 
-					<Badge
-						variant={"status_badge"}
-						mt={1}
-						bgColor={TRANSPORTATION_STATUS_TO_BGCOLOR_MAP.get(transportation.transportationOrderStatus)}
-						alignSelf={"flex-start"}
-					>
-						<Text variant={"body12"} color={TRANSPORTATION_STATUS_TO_TEXTCOLOR_MAP.get(transportation.transportationOrderStatus)}>
-							{TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationOrderStatus)}
-						</Text>
-					</Badge>
+					{isStatusVisible && (
+						<Badge
+							variant={"status_badge"}
+							mt={1}
+							bgColor={TRANSPORTATION_STATUS_TO_BGCOLOR_MAP.get(transportation.transportationOrderStatus)}
+							alignSelf={"flex-start"}
+						>
+							<Text variant={"body12"} color={TRANSPORTATION_STATUS_TO_TEXTCOLOR_MAP.get(transportation.transportationOrderStatus)}>
+								{TRANSPORTATION_STATUS_TO_DISPLAY_NAME_MAP.get(transportation.transportationOrderStatus)}
+							</Text>
+						</Badge>
+					)}
 
 					<HStack mt={3} space={3}>
 						<Center>

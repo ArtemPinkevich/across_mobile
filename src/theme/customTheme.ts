@@ -51,6 +51,15 @@ export const customTheme = extendTheme({
 		},
 		Text: {
 			variants: {
+				header20: () => {
+					return {
+						color: "#000",
+						fontWeight: "600",
+						fontSize: 20,
+						lineHeight: 25,
+						letterSpacing: -0.45,
+					};
+				},
 				header17: () => {
 					return {
 						color: "#000",
@@ -85,6 +94,24 @@ export const customTheme = extendTheme({
 						fontSize: 17,
 						lineHeight: 22,
 						letterSpacing: -0.43,
+					};
+				},
+				body17_gray: () => {
+					return {
+						color: "#666666",
+						fontWeight: "400",
+						fontSize: 17,
+						lineHeight: 22,
+						letterSpacing: -0.43,
+					};
+				},
+				body16_gray: () => {
+					return {
+						color: "#737E86",
+						fontWeight: "500",
+						fontSize: 16,
+						lineHeight: 21,
+						letterSpacing: -0.31,
 					};
 				},
 				body15_black: () => {

@@ -11,9 +11,11 @@ import { NeedAddTruck } from "../../../components/garage/NeedAddTruck";
 import { ApiCommonResult } from "../../../api/common/commonApi";
 import { router } from "expo-router";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
-import { TransportationSearchItem } from "../../../components/transportation/TransportationSearchItem";
 import { useDispatch } from "react-redux";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
+import { FAKE_TRANSPORTATION_LONG } from "../../../api/search/FakeTransportationLong";
+import { TRANSPORTATION_FAKE } from "../../../api/search/SearchResponceFake";
+import { TransportationItem } from "../../../components/transportation/TransportationItem";
 
 export default function RecommendationsTab() {
 	const dispatch = useDispatch();
@@ -22,6 +24,7 @@ export default function RecommendationsTab() {
 
 	const truck = trucks[0];
 	const [transportations, setTransportations] = useState<ITransportation[]>();
+	//const transportations = [TRANSPORTATION_FAKE, FAKE_TRANSPORTATION_LONG];
 
 	const [trigger, { data: searchResponse, isLoading, isError }] = useLazySearchRecommendationsByTruckQuery();
 
@@ -48,7 +51,7 @@ export default function RecommendationsTab() {
 
 	const renderItem = (item: ITransportation) => (
 		<Pressable onPress={() => itemPressHandler(item)} my={1}>
-			<TransportationSearchItem transportation={item} />
+			<TransportationItem transportation={item} isMenuVisible={false} isStatusVisible={false} />
 		</Pressable>
 	);
 
@@ -71,7 +74,9 @@ export default function RecommendationsTab() {
 					</Button>
 				</Center>
 			)}
-			{!transportations ? null : transportations?.length > 0 && <FlatList data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />}
+			{!transportations
+				? null
+				: transportations?.length > 0 && <FlatList px={4} data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />}
 		</View>
 	) : (
 		<NeedAddTruck />
