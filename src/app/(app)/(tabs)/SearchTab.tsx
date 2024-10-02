@@ -261,11 +261,9 @@ export default function SearchTab() {
 						</HStack>
 					</Box>
 
-					<Center>
-						<Button minW={200} size={"md"} variant="outline" onPress={searchHandler}>
-							Найти
-						</Button>
-					</Center>
+					<Button variant="blue_button" onPress={searchHandler}>
+						Найти
+					</Button>
 					{!transportations ? null : transportations?.length > 0 ? (
 						<FlatList data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />
 					) : (

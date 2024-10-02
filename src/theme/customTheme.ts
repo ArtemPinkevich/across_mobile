@@ -38,6 +38,21 @@ export const customTheme = extendTheme({
 		mono: "Inter",
 	},
 	components: {
+		Button: {
+			variants: {
+				blue_button: () => {
+					return {
+						bg: "#2C64E3",
+						borderRadius: "16",
+						width: "100%",
+						height: 58,
+						_text: {
+							color: "white",
+						},
+					};
+				},
+			},
+		},
 		Box: {
 			variants: {
 				gray_card: () => {
