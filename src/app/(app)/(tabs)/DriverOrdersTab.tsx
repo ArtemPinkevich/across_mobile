@@ -35,12 +35,12 @@ export default function DriverOrdersTab() {
 	};
 
 	const renderItem = (item: ITransportation) => (
-		<Pressable onPress={() => itemPressHandler(item)} my={1}>
+		<Pressable onPress={() => itemPressHandler(item)} mb={3}>
 			<TransportationItem transportation={item as ITransportation} isMenuVisible={false} />
 		</Pressable>
 	);
 
-	let content = <FlatList px={"4"} mt={"4"} data={filtred} renderItem={(o) => renderItem(o.item)} />;
+	let content = <FlatList pt={4} data={filtred} renderItem={(o) => renderItem(o.item)} />;
 
 	if (filtred.length === 0) {
 		content = (
@@ -50,5 +50,5 @@ export default function DriverOrdersTab() {
 		);
 	}
 
-	return <View style={{ flex: 1, alignItems: "stretch" }}>{content}</View>;
+	return <View style={{ flex: 1, alignItems: "stretch", paddingHorizontal: 16, paddingBottom: 4 }}>{content}</View>;
 }

@@ -27,15 +27,13 @@ export const TruckItem = (props: CarProps) => {
 	};
 
 	return (
-		<HStack py={4} pl={4}>
+		<HStack>
 			<Center>
 				<TruckSvg color={"#000"} />
 			</Center>
 			<VStack pl={5} w="80%">
-				<Text bold fontSize="xl">
-					{trailerTypeDisplayName}
-				</Text>
-				<Text>{carBodyDisplayName}</Text>
+				<Text variant={"body17_black"}>{trailerTypeDisplayName}</Text>
+				<Text variant={"body13"}>{carBodyDisplayName}</Text>
 			</VStack>
 			<Center>
 				{/* defaultIsOpen={false} чтобы не фризился экран (по мотивам https://github.com/GeekyAnts/NativeBase/issues/4730) */}

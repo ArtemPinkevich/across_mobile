@@ -72,7 +72,7 @@ export default function TransportationDetailsModal(props: Props) {
 
 	return (
 		<ScrollView px={4}>
-			<VStack my={4} space={2}>
+			<VStack my={4} space={3}>
 				<Box p={4} variant={"gray_card"}>
 					<Text variant={"header15_gray"}>Маршрут</Text>
 					<HStack>

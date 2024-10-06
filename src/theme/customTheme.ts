@@ -49,6 +49,10 @@ export const customTheme = extendTheme({
 						height: 58,
 						_text: {
 							color: "white",
+							fontWeight: "600",
+							fontSize: 17,
+							lineHeight: 22,
+							letterSpacing: -0.43,
 						},
 					};
 				},

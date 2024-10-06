@@ -8,12 +8,15 @@ import { TransportationItem } from "../../../components/transportation/Transport
 import { useGetRequestedOrdersQuery } from "../../../store/rtkQuery/transportationApi";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { View } from "../../../components/Themed";
+import { TRANSPORTATION_FAKE } from "../../../api/search/SearchResponceFake";
+import { FAKE_TRANSPORTATION_LONG } from "../../../api/search/FakeTransportationLong";
 
 export default function DriverRequestsTab() {
 	const dispatch = useDispatch();
 
 	const { data } = useGetRequestedOrdersQuery();
 	const filtred = data?.transportationOrderDtos?.filter((o) => o.transportationOrderStatus !== TransportationStatus.done) ?? [];
+	//const filtred = [TRANSPORTATION_FAKE, FAKE_TRANSPORTATION_LONG];
 
 	const itemPressHandler = (transportation: ITransportation) => {
 		dispatch(setViewedTransportation(transportation));
@@ -21,12 +24,12 @@ export default function DriverRequestsTab() {
 	};
 
 	const renderItem = (item: ITransportation) => (
-		<Pressable onPress={() => itemPressHandler(item)} my={2}>
+		<Pressable onPress={() => itemPressHandler(item)} mb={3}>
 			<TransportationItem transportation={item as ITransportation} isMenuVisible={false} />
 		</Pressable>
 	);
 
-	let content = <FlatList px={"4"} data={filtred} renderItem={(o) => renderItem(o.item)} />;
+	let content = <FlatList pt={4} data={filtred} renderItem={(o) => renderItem(o.item)} />;
 
 	if (filtred.length === 0) {
 		content = (
@@ -36,5 +39,5 @@ export default function DriverRequestsTab() {
 		);
 	}
 
-	return <View style={{ flex: 1, alignItems: "stretch" }}>{content}</View>;
+	return <View style={{ flex: 1, alignItems: "stretch", paddingHorizontal: 16, paddingBottom: 4 }}>{content}</View>;
 }
