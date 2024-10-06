@@ -15,7 +15,7 @@ import { router } from "expo-router";
 import { setEditingTransportation } from "../../store/slices/buildTransportationSlice";
 import { TransportationStatus } from "../../api/transportation/TransportationStatus";
 import MapMarkerSvg from "../svg/MapMarkerSvg";
-import { MAP_MARKER_BLACK, MAP_MARKER_BLUE } from "../../constants/Colors";
+import { MAP_MARKER_BLACK, GENERAL_BLUE_COLOR } from "../../constants/Colors";
 
 type TransportationItemProps = {
 	transportation: ITransportation;
@@ -74,7 +74,7 @@ export const TransportationItem = (props: TransportationItemProps) => {
 
 					<HStack mt={3} space={3}>
 						<Center>
-							<MapMarkerSvg color={MAP_MARKER_BLUE} />
+							<MapMarkerSvg color={GENERAL_BLUE_COLOR} />
 						</Center>
 						<VStack w={"100%"}>
 							<HStack>

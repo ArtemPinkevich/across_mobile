@@ -1,4 +1,3 @@
-export const MAP_MARKER_BLUE = "#2C64E3";
 export const MAP_MARKER_BLACK = "#000000";
 
 export const APPROVING_ORDER_STATUS_COLOR = "#F3F35D";
@@ -7,6 +6,8 @@ export const TRANSPORTING_ORDER_STATUS_COLOR = "#5D73F3";
 export const UNLOADING_ORDER_STATUS_COLOR = "#25E9A8";
 
 export const ELEMENTS_BG_COLOR = "#EBECF0";
+export const GENERAL_RED_COLOR = "#E32C2C";
+export const GENERAL_BLUE_COLOR = "#2C64E3";
 
 const tintColorLight = "#2f95dc";
 const tintColorDark = "#fff";

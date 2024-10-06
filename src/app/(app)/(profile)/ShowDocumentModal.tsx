@@ -1,12 +1,13 @@
 import * as React from "react";
 import { View } from "../../../components/Themed";
 import { Image } from "expo-image";
-import { Button, Text, Modal } from "native-base";
+import { Button, Text, Modal, Box } from "native-base";
 import { useEffect, useState } from "react";
 import { UserContentType } from "../../../api/profile/documentsEnums";
 import { getUserContentFromBackend } from "../../../services/ImageHelper";
 import { router, useLocalSearchParams } from "expo-router";
 import ChooseSourceAndUploadModal from "../../../components/profile/ChooseSourceAndUploadModal";
+import { GENERAL_BLUE_COLOR } from "../../../constants/Colors";
 
 export default function ShowDocumentModal() {
 	const { docType } = useLocalSearchParams<{ docType: string }>();
@@ -30,16 +31,19 @@ export default function ShowDocumentModal() {
 	};
 
 	return (
-		<View style={{ flex: 1, alignItems: "stretch" }}>
-			<Image style={{ flex: 1, width: "100%" }} source={base64FromServer} />
-			<Button.Group alignSelf={"end"} my={2} mx={4} space={2}>
-				<Button minW={120} size={"md"} variant="outline" onPress={() => setShowModal(true)}>
-					Заменить
-				</Button>
-				<Button minW={120} size={"lg"} variant="solid" onPress={() => router.back()}>
-					Назад
-				</Button>
-			</Button.Group>
+		<View style={{ flex: 1, alignItems: "stretch", padding: 16 }}>
+			<Box w={"100%"} h={320} maxH={320}>
+				<Image
+					style={{ flex: 1, width: "100%", borderWidth: 2, borderRadius: 16, borderColor: GENERAL_BLUE_COLOR }}
+					//source={"https://www.jquery-az.com/html/images/banana.jpg"}
+					source={base64FromServer}
+				/>
+			</Box>
+
+			<Button my={6} variant="blue_button" onPress={() => setShowModal(true)}>
+				Заменить
+			</Button>
+
 			<Modal isOpen={showModal} onClose={() => setShowModal(false)}>
 				<Modal.Content maxWidth="400px">
 					<Modal.CloseButton />

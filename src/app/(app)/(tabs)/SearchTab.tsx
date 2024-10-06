@@ -14,7 +14,7 @@ import { LocalitySearchTarget } from "../(modals)/PlacesInputModal";
 import { RootState } from "../../../store/configureStore";
 import { IPlace } from "../../../api/places/Places";
 import MapMarkerSvg from "../../../components/svg/MapMarkerSvg";
-import { ELEMENTS_BG_COLOR, MAP_MARKER_BLACK, MAP_MARKER_BLUE } from "../../../constants/Colors";
+import { ELEMENTS_BG_COLOR, MAP_MARKER_BLACK, GENERAL_BLUE_COLOR } from "../../../constants/Colors";
 import { TransportationItem } from "../../../components/transportation/TransportationItem";
 
 export default function SearchTab() {
@@ -113,7 +113,7 @@ export default function SearchTab() {
 
 						<HStack mt={6} space={3}>
 							<Center>
-								<MapMarkerSvg color={MAP_MARKER_BLUE} />
+								<MapMarkerSvg color={GENERAL_BLUE_COLOR} />
 							</Center>
 							{loadingPlace ? (
 								<Pressable onPress={loadingPlacePressHandler}>

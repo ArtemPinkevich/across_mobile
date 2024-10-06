@@ -8,6 +8,7 @@ import { AuthorizationService } from "../../../services/AuthorizationService";
 import UserAvatar from "../../../components/profile/Avatar";
 import { ArrowToRightSectionHoc } from "../../../components/screenItems/ArrowToRightSectionHoc";
 import { ArrowToRightBlackHeaderSectionHoc } from "../../../components/screenItems/ArrowToRightBlackHeaderSectionHoc";
+import { GENERAL_RED_COLOR } from "../../../constants/Colors";
 
 export default function ProfileTab() {
 	let content = (
@@ -81,7 +82,7 @@ export default function ProfileTab() {
 					</Box>
 
 					<Button my={6} variant="red_link_button" fontSize={17} onPress={() => AuthorizationService.signOut()}>
-						<Text variant={"header17"} color={"#E32C2C"}>
+						<Text variant={"header17"} color={GENERAL_RED_COLOR}>
 							Выйти
 						</Text>
 					</Button>

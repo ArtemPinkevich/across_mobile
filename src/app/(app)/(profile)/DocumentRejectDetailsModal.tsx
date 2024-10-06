@@ -5,11 +5,14 @@ import { Button, Spacer, Text } from "native-base";
 import ChooseSourceAndUploadModal from "../../../components/profile/ChooseSourceAndUploadModal";
 import { useState } from "react";
 import { useGetProfileQuery } from "../../../store/rtkQuery/profileApi";
+import { FAKE_PROFILE, IProfile } from "../../../api/profile/Profile";
 
 export default function DocumentRejectDetailsModal() {
 	const { docType } = useLocalSearchParams<{ docType: string }>();
 	const [showChooseSourceModal, setShowChooseSourceModal] = useState(false);
-	const { data: profile } = useGetProfileQuery();
+	//const { data: profile } = useGetProfileQuery();
+
+	const profile: IProfile = FAKE_PROFILE;
 
 	if (!profile?.documentDtos) {
 		return null;
@@ -19,21 +22,15 @@ export default function DocumentRejectDetailsModal() {
 
 	const modalOnclose = () => {
 		setShowChooseSourceModal(false);
-		router.back();
 	};
 
 	return (
-		<View style={{ flex: 1, alignItems: "stretch" }}>
-			<Text m={4}>{doc?.comment ?? ""}</Text>
-			<Spacer />
-			<Button.Group alignSelf={"end"} my={2} mx={4} space={2}>
-				<Button minW={120} size={"md"} variant="outline" onPress={() => setShowChooseSourceModal(true)}>
-					Загрузить
-				</Button>
-				<Button minW={120} size={"lg"} variant="solid" onPress={() => router.back()}>
-					Назад
-				</Button>
-			</Button.Group>
+		<View style={{ flex: 1, alignItems: "stretch", padding: 16 }}>
+			<Text>{doc?.comment ?? "Комментарий отсутствует"}</Text>
+
+			<Button my={6} variant="blue_button" onPress={() => setShowChooseSourceModal(true)}>
+				Загрузить
+			</Button>
 
 			<ChooseSourceAndUploadModal userContentType={+docType} showModal={showChooseSourceModal} onClose={modalOnclose} />
 		</View>

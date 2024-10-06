@@ -1,4 +1,5 @@
 import { extendTheme } from "native-base";
+import { GENERAL_BLUE_COLOR } from "../constants/Colors";
 
 export const customTheme = extendTheme({
 	fontConfig: {
@@ -42,7 +43,7 @@ export const customTheme = extendTheme({
 			variants: {
 				blue_button: () => {
 					return {
-						bg: "#2C64E3",
+						bg: GENERAL_BLUE_COLOR,
 						borderRadius: "16",
 						width: "100%",
 						height: 58,
@@ -158,13 +159,6 @@ export const customTheme = extendTheme({
 						letterSpacing: -0.23,
 					};
 				},
-				body12: () => {
-					return {
-						fontWeight: "500",
-						fontSize: 12,
-						lineHeight: 16,
-					};
-				},
 				body13: () => {
 					return {
 						color: "#737E86",
@@ -172,6 +166,13 @@ export const customTheme = extendTheme({
 						fontSize: 13,
 						lineHeight: 18,
 						letterSpacing: -0.08,
+					};
+				},
+				body12: () => {
+					return {
+						fontWeight: "500",
+						fontSize: 12,
+						lineHeight: 16,
 					};
 				},
 			},

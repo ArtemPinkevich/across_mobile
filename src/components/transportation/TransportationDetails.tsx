@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import { ITransportation } from "../../api/transportation/Transportation";
 import { router } from "expo-router";
 import MapMarkerSvg from "../svg/MapMarkerSvg";
-import { MAP_MARKER_BLACK, MAP_MARKER_BLUE } from "../../constants/Colors";
+import { MAP_MARKER_BLACK, GENERAL_BLUE_COLOR } from "../../constants/Colors";
 
 type Props = {
 	transportation: ITransportation;
@@ -79,7 +79,7 @@ export default function TransportationDetailsModal(props: Props) {
 						<VStack w="90%" space={1}>
 							<HStack mt={3} space={3}>
 								<Center>
-									<MapMarkerSvg color={MAP_MARKER_BLUE} />
+									<MapMarkerSvg color={GENERAL_BLUE_COLOR} />
 								</Center>
 								<VStack w={"100%"}>
 									<HStack>
