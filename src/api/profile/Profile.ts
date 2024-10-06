@@ -25,3 +25,35 @@ export interface IUserDocument {
 	documentStatus: UserDocumentStatus;
 	comment?: string;
 }
+
+export const FAKE_PROFILE: IProfile = {
+	name: "Пинкевич",
+	surname: "Артём",
+	patronymic: "Владиславович",
+	role: DRIVER_ROLE,
+	birthDate: "1992-03-21",
+	phoneNumber: "79539105697",
+	reservePhoneNumber: "79539105697",
+	documentDtos: [
+		{
+			documentType: UserContentType.DRIVER_LICENSE,
+			documentStatus: UserDocumentStatus.ACCEPTED,
+			comment: "",
+		},
+		{
+			documentType: UserContentType.PASSPORT_MAIN,
+			documentStatus: UserDocumentStatus.VERIFICATION,
+			comment: "",
+		},
+		{
+			documentType: UserContentType.PASSPORT_BACK_SIDE,
+			documentStatus: UserDocumentStatus.NONE,
+			comment: "",
+		},
+		{
+			documentType: UserContentType.ADR_CERTIFICATE,
+			documentStatus: UserDocumentStatus.REJECTED,
+			comment: "Сорян",
+		},
+	],
+};

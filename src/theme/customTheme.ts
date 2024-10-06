@@ -51,6 +51,17 @@ export const customTheme = extendTheme({
 						},
 					};
 				},
+				red_link_button: () => {
+					return {
+						_text: {
+							color: "#E32C2C",
+							fontWeight: "600",
+							fontSize: 17,
+							lineHeight: 22,
+							letterSpacing: -0.43,
+						},
+					};
+				},
 			},
 		},
 		Box: {

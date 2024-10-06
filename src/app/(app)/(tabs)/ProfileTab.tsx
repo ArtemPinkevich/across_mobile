@@ -1,16 +1,13 @@
-import { Platform, StyleSheet } from "react-native";
-import { Link, router } from "expo-router";
-import { Text, Center, HStack, VStack, Fab, Icon, Pressable, Button, ScrollView } from "native-base";
-import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { Text, Center, HStack, VStack, Pressable, Button, ScrollView, Box, IconButton } from "native-base";
 import React from "react";
-import moment from "moment";
 import { View } from "../../../components/Themed";
-import { TitleAndValueItem } from "../../../components/screenItems/TitleValueItem";
 import { useGetProfileQuery } from "../../../store/rtkQuery/profileApi";
-import { LeftAlignedSection } from "../../../components/screenItems/LeftAlignedSection";
-import { DRIVER_ROLE, SHIPPER_ROLE } from "../../../api/profile/Profile";
+import { DRIVER_ROLE, FAKE_PROFILE, IProfile } from "../../../api/profile/Profile";
 import { AuthorizationService } from "../../../services/AuthorizationService";
 import UserAvatar from "../../../components/profile/Avatar";
+import { ArrowToRightSectionHoc } from "../../../components/screenItems/ArrowToRightSectionHoc";
+import { ArrowToRightBlackHeaderSectionHoc } from "../../../components/screenItems/ArrowToRightBlackHeaderSectionHoc";
 
 export default function ProfileTab() {
 	let content = (
@@ -19,76 +16,79 @@ export default function ProfileTab() {
 		</Center>
 	);
 
-	const { data: profile } = useGetProfileQuery();
+	//const { data: profile } = useGetProfileQuery();
+
+	const profile: IProfile = FAKE_PROFILE;
 
 	if (profile) {
-		const phoneNumber = profile.phoneNumber;
-		const birthdayMoment = moment(profile.birthDate);
-		const isBirthdayValid = profile.birthDate && birthdayMoment.isValid();
-
 		content = (
 			<ScrollView px={4} mb={4}>
-				<VStack space={3}>
-					<Text fontSize="md" color={"blue.500"} fontWeight="500" mt={5}>
-						{profile.role === SHIPPER_ROLE ? "Грузоотправитель" : "Грузоперевозчик"}
-					</Text>
-					<HStack space={10} my={3}>
-						<UserAvatar />
-						<Center maxWidth={"50%"}>
-							<VStack>
-								<Text fontSize="md">{profile.name}</Text>
-								<Text fontSize="md">{profile.surname}</Text>
-								<Text>{profile.patronymic}</Text>
-							</VStack>
-						</Center>
-					</HStack>
-					<TitleAndValueItem title={"Номер телефона"} value={!phoneNumber || phoneNumber === "" ? "Не указано" : phoneNumber} />
-					{profile.reservePhoneNumber && <TitleAndValueItem title={"WhatsApp номер"} value={profile.reservePhoneNumber} />}
-					{Platform.OS === "web" ? null : (
-						<TitleAndValueItem title={"Дата рождения"} value={isBirthdayValid ? birthdayMoment.format("DD MMMM YYYY") : "Не указано"} />
-					)}
+				<VStack space={4}>
+					<Center mt={6} mb={2}>
+						<Box h={160} w={160}>
+							<UserAvatar />
+						</Box>
+					</Center>
 
-					<Pressable onPress={() => router.push("/DocumentsModal")} my={1}>
-						<LeftAlignedSection title={"Документы"} value={"Необходимо загрузить фото документов для подтверждения личности"} />
-					</Pressable>
+					<Box p={4} variant={"gray_card"}>
+						<VStack space={4}>
+							<Pressable onPress={() => router.push("/EditProfileModal")}>
+								<ArrowToRightSectionHoc title="Имя">
+									<HStack space={2} flexWrap={"wrap"}>
+										<Text variant={"body17_black"}>{profile.surname ?? ""}</Text>
+										<Text variant={"body17_black"}>{profile.name ?? ""}</Text>
+										<Text variant={"body17_black"}>{profile.patronymic ?? ""}</Text>
+									</HStack>
+								</ArrowToRightSectionHoc>
+							</Pressable>
+
+							<Pressable>
+								<ArrowToRightSectionHoc title="Номер телефона">
+									<Text variant={"body17_black"}>{profile.phoneNumber ?? ""}</Text>
+								</ArrowToRightSectionHoc>
+							</Pressable>
+
+							{profile.reservePhoneNumber && (
+								<Pressable>
+									<ArrowToRightSectionHoc title="WhatsApp телефона">
+										<Text variant={"body17_black"}>{profile.reservePhoneNumber ?? ""}</Text>
+									</ArrowToRightSectionHoc>
+								</Pressable>
+							)}
+						</VStack>
+					</Box>
+
+					<Box p={4} variant={"gray_card"}>
+						<Pressable onPress={() => router.push("/DocumentsModal")}>
+							<ArrowToRightBlackHeaderSectionHoc title="Документы">
+								<Text variant={"body13"}>Необходимо загрузить фото документов</Text>
+							</ArrowToRightBlackHeaderSectionHoc>
+						</Pressable>
+					</Box>
 
 					{profile.role === DRIVER_ROLE && (
-						<Pressable onPress={() => router.push("/GarageModal")} my={1}>
-							<LeftAlignedSection title={"Гараж"} value={""} />
-						</Pressable>
+						<Box px={4} py={6} variant={"gray_card"}>
+							<Pressable onPress={() => router.push("/GarageModal")}>
+								<ArrowToRightBlackHeaderSectionHoc title="Гараж"></ArrowToRightBlackHeaderSectionHoc>
+							</Pressable>
+						</Box>
 					)}
 
-					<Pressable onPress={() => router.push("/JournalModal")} my={1}>
-						<LeftAlignedSection title={"История перевозок"} value={""} />
-					</Pressable>
+					<Box px={4} py={6} variant={"gray_card"}>
+						<Pressable onPress={() => router.push("/JournalModal")}>
+							<ArrowToRightBlackHeaderSectionHoc title="История перевозок"></ArrowToRightBlackHeaderSectionHoc>
+						</Pressable>
+					</Box>
 
-					<Button variant="link" minW={200} size={"lg"} onPress={() => AuthorizationService.signOut()}>
-						Выйти
+					<Button my={6} variant="red_link_button" fontSize={17} onPress={() => AuthorizationService.signOut()}>
+						<Text variant={"header17"} color={"#E32C2C"}>
+							Выйти
+						</Text>
 					</Button>
 				</VStack>
 			</ScrollView>
 		);
 	}
 
-	return (
-		<View style={styles.container}>
-			{content}
-			<Link href="/EditProfileModal" asChild>
-				<Fab
-					position="absolute"
-					placement="bottom-right"
-					bgColor={"blue.500"}
-					icon={<Icon color="white" as={<MaterialIcons name="edit" />} size="sm" />}
-					renderInPortal={false}
-				/>
-			</Link>
-		</View>
-	);
+	return <View style={{ flex: 1, alignItems: "center" }}>{content}</View>;
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-	},
-});

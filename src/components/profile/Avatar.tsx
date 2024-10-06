@@ -1,10 +1,11 @@
 import * as React from "react";
 import { useState } from "react";
-import { Box, Avatar, Pressable } from "native-base";
+import { Box, Avatar, Pressable, IconButton } from "native-base";
 import { UserContentType } from "../../api/profile/documentsEnums";
 import { getUserContentFromBackend } from "../../services/ImageHelper";
 import ChooseSourceAndUploadModal from "./ChooseSourceAndUploadModal";
 import { useFocusEffect } from "expo-router";
+import EditSvg from "../svg/EditSvg";
 
 export default function UserAvatar() {
 	const [showUploadModal, setShowUploadModal] = useState(false);
@@ -29,10 +30,10 @@ export default function UserAvatar() {
 	return (
 		<Box>
 			<ChooseSourceAndUploadModal userContentType={UserContentType.AVATAR} showModal={showUploadModal} onClose={uploadModalOnClose} />
-			<Pressable onPress={() => setShowUploadModal(true)} my={2}>
+			<Pressable onPress={() => setShowUploadModal(true)}>
 				<Avatar
 					bg="blueGray.500"
-					size={"xl"}
+					style={{ height: 160, width: 160 }}
 					source={{
 						uri: base64FromServer,
 					}}
@@ -40,6 +41,17 @@ export default function UserAvatar() {
 					A
 				</Avatar>
 			</Pressable>
+			<IconButton
+				position={"absolute"}
+				bottom={0}
+				right={0}
+				rounded={"full"}
+				size={"lg"}
+				shadow={"5"}
+				bg={"#fff"}
+				onPress={() => setShowUploadModal(true)}
+				icon={<EditSvg />}
+			/>
 		</Box>
 	);
 }
