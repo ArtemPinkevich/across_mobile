@@ -13,7 +13,6 @@ import {
 import { useDeleteTransportationMutation } from "../../store/rtkQuery/transportationApi";
 import { router } from "expo-router";
 import { setEditingTransportation } from "../../store/slices/buildTransportationSlice";
-import { TransportationStatus } from "../../api/transportation/TransportationStatus";
 import MapMarkerSvg from "../svg/MapMarkerSvg";
 import { MAP_MARKER_BLACK, GENERAL_BLUE_COLOR } from "../../constants/Colors";
 

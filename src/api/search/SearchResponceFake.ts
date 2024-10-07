@@ -75,7 +75,7 @@ export const TRANSPORTATION_FAKE: ITransportation = {
 		unloadingContactPerson: "Фио На Выгрузке",
 		unloadingContactPhone: "79002220022",
 	},
-	transportationOrderStatus: TransportationStatus.waitingForLoading,
+	transportationOrderStatus: TransportationStatus.managerApproving,
 	price: 300000,
 };
 

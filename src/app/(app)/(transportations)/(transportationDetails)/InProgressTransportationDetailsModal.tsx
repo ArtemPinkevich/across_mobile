@@ -22,7 +22,7 @@ export default function InProgressTransportationDetailsModal() {
 	const [startTransportation, { isLoading: isLoadingStartTransportation, error: errorStartTransportation }] = useStartTransportationMutation();
 	const [informArrivalForUnloading, { isLoading: isLoadingForUnloading, error: errorForUnloading }] = useInformArrivalForUnloadingMutation();
 
-	const doneHandler = async () => {
+	const onPressHandler = async () => {
 		if (!viewedTransportation?.transportationOrderId) {
 			return;
 		}
@@ -77,21 +77,9 @@ export default function InProgressTransportationDetailsModal() {
 		<View style={{ flex: 1, alignItems: "stretch" }}>
 			<TransportationDetails transportation={viewedTransportation} />
 			<Center m={4}>
-				<HStack>
-					<Button minW={120} size={"md"} variant="outline" onPress={() => router.back()}>
-						Назад
-					</Button>
-					<Spacer />
-					<Button
-						minW={120}
-						size={"md"}
-						variant="outline"
-						isLoading={isLoading || isLoadingForLoading || isLoadingStartTransportation || isLoadingForUnloading}
-						onPress={doneHandler}
-					>
-						{getButtonText()}
-					</Button>
-				</HStack>
+				<Button variant="blue_button" onPress={onPressHandler}>
+					{getButtonText()}
+				</Button>
 				{(error || errorForLoading || errorStartTransportation || errorForUnloading) && <Text color={"red.500"}>Не удалось выполнить операцию</Text>}
 			</Center>
 		</View>

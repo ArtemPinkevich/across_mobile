@@ -53,7 +53,7 @@ export const FAKE_PROFILE: IProfile = {
 		{
 			documentType: UserContentType.ADR_CERTIFICATE,
 			documentStatus: UserDocumentStatus.REJECTED,
-			comment: "Сорян",
+			comment: "Ну чесно, фото не очень :)",
 		},
 	],
 };

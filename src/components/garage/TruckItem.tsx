@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable } from "react-native";
-import { HStack, Center, VStack, Menu, Text } from "native-base";
+import { HStack, Center, VStack, Menu, Text, Spacer } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ITruck } from "../../api/truck/Truck";
 import { CARBODY_DISPLAY_NAME_MAP } from "../../api/transportation/toDisplayNameMappers/CarBodyToDisplayNameMap";
@@ -31,10 +31,11 @@ export const TruckItem = (props: CarProps) => {
 			<Center>
 				<TruckSvg color={"#000"} />
 			</Center>
-			<VStack pl={5} w="80%">
+			<VStack pl={4} maxW="80%">
 				<Text variant={"body17_black"}>{trailerTypeDisplayName}</Text>
 				<Text variant={"body13"}>{carBodyDisplayName}</Text>
 			</VStack>
+			<Spacer />
 			<Center>
 				{/* defaultIsOpen={false} чтобы не фризился экран (по мотивам https://github.com/GeekyAnts/NativeBase/issues/4730) */}
 				<Menu
@@ -42,7 +43,7 @@ export const TruckItem = (props: CarProps) => {
 					w="150"
 					defaultIsOpen={false}
 					trigger={(triggerProps) => (
-						<Pressable accessibilityLabel="More options menu" {...triggerProps}>
+						<Pressable accessibilityLabel="More options menu" {...triggerProps} style={{ paddingLeft: 16, paddingRight: 8 }}>
 							<MaterialCommunityIcons name="dots-vertical" size={17} />
 						</Pressable>
 					)}

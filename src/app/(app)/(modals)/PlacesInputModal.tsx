@@ -70,8 +70,8 @@ export default function PlacesInputModal() {
 	};
 
 	return (
-		<View style={{ flex: 1, alignItems: "stretch" }}>
-			<Box shadow={9} borderRadius={2} mx={2} mt={2} mb={0}>
+		<View style={{ flex: 1, alignItems: "stretch", padding: 16 }}>
+			<Box shadow={1} borderRadius={1}>
 				<Input
 					placeholder="Начните вводить название города"
 					autoFocus

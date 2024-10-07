@@ -41,7 +41,7 @@ export default function SearchTab() {
 		setWeightMax(undefined);
 		setVolumeMin(undefined);
 		setVolumeMax(undefined);
-		setTransportations(searchResponse?.transportationOrders ?? []);
+		searchResponse?.transportationOrders && setTransportations(searchResponse?.transportationOrders ?? []);
 	};
 
 	const applyFiltersHandler = () => {
@@ -111,47 +111,43 @@ export default function SearchTab() {
 					<Box p={4} variant={"gray_card"}>
 						<Text variant={"header20"}>Откуда и куда</Text>
 
-						<HStack mt={6} space={3}>
-							<Center>
-								<MapMarkerSvg color={GENERAL_BLUE_COLOR} />
-							</Center>
-							{loadingPlace ? (
-								<Pressable onPress={loadingPlacePressHandler}>
+						<Pressable onPress={loadingPlacePressHandler}>
+							<HStack my={6} space={3}>
+								<Center>
+									<MapMarkerSvg color={GENERAL_BLUE_COLOR} />
+								</Center>
+								{loadingPlace ? (
 									<VStack w={"100%"}>
 										<Text variant={"header15"}>{loadingPlace.city}</Text>
 										<Text variant={"body13"}>{`${loadingPlace.country}, ${loadingPlace.region}`}</Text>
 									</VStack>
-								</Pressable>
-							) : (
-								<Pressable onPress={loadingPlacePressHandler}>
-									<Center>
+								) : (
+									<Center justifyContent={"left"}>
 										<Text variant={"body15_gray"}>Откуда</Text>
 									</Center>
-								</Pressable>
-							)}
-						</HStack>
+								)}
+							</HStack>
+						</Pressable>
 
-						<Divider mt={6} />
+						<Divider />
 
-						<HStack mt={6} mb={2} space={3}>
-							<Center>
-								<MapMarkerSvg color={MAP_MARKER_BLACK} />
-							</Center>
-							{unloadingPlace ? (
-								<Pressable onPress={unloadingPlacePressHandler}>
+						<Pressable onPress={unloadingPlacePressHandler}>
+							<HStack mt={6} mb={2} space={3}>
+								<Center>
+									<MapMarkerSvg color={MAP_MARKER_BLACK} />
+								</Center>
+								{unloadingPlace ? (
 									<VStack w={"100%"}>
 										<Text variant={"header15"}>{unloadingPlace.city}</Text>
 										<Text variant={"body13"}>{`${unloadingPlace.country}, ${unloadingPlace.region}`}</Text>
 									</VStack>
-								</Pressable>
-							) : (
-								<Pressable onPress={unloadingPlacePressHandler}>
+								) : (
 									<Center>
 										<Text variant={"body15_gray"}>Куда</Text>
 									</Center>
-								</Pressable>
-							)}
-						</HStack>
+								)}
+							</HStack>
+						</Pressable>
 					</Box>
 					{/* 
 					<Box p={4} variant={"gray_card"}>
@@ -249,9 +245,9 @@ export default function SearchTab() {
 								rounded={"xl"}
 								placeholder="9999"
 								fontSize={17}
-								value={weightMax?.toString() ?? ""}
+								value={volumeMax?.toString() ?? ""}
 								onBlur={applyFiltersHandler}
-								onChangeText={(o) => setWeightMax(+o)}
+								onChangeText={(o) => setVolumeMax(+o)}
 								leftElement={
 									<Text variant={"body17_gray"} ml={3}>
 										до

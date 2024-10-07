@@ -43,14 +43,14 @@ export default function ProfileTab() {
 								</ArrowToRightSectionHoc>
 							</Pressable>
 
-							<Pressable>
+							<Pressable onPress={() => router.push("/EditProfileModal")}>
 								<ArrowToRightSectionHoc title="Номер телефона">
 									<Text variant={"body17_black"}>{profile.phoneNumber ?? ""}</Text>
 								</ArrowToRightSectionHoc>
 							</Pressable>
 
 							{profile.reservePhoneNumber && (
-								<Pressable>
+								<Pressable onPress={() => router.push("/EditProfileModal")}>
 									<ArrowToRightSectionHoc title="WhatsApp телефона">
 										<Text variant={"body17_black"}>{profile.reservePhoneNumber ?? ""}</Text>
 									</ArrowToRightSectionHoc>

@@ -51,6 +51,9 @@ export default function UserAvatar() {
 				bg={"#fff"}
 				onPress={() => setShowUploadModal(true)}
 				icon={<EditSvg />}
+				_pressed={{
+					bgColor: "gray.200",
+				}}
 			/>
 		</Box>
 	);
