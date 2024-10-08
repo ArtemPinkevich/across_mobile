@@ -1,6 +1,7 @@
 import { WebView } from "react-native-webview";
 import { StyleSheet } from "react-native";
 import { RoutePointDto } from "../../api/places/LocationModels";
+import { OSRM_SERVER_ADDRESS } from "../../constants/GlobalConstants";
 
 type Props = {
 	departurePoint: RoutePointDto;
@@ -91,6 +92,7 @@ export default function Osm(props: Props) {
 					`
 		L.Routing.control({
 				waypoints: [${waypointsAsString}],
+				serviceUrl: ${OSRM_SERVER_ADDRESS},
                 lineOptions: {
                         styles: [{color: 'green', opacity: 1, weight: 5}]
                     }
