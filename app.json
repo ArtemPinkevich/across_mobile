@@ -55,6 +55,14 @@
 				{
 					"fonts": ["node_modules/@expo-google-fonts/inter/Inter_900Black.ttf"]
 				}
+			],
+			[
+				"expo-build-properties",
+				{
+					"android": {
+						"usesCleartextTraffic": true
+					}
+				}
 			]
 		],
 		"experiments": {
