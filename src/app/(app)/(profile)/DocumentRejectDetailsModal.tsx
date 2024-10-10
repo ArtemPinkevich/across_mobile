@@ -5,14 +5,12 @@ import { Button, Spacer, Text } from "native-base";
 import ChooseSourceAndUploadModal from "../../../components/profile/ChooseSourceAndUploadModal";
 import { useState } from "react";
 import { useGetProfileQuery } from "../../../store/rtkQuery/profileApi";
-import { FAKE_PROFILE, IProfile } from "../../../api/profile/Profile";
+import { IProfile } from "../../../api/profile/Profile";
 
 export default function DocumentRejectDetailsModal() {
 	const { docType } = useLocalSearchParams<{ docType: string }>();
 	const [showChooseSourceModal, setShowChooseSourceModal] = useState(false);
-	//const { data: profile } = useGetProfileQuery();
-
-	const profile: IProfile = FAKE_PROFILE;
+	const { data: profile } = useGetProfileQuery();
 
 	if (!profile?.documentDtos) {
 		return null;

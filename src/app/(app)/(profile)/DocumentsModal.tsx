@@ -2,7 +2,7 @@ import * as React from "react";
 import { View } from "../../../components/Themed";
 import { UserContentType, UserDocumentStatus } from "../../../api/profile/documentsEnums";
 import { useGetProfileQuery } from "../../../store/rtkQuery/profileApi";
-import { FAKE_PROFILE, IProfile, IUserDocument } from "../../../api/profile/Profile";
+import { IProfile, IUserDocument } from "../../../api/profile/Profile";
 import { Box, Pressable } from "native-base";
 import DocumentCard from "../../../components/profile/DocumentCard";
 import { router } from "expo-router";
@@ -16,8 +16,6 @@ export default function DocumentsModal() {
 
 	const [showUploadModal, setShowUploadModal] = useState(false);
 	const [selectedDocumentType, setSelectedDocumentType] = useState<UserContentType>();
-
-	//const profile: IProfile = FAKE_PROFILE;
 
 	if (!profile?.documentDtos) {
 		return <View style={{ flex: 1 }} />;

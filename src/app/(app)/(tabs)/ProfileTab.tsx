@@ -3,7 +3,7 @@ import { Text, Center, HStack, VStack, Pressable, Button, ScrollView, Box, IconB
 import React from "react";
 import { View } from "../../../components/Themed";
 import { useGetProfileQuery } from "../../../store/rtkQuery/profileApi";
-import { DRIVER_ROLE, FAKE_PROFILE, IProfile } from "../../../api/profile/Profile";
+import { DRIVER_ROLE, IProfile } from "../../../api/profile/Profile";
 import { AuthorizationService } from "../../../services/AuthorizationService";
 import UserAvatar from "../../../components/profile/Avatar";
 import { ArrowToRightSectionHoc } from "../../../components/screenItems/ArrowToRightSectionHoc";
@@ -17,9 +17,7 @@ export default function ProfileTab() {
 		</Center>
 	);
 
-	//const { data: profile } = useGetProfileQuery();
-
-	const profile: IProfile = FAKE_PROFILE;
+	const { data: profile } = useGetProfileQuery();
 
 	if (profile) {
 		content = (
