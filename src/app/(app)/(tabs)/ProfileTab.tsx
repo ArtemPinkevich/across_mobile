@@ -57,13 +57,15 @@ export default function ProfileTab() {
 						</VStack>
 					</Box>
 
-					<Box p={4} variant={"gray_card"}>
-						<Pressable onPress={() => router.push("/DocumentsModal")}>
-							<ArrowToRightBlackHeaderSectionHoc title="Документы">
-								<Text variant={"body13"}>Необходимо загрузить фото документов</Text>
-							</ArrowToRightBlackHeaderSectionHoc>
-						</Pressable>
-					</Box>
+					{profile.role === DRIVER_ROLE && (
+						<Box p={4} variant={"gray_card"}>
+							<Pressable onPress={() => router.push("/DocumentsModal")}>
+								<ArrowToRightBlackHeaderSectionHoc title="Документы">
+									<Text variant={"body13"}>Необходимо загрузить фото документов</Text>
+								</ArrowToRightBlackHeaderSectionHoc>
+							</Pressable>
+						</Box>
+					)}
 
 					{profile.role === DRIVER_ROLE && (
 						<Box px={4} py={6} variant={"gray_card"}>
