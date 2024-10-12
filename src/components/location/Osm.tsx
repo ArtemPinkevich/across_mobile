@@ -12,15 +12,15 @@ type Props = {
 export default function Osm(props: Props) {
 	const { departurePoint, destinationPoint, routePoints } = props;
 
-	const sourceLattitide = departurePoint.Latitude;
-	const sourceLongtitude = departurePoint.Longitude;
+	const sourceLattitide = departurePoint.latitude;
+	const sourceLongtitude = departurePoint.longitude;
 
-	const destinationLattitide = destinationPoint.Latitude;
-	const destinationLongtitude = destinationPoint.Longitude;
+	const destinationLattitide = destinationPoint.latitude;
+	const destinationLongtitude = destinationPoint.longitude;
 
 	const cargoPoint = routePoints.at(-1);
-	const cargoLatitude = cargoPoint?.Latitude;
-	const cargoLongitude = cargoPoint?.Longitude;
+	const cargoLatitude = cargoPoint?.latitude;
+	const cargoLongitude = cargoPoint?.longitude;
 
 	let centerLattitide = "";
 	if (cargoLatitude) {
@@ -38,7 +38,7 @@ export default function Osm(props: Props) {
 
 	const waypoints: string[] = [];
 	sourceLattitide && sourceLongtitude && waypoints.push(`L.latLng(${sourceLattitide}, ${sourceLongtitude})`);
-	routePoints && routePoints.map((o) => waypoints.push(`L.latLng(${o.Latitude}, ${o.Longitude})`));
+	routePoints && routePoints.map((o) => waypoints.push(`L.latLng(${o.latitude}, ${o.longitude})`));
 	destinationLattitide && destinationLongtitude && waypoints.push(`L.latLng(${destinationLattitide}, ${destinationLongtitude})`);
 	const waypointsAsString = waypoints.join(", ");
 

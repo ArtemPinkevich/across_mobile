@@ -9,22 +9,22 @@ import { TransportationOrderRouteResultDto } from "../../../api/places/LocationM
 const geoRouteFake: TransportationOrderRouteResultDto = {
 	// Томск 56.484645, 84.947649
 	departurePoint: {
-		Latitude: "56.484645",
-		Longitude: "84.947649",
-		UpdatedDateTime: "",
+		latitude: "56.484645",
+		longitude: "84.947649",
+		updatedDateTime: "",
 	},
 	// Барнаул 53.346785, 83.776856
 	destinationPoint: {
-		Latitude: "53.346785",
-		Longitude: "83.776856",
-		UpdatedDateTime: "",
+		latitude: "53.346785",
+		longitude: "83.776856",
+		updatedDateTime: "",
 	},
 	// Промежуточная точка (Залесовский район) 54.179996, 85.074036
 	routePoints: [
 		{
-			Latitude: "54.179996",
-			Longitude: "85.074036",
-			UpdatedDateTime: "",
+			latitude: "54.179996",
+			longitude: "85.074036",
+			updatedDateTime: "",
 		},
 	],
 };

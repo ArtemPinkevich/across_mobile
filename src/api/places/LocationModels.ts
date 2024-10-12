@@ -5,7 +5,7 @@ export interface TransportationOrderRouteResultDto {
 }
 
 export interface RoutePointDto {
-	Latitude: string;
-	Longitude: string;
-	UpdatedDateTime: string;
+	latitude: string;
+	longitude: string;
+	updatedDateTime: string;
 }
