@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import { AuthorizationApi } from "../api/authorization/AuthorizationApi";
-import { JwtTokenService } from "./JwtTokenService";
+import { AsyncStorageKeys, getFromAsyncStorage, removeFromAsyncStorage } from "./AsyncStorageService";
+import { refreshTokens } from "../api/httpClient";
 
 async function signIn(phoneNumber: string): Promise<void> {
 	const result = await AuthorizationApi.signIn(phoneNumber);
@@ -16,16 +17,15 @@ async function sendVerificationCode(phoneNumber: string, verificationCode: strin
 }
 
 async function signOut(): Promise<void> {
-	await JwtTokenService.removeAccessToken();
+	await removeFromAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN);
 	router.replace("/sign-in");
 }
 
 async function checkAuthorization(): Promise<void> {
-	if (await JwtTokenService.getAccessToken()) {
-		await JwtTokenService.refreshTokens();
+	if (await getFromAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN)) {
+		await refreshTokens();
 	}
-
-	if (!(await JwtTokenService.getAccessToken())) {
+	if (!(await getFromAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN))) {
 		router.replace("/sign-in");
 	}
 }

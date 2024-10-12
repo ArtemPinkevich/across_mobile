@@ -1,6 +1,5 @@
 import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
-import { JwtTokenService } from "./JwtTokenService";
 import { SERVER_ADDRESS } from "../constants/GlobalConstants";
 import axios from "axios";
 import { AsyncStorageKeys, getFromAsyncStorage } from "./AsyncStorageService";
@@ -23,11 +22,11 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
 });
 
 export const startBackgroundTracking = async () => {
-	await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-		accuracy: Location.Accuracy.Balanced,
-		deferredUpdatesDistance: 1000, // метры
-		deferredUpdatesInterval: 30000, // миллисекунды
-	});
+	 await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+	 	accuracy: Location.Accuracy.Balanced,
+	 	deferredUpdatesDistance: 1000, // метры
+	 	deferredUpdatesInterval: 30000, // миллисекунды
+	 });
 };
 
 export const sendLocationToBackend = async (location: Location.LocationObject) => {
@@ -51,7 +50,7 @@ export const sendLocationToBackend = async (location: Location.LocationObject) =
 
 const sendOrderLocationOnBackend = async (orderId: string, latitude: number, longitude: number) => {
 	try {
-		const accessToken = await JwtTokenService.getAccessToken();
+		const accessToken = await getFromAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN);
 		const config = {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		};
@@ -72,7 +71,7 @@ const sendOrderLocationOnBackend = async (orderId: string, latitude: number, lon
 
 const sendTruckLocationOnBackend = async (truckId: string, latitude: number, longitude: number) => {
 	try {
-		const accessToken = await JwtTokenService.getAccessToken();
+		const accessToken = await getFromAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN);
 		const config = {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		};

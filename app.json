@@ -1,6 +1,6 @@
 {
 	"expo": {
-		"name": "Across",
+		"name": "Compass",
 		"slug": "across",
 		"version": "1.0.0",
 		"orientation": "portrait",
@@ -39,7 +39,7 @@
 				"expo-image-picker",
 				{
 					"photosPermission": "The app accesses your photos to let you share them with your friends.",
-					"cameraPermission": "Allow Across to access your camera"
+					"cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
 				}
 			],
 			[

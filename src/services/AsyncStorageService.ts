@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export enum AsyncStorageKeys {
+	ACCESS_TOKEN = "ACCESS_TOKEN",
 	TRANSPORTING_ORDER_ID = "TRANSPORTING_ORDER_ID",
 	ACTIVE_TRUCK_ID = "ACTIVE_TRUCK_ID",
 }

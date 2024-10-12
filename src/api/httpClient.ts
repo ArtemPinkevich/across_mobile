@@ -1,6 +1,6 @@
 import axios from "axios";
 import { SERVER_ADDRESS } from "../constants/GlobalConstants";
-import { JwtTokenService } from "../services/JwtTokenService";
+import { AsyncStorageKeys, getFromAsyncStorage, removeFromAsyncStorage, saveInAsyncStorage } from "../services/AsyncStorageService";
 
 const httpClient = axios.create({
 	baseURL: SERVER_ADDRESS,
@@ -19,7 +19,7 @@ const httpClient = axios.create({
 httpClient.interceptors.request.use(
 	async (config) => {
 		// при каждом запросе добавляем access token в headers
-		const accessToken = await JwtTokenService.getAccessToken();
+		const accessToken = await getFromAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN);
 		config.headers.Authorization = accessToken ? `Bearer ${accessToken}` : "";
 
 		return config;
@@ -37,7 +37,7 @@ httpClient.interceptors.response.use(
 		// если успешный ответ авторизации (тут вообще лучше проверять response.config.url, но для этого нужно переделать код сервера)
 		if (response.status === 200 && response.data.accessToken) {
 			// сохраняем access token
-			await JwtTokenService.saveAccessToken(response.data.accessToken);
+			await saveInAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN, response.data.accessToken);
 		}
 
 		return response;
@@ -54,15 +54,15 @@ httpClient.interceptors.response.use(
 			const authError = status === 401;
 
 			// если access token есть и код статус 401 Unauthorized
-			if ((await JwtTokenService.getAccessToken()) && authError) {
+			if ((await getFromAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN)) && authError) {
 				// сохраняем конфигурацию предыдущего неуспешного запроса
 				const prevRequestConfig = error.config;
 
 				// обновим access и refresh токены через новый запрос
-				await JwtTokenService.refreshTokens();
+				await refreshTokens();
 
 				// переопределяем access token в headers предыдущего запроса (возможно это дублирование, т.к. в request interceptor устанавливаем!)
-				const accessToken = await JwtTokenService.getAccessToken();
+				const accessToken = await getFromAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN);
 
 				prevRequestConfig.headers.Authorization = accessToken ? `Bearer ${accessToken}` : "";
 
@@ -88,4 +88,21 @@ httpClient.interceptors.response.use(
 	},
 );
 
-export { httpClient };
+const refreshTokens = async (): Promise<void> => {
+	try {
+		// удалим access token
+		await removeFromAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN);
+
+		// отправим запрос на обновление токенов
+		const response = await httpClient.get("/Authorization/refresh_tokens");
+
+		if (response?.data) {
+			// сохраним access token в AsyncStorage. refresh token автоматически сохраняется в cookies (возможно это дублирование, т.к. в response interceptor мы это выполняем!)
+			await saveInAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN, response.data.accessToken);
+		}
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export { httpClient, refreshTokens };

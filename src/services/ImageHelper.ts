@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import * as ImagePicker from "expo-image-picker";
 import { SERVER_ADDRESS } from "../constants/GlobalConstants";
 import { UserContentType } from "../api/profile/documentsEnums";
-import { JwtTokenService } from "./JwtTokenService";
+import { AsyncStorageKeys, getFromAsyncStorage } from "./AsyncStorageService";
 
 export const uploadUserContentFromGallery = async (userContentType: UserContentType, sectionKey?: string) => {
 	const imageAsset: ImagePicker.ImagePickerAsset | undefined = await getImageAssetFromGallery();
@@ -17,7 +17,7 @@ export const sendUserContentToBackend = async (userContentType: UserContentType,
 	try {
 		const formData = await createFormDataFromImageAsset(img);
 
-		const accessToken = await JwtTokenService.getAccessToken();
+		const accessToken = await getFromAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN);
 		const config = {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		};
@@ -30,7 +30,7 @@ export const sendUserContentToBackend = async (userContentType: UserContentType,
 
 export const getUserContentFromBackend = async (userContentType: UserContentType, sectionKey?: string): Promise<string | undefined> => {
 	try {
-		const accessToken = await JwtTokenService.getAccessToken();
+		const accessToken = await getFromAsyncStorage(AsyncStorageKeys.ACCESS_TOKEN);
 		const config: AxiosRequestConfig = {
 			method: "GET",
 			headers: { Authorization: `Bearer ${accessToken}`, "Cache-Control": "no-cache" },
