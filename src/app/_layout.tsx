@@ -38,6 +38,15 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
 	const [loaded, error] = useFonts({
 		SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
+		Inter_100Thin,
+		Inter_200ExtraLight,
+		Inter_300Light,
+		Inter_400Regular,
+		Inter_500Medium,
+		Inter_600SemiBold,
+		Inter_700Bold,
+		Inter_800ExtraBold,
+		Inter_900Black,
 		...FontAwesome.font,
 	});
 
@@ -60,22 +69,6 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-	const [fontsLoaded] = useFonts({
-		Inter_100Thin,
-		Inter_200ExtraLight,
-		Inter_300Light,
-		Inter_400Regular,
-		Inter_500Medium,
-		Inter_600SemiBold,
-		Inter_700Bold,
-		Inter_800ExtraBold,
-		Inter_900Black,
-	});
-
-	if (!fontsLoaded) {
-		return null;
-	}
-
 	useEffect(() => {
 		AuthorizationService.checkAuthorization();
 	}, []);
