@@ -57,23 +57,31 @@ export default function LocationPermission() {
 	return (
 		<View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#fff" }}>
 			{gpsServicesEnabled ? (
-				<Box m={5}>
-					<Text textAlign={"center"}>Чтобы сервис мог находить ближайшие к вам грузы, разрешите определять ваше местоположение</Text>
-					<Button mt={5} variant="outline" minW={200} size={"lg"} onPress={requestLocationPermissions}>
+				<Box mx={5}>
+					<Box px={4} py={16} variant={"gray_card"}>
+						<Text variant={"body15_black"} textAlign={"center"}>
+							Чтобы сервис мог находить ближайшие к вам грузы, разрешите определять ваше местоположение
+						</Text>
+					</Box>
+					<Button mt={4} variant="blue_button" onPress={requestLocationPermissions}>
 						Разрешить
 					</Button>
 				</Box>
 			) : (
-				<Box m={5}>
-					<Text textAlign={"center"}>Пожалуйста, включите геолокацию в настройках смартфона</Text>
-					<Button mt={5} variant="outline" minW={200} size={"lg"} onPress={checkLocationEnabled}>
+				<Box mx={5}>
+					<Box px={4} py={16} variant={"gray_card"}>
+						<Text variant={"body15_black"} textAlign={"center"}>
+							Пожалуйста, включите геолокацию в настройках смартфона
+						</Text>
+					</Box>
+					<Button mt={4} variant="blue_button" onPress={checkLocationEnabled}>
 						Повторить
 					</Button>
 				</Box>
 			)}
 
 			{errorMsg && (
-				<Text mt={5} mx={10} textAlign={"center"} color={"red.500"}>
+				<Text mt={5} mx={10} variant={"body12"} textAlign={"center"} color={"#E32C2C"}>
 					{errorMsg}
 				</Text>
 			)}
