@@ -42,9 +42,13 @@ export default function LocationPermission() {
 			if (backgroundStatus === "granted") {
 				startBackgroundTracking();
 				router.replace("/DriverOrdersTab");
+			} else if (backgroundStatus === "denied") {
+				setErrorMsg("Приложению запрещен доступ к геопозиции. Пожалуйста, снимите запрет в настройках прав приложения.");
 			} else {
 				setErrorMsg("Для продолжения работы с приложением необходимо разрешить доступ к геопозиции в фоновом режиме");
 			}
+		} else if (foregroundStatus === "denied") {
+			setErrorMsg("Приложению запрещен доступ к геопозиции. Пожалуйста, снимите запрет в настройках прав приложения.");
 		} else {
 			setErrorMsg("Для продолжения работы с приложением необходимо разрешить доступ к геопозиции");
 		}
