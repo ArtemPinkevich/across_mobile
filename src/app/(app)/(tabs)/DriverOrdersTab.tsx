@@ -40,7 +40,7 @@ export default function DriverOrdersTab() {
 		</Pressable>
 	);
 
-	let content = <FlatList pt={4} data={filtred} renderItem={(o) => renderItem(o.item)} />;
+	let content = <FlatList pt={4} px={4} data={filtred} renderItem={(o) => renderItem(o.item)} />;
 
 	if (filtred.length === 0) {
 		content = (
@@ -50,5 +50,5 @@ export default function DriverOrdersTab() {
 		);
 	}
 
-	return <View style={{ flex: 1, alignItems: "stretch", paddingHorizontal: 16, paddingBottom: 4 }}>{content}</View>;
+	return <View style={{ flex: 1, alignItems: "stretch", paddingBottom: 4 }}>{content}</View>;
 }

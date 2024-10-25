@@ -7,7 +7,7 @@ import { Text, ScrollView, Button, Center, Input, Pressable, HStack, Box, VStack
 import { View } from "../../../components/Themed";
 import moment, { Moment } from "moment";
 import { useLazySearchTransportationsQuery } from "../../../store/rtkQuery/searchApi";
-import { SearchRequest } from "../../../api/search/Search";
+import { SearchRequest, SearchResponse } from "../../../api/search/Search";
 import { ITransportation } from "../../../api/transportation/Transportation";
 import { setViewedTransportation } from "../../../store/slices/transportationsSlice";
 import { LocalitySearchTarget } from "../(modals)/PlacesInputModal";
@@ -16,7 +16,7 @@ import { IPlace } from "../../../api/places/Places";
 import { ELEMENTS_BG_COLOR, MAP_MARKER_BLACK, GENERAL_BLUE_COLOR } from "../../../constants/Colors";
 import { TransportationItem } from "../../../components/transportation/TransportationItem";
 import LocationTextBlock from "../../../components/location/LocationTextBlock";
-import { FAKE_PLACE_FROM } from "../../../api/search/SearchResponceFake";
+import { FAKE_PLACE_FROM, searchResponseFake } from "../../../api/search/SearchResponceFake";
 import { FAKE_PLACE_TO_LONG } from "../../../api/search/FakeTransportationLong";
 
 export default function SearchTab() {
