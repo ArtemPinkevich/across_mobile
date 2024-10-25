@@ -1,26 +1,24 @@
 import * as React from "react";
 import { useState } from "react";
-import { StyleSheet } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { router } from "expo-router";
-import { ScrollView, Center, Button, CheckIcon, FormControl, Select, Pressable, Checkbox, Input, Text } from "native-base";
-import { TrailerType } from "../../../api/truck/TrailerType";
+import { ScrollView, Center, Button, Pressable, Checkbox, Input, Text, Box, VStack } from "native-base";
 import { ITruck, ITruckResultDto } from "../../../api/truck/Truck";
-import { LeftAlignedSection } from "../../../components/screenItems/LeftAlignedSection";
 import { RootState } from "../../../store/configureStore";
 import { CARBODY_DISPLAY_NAME_MAP } from "../../../api/transportation/toDisplayNameMappers/CarBodyToDisplayNameMap";
 import { LOADING_TYPE_DISPLAY_NAME_MAP } from "../../../api/transportation/toDisplayNameMappers/LoadingTypeToDisplayNameMap";
-import { LeftAlignedWithChipsSection } from "../../../components/screenItems/LeftAlignedWithChipsSection";
 import { View } from "../../../components/Themed";
 import { useAddOrUpdateTruckMutation } from "../../../store/rtkQuery/garageApi";
 import { ApiCommonResult } from "../../../api/common/commonApi";
+import { ArrowToRightSectionHoc } from "../../../components/screenItems/ArrowToRightSectionHoc";
+import { ELEMENTS_BG_COLOR } from "../../../constants/Colors";
+import { TRAILER_TYPE_DISPLAY_NAME_MAP } from "../../../api/transportation/toDisplayNameMappers/TrailerTypeToDisplayNameMap";
 
 export default function EditTruckModal() {
 	const [addOrUpdateTruck, { isLoading, error }] = useAddOrUpdateTruckMutation();
 
 	const editingTruсk = useSelector((state: RootState) => state.garage.editingTruсk);
 
-	const [trailerType, setTrailerType] = useState<TrailerType | undefined>(editingTruсk.trailerType);
 	const [hasLiftgate, setHasLiftgate] = useState<boolean>(editingTruсk.hasLiftgate);
 	const [hasStanchionTrailer, setHasStanchionTrailer] = useState<boolean>(editingTruсk.hasStanchionTrailer);
 	const [carryingCapacity, setCarryingCapacity] = useState<number>(editingTruсk.carryingCapacity);
@@ -41,6 +39,11 @@ export default function EditTruckModal() {
 	const [adr8, setAdr8] = useState<boolean>(editingTruсk.adr8);
 	const [adr9, setAdr9] = useState<boolean>(editingTruсk.adr9);
 
+	const trailerTypeDisplayName =
+		editingTruсk?.trailerType || editingTruсk?.trailerType === 0
+			? TRAILER_TYPE_DISPLAY_NAME_MAP.get(editingTruсk.trailerType) ?? "Не выбрано"
+			: "Не выбрано";
+
 	const carBodyDisplayName =
 		editingTruсk?.carBodyType || editingTruсk?.carBodyType === 0
 			? CARBODY_DISPLAY_NAME_MAP.get(editingTruсk.carBodyType) ?? "Не выбрано"
@@ -57,7 +60,7 @@ export default function EditTruckModal() {
 	}
 
 	const saveHandler = async () => {
-		if (trailerType === undefined) {
+		if (editingTruсk?.trailerType === undefined) {
 			alert("Необходимо указать тип прицепа");
 			return;
 		}
@@ -67,14 +70,19 @@ export default function EditTruckModal() {
 			return;
 		}
 
-		if (editingTruсk?.loadingType?.length === 0) {
+		if (!editingTruсk?.loadingType || editingTruсk.loadingType.length === 0) {
 			alert("Необходимо указать тип загрузки");
+			return;
+		}
+
+		if (!carryingCapacity) {
+			alert("Необходимо указать грузоподъемность");
 			return;
 		}
 
 		const truck: ITruck = {
 			createdId: new Date().toJSON(),
-			trailerType: trailerType,
+			trailerType: editingTruсk.trailerType,
 			carBodyType: editingTruсk.carBodyType,
 			regNumber: "",
 			loadingType: editingTruсk.loadingType,
@@ -109,155 +117,181 @@ export default function EditTruckModal() {
 		}
 	};
 
-	const carBodySectionOnPress = () => {
-		router.push("/CarBodySelectListModal");
-	};
-
-	const loadingTypeSectionOnPress = () => {
-		router.push("/LoadingTypeSelectListModal");
-	};
-
 	return (
-		<View style={styles.container}>
+		<View style={{ flex: 1, alignItems: "stretch" }}>
 			<ScrollView px={4}>
-				{/* По хорошему заменить бы на RadioButtons */}
-				<FormControl isRequired mb={1}>
-					<FormControl.Label>Тип прицепа</FormControl.Label>
-					<Select
-						minWidth="200"
-						accessibilityLabel="TrailerType"
-						onValueChange={(arg) => setTrailerType(+arg)}
-						_selectedItem={{
-							bg: "teal.600",
-							endIcon: <CheckIcon size={5} />,
-						}}
-					>
-						<Select.Item label="Грузовик" value={TrailerType.Truck.toString()} />
-						<Select.Item label="Прицеп" value={TrailerType.Trailer.toString()} />
-						<Select.Item label="Полуприцеп" value={TrailerType.Semitrailer.toString()} />
-					</Select>
-				</FormControl>
+				<VStack my={4} space={3}>
+					<Box p={4} variant={"gray_card"}>
+						<Text variant={"header15_gray"}>Основные</Text>
 
-				<Pressable onPress={carBodySectionOnPress} my={1}>
-					<LeftAlignedSection title={"Тип кузова"} value={carBodyDisplayName} />
-				</Pressable>
+						<Pressable mt={4} onPress={() => router.push("/TrailerTypeSelectListModal")}>
+							<ArrowToRightSectionHoc title="Тип прицепа">
+								<Text ml={2} variant={"body17_black"}>
+									{trailerTypeDisplayName}
+								</Text>
+							</ArrowToRightSectionHoc>
+						</Pressable>
 
-				<Pressable onPress={loadingTypeSectionOnPress} my={1}>
-					{loadingTypeDisplayNames && loadingTypeDisplayNames?.length > 0 ? (
-						<LeftAlignedWithChipsSection title={"Тип загрузки"} values={loadingTypeDisplayNames} />
-					) : (
-						<LeftAlignedSection title={"Тип загрузки"} value="Не выбрано" />
-					)}
-				</Pressable>
+						<Pressable mt={4} onPress={() => router.push("/CarBodySelectListModal")}>
+							<ArrowToRightSectionHoc title="Тип кузова">
+								<Text ml={2} variant={"body17_black"}>
+									{carBodyDisplayName}
+								</Text>
+							</ArrowToRightSectionHoc>
+						</Pressable>
 
-				<Checkbox value={"hasLiftgate"} isChecked={hasLiftgate} m={2} mt={4} onChange={(o) => setHasLiftgate(o)}>
-					Гидролифт
-				</Checkbox>
-				<Checkbox value={"hasStanchionTrailer"} isChecked={hasStanchionTrailer} m={2} onChange={(o) => setHasStanchionTrailer(o)}>
-					Коники
-				</Checkbox>
+						<Pressable mt={4} onPress={() => router.push("/LoadingTypeSelectListModal")}>
+							<ArrowToRightSectionHoc title="Тип загрузки">
+								<Text ml={2} variant={"body17_black"}>
+									{loadingTypeDisplayNames?.length > 0 ? loadingTypeDisplayNames.join(",\n") : "Не выбрано"}
+								</Text>
+							</ArrowToRightSectionHoc>
+						</Pressable>
 
-				<FormControl my={4}>
-					<FormControl.Label>Грузоподъемность, т</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={3}
-						variant="filled"
-						size="md"
-						placeholder="Грузоподъемность"
-						value={carryingCapacity.toString()}
-						onChangeText={(o) => setCarryingCapacity(+o)}
-					/>
-					<Checkbox value={"hasLTL"} isChecked={hasLTL} m={2} onChange={(o) => setHasLTL(o)}>
-						Догруз
-					</Checkbox>
-				</FormControl>
+						<Text mt={4} variant={"body13"}>
+							Грузоподъемность, т
+						</Text>
+						<Input
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
+							maxLength={4}
+							variant="filled"
+							rounded={"xl"}
+							fontSize={17}
+							value={carryingCapacity?.toString() ?? ""}
+							onChangeText={(o) => setCarryingCapacity(+o)}
+						/>
+					</Box>
 
-				<FormControl my={4}>
-					<FormControl.Label>Объем кузова, м3</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={4}
-						variant="filled"
-						size="md"
-						placeholder="Объем кузова"
-						value={bodyVolume.toString()}
-						onChangeText={(o) => setBodyVolume(+o)}
-					/>
+					<Box p={4} variant={"gray_card"}>
+						<Text mb={4} variant={"header15_gray"}>
+							Доп. параметры
+						</Text>
+						<Checkbox value={"hasLTL"} isChecked={hasLTL} m={2} onChange={(o) => setHasLTL(o)}>
+							Догруз
+						</Checkbox>
+						<Checkbox value={"hasLiftgate"} isChecked={hasLiftgate} m={2} onChange={(o) => setHasLiftgate(o)}>
+							Гидролифт
+						</Checkbox>
+						<Checkbox value={"hasStanchionTrailer"} isChecked={hasStanchionTrailer} m={2} onChange={(o) => setHasStanchionTrailer(o)}>
+							Коники
+						</Checkbox>
+					</Box>
 
-					<FormControl.Label>Длина кузова, м</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={2}
-						variant="filled"
-						size="md"
-						placeholder="Длина кузова"
-						value={innerBodyLength.toString()}
-						onChangeText={(o) => setInnerBodyLength(+o)}
-					/>
+					<Box p={4} variant={"gray_card"}>
+						<Text variant={"header15_gray"}>Габариты кузова</Text>
 
-					<FormControl.Label>Ширина кузова, м</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={2}
-						variant="filled"
-						size="md"
-						placeholder="Ширина кузова"
-						value={innerBodyWidth.toString()}
-						onChangeText={(o) => setInnerBodyWidth(+o)}
-					/>
+						<Text mt={4} variant={"body13"}>
+							Объем, м³
+						</Text>
+						<Input
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
+							maxLength={4}
+							variant="filled"
+							rounded={"xl"}
+							fontSize={17}
+							value={bodyVolume?.toString() ?? ""}
+							onChangeText={(o) => setBodyVolume(+o)}
+						/>
 
-					<FormControl.Label>Высота кузова, м</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={2}
-						variant="filled"
-						size="md"
-						placeholder="Высота кузова"
-						value={innerBodyHeight.toString()}
-						onChangeText={(o) => setInnerBodyHeight(+o)}
-					/>
-				</FormControl>
+						<Text mt={4} variant={"body13"}>
+							Длина, м
+						</Text>
+						<Input
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
+							maxLength={2}
+							variant="filled"
+							rounded={"xl"}
+							fontSize={17}
+							value={innerBodyLength?.toString() ?? ""}
+							onChangeText={(o) => setInnerBodyLength(+o)}
+						/>
 
-				<FormControl my={4}>
-					<FormControl.Label>Разрешения</FormControl.Label>
-					<Checkbox value={"tir"} isChecked={tir} m={2} onChange={(o) => setTir(o)}>
-						TIR
-					</Checkbox>
-					<Checkbox value={"ekmt"} isChecked={ekmt} m={2} onChange={(o) => setEkmt(o)}>
-						EKMT
-					</Checkbox>
-					<Checkbox value={"adr1"} isChecked={adr1} m={2} onChange={(o) => setAdr1(o)}>
-						ADR-1, Взрывчатые материалы
-					</Checkbox>
-					<Checkbox value={"adr2"} isChecked={adr2} m={2} onChange={(o) => setAdr2(o)}>
-						ADR-2, Сжатые газы
-					</Checkbox>
-					<Checkbox value={"adr3"} isChecked={adr3} m={2} onChange={(o) => setAdr3(o)}>
-						ADR-3, Легковоспламен. жидкости
-					</Checkbox>
-					<Checkbox value={"adr4"} isChecked={adr4} m={2} onChange={(o) => setAdr4(o)}>
-						ADR-4, Легковоспламен. вещества
-					</Checkbox>
-					<Checkbox value={"adr5"} isChecked={adr5} m={2} onChange={(o) => setAdr5(o)}>
-						ADR-5, Окисляющиеся вещества
-					</Checkbox>
-					<Checkbox value={"adr6"} isChecked={adr6} m={2} onChange={(o) => setAdr6(o)}>
-						ADR-6, Ядовитые вещества
-					</Checkbox>
-					<Checkbox value={"adr7"} isChecked={adr7} m={2} onChange={(o) => setAdr7(o)}>
-						ADR-7, Радиоактивные вещества
-					</Checkbox>
-					<Checkbox value={"adr8"} isChecked={adr8} m={2} onChange={(o) => setAdr8(o)}>
-						ADR-8, Едкие вещества
-					</Checkbox>
-					<Checkbox value={"adr9"} isChecked={adr9} m={2} onChange={(o) => setAdr9(o)}>
-						ADR-9, Вещества с низкой опасностью
-					</Checkbox>
-				</FormControl>
+						<Text mt={4} variant={"body13"}>
+							Ширина, м
+						</Text>
+						<Input
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
+							maxLength={2}
+							variant="filled"
+							rounded={"xl"}
+							fontSize={17}
+							value={innerBodyWidth?.toString() ?? ""}
+							onChangeText={(o) => setInnerBodyWidth(+o)}
+						/>
+
+						<Text mt={4} variant={"body13"}>
+							Высота, м
+						</Text>
+						<Input
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
+							maxLength={2}
+							variant="filled"
+							rounded={"xl"}
+							fontSize={17}
+							value={innerBodyHeight?.toString() ?? ""}
+							onChangeText={(o) => setInnerBodyHeight(+o)}
+						/>
+					</Box>
+
+					<Box p={4} variant={"gray_card"}>
+						<Text mb={4} variant={"header15_gray"}>
+							Разрешения
+						</Text>
+						<VStack space={4} pl={2}>
+							<Checkbox value={"tir"} isChecked={tir} onChange={(o) => setTir(o)}>
+								TIR
+							</Checkbox>
+							<Checkbox value={"ekmt"} isChecked={ekmt} onChange={(o) => setEkmt(o)}>
+								EKMT
+							</Checkbox>
+							<Checkbox value={"adr1"} isChecked={adr1} onChange={(o) => setAdr1(o)}>
+								ADR-1, Взрывчатые материалы
+							</Checkbox>
+							<Checkbox value={"adr2"} isChecked={adr2} onChange={(o) => setAdr2(o)}>
+								ADR-2, Сжатые газы
+							</Checkbox>
+							<Checkbox value={"adr3"} isChecked={adr3} onChange={(o) => setAdr3(o)}>
+								ADR-3, Легковоспламен. жидкости
+							</Checkbox>
+							<Checkbox value={"adr4"} isChecked={adr4} onChange={(o) => setAdr4(o)}>
+								ADR-4, Легковоспламен. вещества
+							</Checkbox>
+							<Checkbox value={"adr5"} isChecked={adr5} onChange={(o) => setAdr5(o)}>
+								ADR-5, Окисляющиеся вещества
+							</Checkbox>
+							<Checkbox value={"adr6"} isChecked={adr6} onChange={(o) => setAdr6(o)}>
+								ADR-6, Ядовитые вещества
+							</Checkbox>
+							<Checkbox value={"adr7"} isChecked={adr7} onChange={(o) => setAdr7(o)}>
+								ADR-7, Радиоактивные вещества
+							</Checkbox>
+							<Checkbox value={"adr8"} isChecked={adr8} onChange={(o) => setAdr8(o)}>
+								ADR-8, Едкие вещества
+							</Checkbox>
+							<Checkbox value={"adr9"} isChecked={adr9} onChange={(o) => setAdr9(o)}>
+								ADR-9, Вещества с низкой опасностью
+							</Checkbox>
+						</VStack>
+					</Box>
+				</VStack>
 			</ScrollView>
-			<Center my={2}>
-				<Button minW={200} size={"lg"} variant="outline" isLoading={isLoading} onPress={saveHandler}>
+			<Center my={2} px={4}>
+				<Button variant="blue_button" isLoading={isLoading} onPress={saveHandler}>
 					Продолжить
 				</Button>
 				{error && <Text color={"red.500"}>Не удалось выполнить операцию</Text>}
@@ -265,10 +299,3 @@ export default function EditTruckModal() {
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-	},
-});

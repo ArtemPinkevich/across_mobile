@@ -28,6 +28,7 @@ export default function GarageLayout() {
 		>
 			<Stack.Screen name="EditTruckModal" options={{ title: "Информация о грузовике" }} />
 			<Stack.Screen name="GarageModal" options={{ title: "Гараж" }} />
+			<Stack.Screen name="TrailerTypeSelectListModal" options={{ title: "Выбор типа прицепа" }} />
 			<Stack.Screen name="CarBodySelectListModal" options={{ title: "Выбор типа кузова" }} />
 			<Stack.Screen name="LoadingTypeSelectListModal" options={{ title: "Выбор типа загрузки" }} />
 			<Stack.Screen name="TruckPhotosModal" options={{ title: "Фото грузовика" }} />

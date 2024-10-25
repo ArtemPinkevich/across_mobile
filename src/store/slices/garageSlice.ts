@@ -47,6 +47,9 @@ export const garageSlice = createSlice({
 	initialState,
 	// The `reducers` field lets us define reducers and generate associated actions
 	reducers: {
+		setTrailerType: (state, action) => {
+			state.editingTruсk.trailerType = action.payload;
+		},
 		setCarBody: (state, action) => {
 			state.editingTruсk.carBodyType = action.payload;
 		},
@@ -59,6 +62,6 @@ export const garageSlice = createSlice({
 	},
 });
 
-export const { setCarBody, setLoadingType, resetEditingTruсk } = garageSlice.actions;
+export const { setTrailerType, setCarBody, setLoadingType, resetEditingTruсk } = garageSlice.actions;
 
 export default garageSlice.reducer;
