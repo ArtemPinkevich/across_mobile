@@ -3,14 +3,15 @@ import { useState } from "react";
 import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { router } from "expo-router";
-import { ScrollView, Center, Button, FormControl, Pressable, Input } from "native-base";
-import { LeftAlignedSection } from "../../../components/screenItems/LeftAlignedSection";
+import { ScrollView, Center, Button, Pressable, Input, VStack, Box, Text } from "native-base";
 import { RootState } from "../../../store/configureStore";
 import { View } from "../../../components/Themed";
 import { PackagingType } from "../../../api/transportation/PackagingType";
 import { PACKAGING_TYPE_DISPLAY_NAME_MAP } from "../../../api/transportation/toDisplayNameMappers/PackagingTypeToDisplayNameMap";
 import { ICargo } from "../../../api/transportation/Transportation";
 import { setEditingCargo, setEditingPrice } from "../../../store/slices/buildTransportationSlice";
+import { ELEMENTS_BG_COLOR } from "../../../constants/Colors";
+import { ArrowToRightSectionHoc } from "../../../components/screenItems/ArrowToRightSectionHoc";
 
 export default function CargoEditingModal() {
 	const dispatch = useDispatch();
@@ -80,112 +81,169 @@ export default function CargoEditingModal() {
 	return (
 		<View style={styles.container}>
 			<ScrollView px={4}>
-				<FormControl isRequired mb={1}>
-					<FormControl.Label>Название</FormControl.Label>
-					<Input maxLength={200} variant="filled" size="md" placeholder="Название" value={name} onChangeText={setName} />
+				<VStack my={4} space={3}>
+					<Box p={4} variant={"gray_card"}>
+						<Text mb={2} variant={"header15_gray"}>
+							Основные
+						</Text>
 
-					<FormControl.Label mt={2}>Вес, т</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={4}
-						variant="filled"
-						size="md"
-						placeholder="Вес"
-						value={weight.toString()}
-						onChangeText={(o) => setWeight(+o)}
-					/>
+						<Text mt={2} variant={"body13"}>
+							Наименование
+						</Text>
+						<Input bg={ELEMENTS_BG_COLOR} mt={1} maxLength={100} variant="filled" rounded={"xl"} fontSize={17} value={name} onChangeText={setName} />
 
-					<FormControl.Label mt={2}>Объем, м3</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={4}
-						variant="filled"
-						size="md"
-						placeholder="Объем"
-						value={volume.toString()}
-						onChangeText={(o) => setVolume(+o)}
-					/>
-
-					<FormControl.Label mt={2}>Ставка, ₸</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={9}
-						variant="filled"
-						size="md"
-						placeholder="Стоимость"
-						value={price.toString()}
-						onChangeText={(o) => setPrice(+o)}
-					/>
-				</FormControl>
-
-				<Pressable onPress={PackagingTypeSectionOnPress} mt={2} mb={1}>
-					<LeftAlignedSection title={"Тип упаковки"} value={packagingTypeDisplayName} />
-				</Pressable>
-
-				{editingCargo.packagingType === PackagingType.inBulk || editingCargo.packagingType === PackagingType.loose ? null : (
-					<FormControl mb={4} mx={8}>
-						<FormControl.Label>Количество, шт</FormControl.Label>
+						<Text mt={4} variant={"body13"}>
+							Вес, т
+						</Text>
 						<Input
-							keyboardType="numeric"
-							width={200}
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
 							maxLength={4}
 							variant="filled"
-							size="md"
-							placeholder="Количество"
-							value={packagingQuantity?.toString()}
-							onChangeText={(o) => setPackagingQuantity(+o)}
+							rounded={"xl"}
+							fontSize={17}
+							value={weight?.toString() ?? ""}
+							onChangeText={(o) => setWeight(+o)}
 						/>
-					</FormControl>
-				)}
 
-				<FormControl my={4}>
-					<FormControl.Label>Длина груза, м</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={2}
-						variant="filled"
-						size="md"
-						placeholder="Длина груза"
-						value={length?.toString()}
-						onChangeText={(o) => setLength(+o)}
-					/>
+						<Text mt={4} variant={"body13"}>
+							Объем, м³
+						</Text>
+						<Input
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
+							maxLength={4}
+							variant="filled"
+							rounded={"xl"}
+							fontSize={17}
+							value={volume?.toString() ?? ""}
+							onChangeText={(o) => setVolume(+o)}
+						/>
 
-					<FormControl.Label mt={2}>Ширина груза, м</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={2}
-						variant="filled"
-						size="md"
-						placeholder="Ширина груза"
-						value={width?.toString()}
-						onChangeText={(o) => setWidth(+o)}
-					/>
+						<Text mt={4} variant={"body13"}>
+							Ставка, ₸
+						</Text>
+						<Input
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
+							maxLength={9}
+							variant="filled"
+							rounded={"xl"}
+							fontSize={17}
+							value={price?.toString() ?? ""}
+							onChangeText={(o) => setPrice(+o)}
+						/>
+					</Box>
 
-					<FormControl.Label mt={2}>Высота груза, м</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={2}
-						variant="filled"
-						size="md"
-						placeholder="Высота груза"
-						value={height?.toString()}
-						onChangeText={(o) => setHeight(+o)}
-					/>
+					<Box p={4} variant={"gray_card"}>
+						<Text mb={4} variant={"header15_gray"}>
+							Упаковка
+						</Text>
 
-					<FormControl.Label mt={4}>Диаметр груза, м</FormControl.Label>
-					<Input
-						keyboardType="numeric"
-						maxLength={2}
-						variant="filled"
-						size="md"
-						placeholder="Диаметр груза"
-						value={diameter?.toString()}
-						onChangeText={(o) => setDiameter(+o)}
-					/>
-				</FormControl>
+						<Pressable onPress={PackagingTypeSectionOnPress}>
+							<ArrowToRightSectionHoc title="Тип упаковки">
+								<Text variant={"body17_black"}>{packagingTypeDisplayName ?? ""}</Text>
+							</ArrowToRightSectionHoc>
+						</Pressable>
+
+						{editingCargo.packagingType === PackagingType.inBulk || editingCargo.packagingType === PackagingType.loose ? null : (
+							<Box mt={4}>
+								<Text variant={"body13"}>Количество, шт</Text>
+								<Input
+									inputMode="numeric"
+									w={"50%"}
+									bg={ELEMENTS_BG_COLOR}
+									mt={1}
+									maxLength={4}
+									variant="filled"
+									rounded={"xl"}
+									fontSize={17}
+									value={packagingQuantity?.toString() ?? ""}
+									onChangeText={(o) => setPackagingQuantity(+o)}
+								/>
+							</Box>
+						)}
+					</Box>
+
+					<Box p={4} variant={"gray_card"}>
+						<Text mb={2} variant={"header15_gray"}>
+							Габариты
+						</Text>
+
+						<Text mt={4} variant={"body13"}>
+							Длина, м
+						</Text>
+						<Input
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
+							maxLength={2}
+							variant="filled"
+							rounded={"xl"}
+							fontSize={17}
+							value={length?.toString() ?? ""}
+							onChangeText={(o) => setLength(+o)}
+						/>
+
+						<Text mt={4} variant={"body13"}>
+							Ширина, м
+						</Text>
+						<Input
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
+							maxLength={2}
+							variant="filled"
+							rounded={"xl"}
+							fontSize={17}
+							value={width?.toString() ?? ""}
+							onChangeText={(o) => setWidth(+o)}
+						/>
+
+						<Text mt={4} variant={"body13"}>
+							Высота, м
+						</Text>
+						<Input
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
+							maxLength={2}
+							variant="filled"
+							rounded={"xl"}
+							fontSize={17}
+							value={height?.toString() ?? ""}
+							onChangeText={(o) => setHeight(+o)}
+						/>
+
+						<Text mt={4} variant={"body13"}>
+							Диаметр, м
+						</Text>
+						<Input
+							inputMode="numeric"
+							w={"50%"}
+							bg={ELEMENTS_BG_COLOR}
+							mt={1}
+							maxLength={2}
+							variant="filled"
+							rounded={"xl"}
+							fontSize={17}
+							value={diameter?.toString() ?? ""}
+							onChangeText={(o) => setDiameter(+o)}
+						/>
+					</Box>
+				</VStack>
 			</ScrollView>
-			<Center my={2}>
-				<Button minW={200} size={"lg"} variant="outline" onPress={saveHandler}>
+			<Center my={2} px={4}>
+				<Button variant="blue_button" onPress={saveHandler}>
 					Далее
 				</Button>
 			</Center>
