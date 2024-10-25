@@ -12,6 +12,7 @@ import { ICargo } from "../../../api/transportation/Transportation";
 import { setEditingCargo, setEditingPrice } from "../../../store/slices/buildTransportationSlice";
 import { ELEMENTS_BG_COLOR } from "../../../constants/Colors";
 import { ArrowToRightSectionHoc } from "../../../components/screenItems/ArrowToRightSectionHoc";
+import { LOGISTIC_COMMISSION } from "../../../constants/GlobalConstants";
 
 export default function CargoEditingModal() {
 	const dispatch = useDispatch();
@@ -139,6 +140,10 @@ export default function CargoEditingModal() {
 							value={price?.toString() ?? ""}
 							onChangeText={(o) => setPrice(+o)}
 						/>
+
+						<Text mt={1} variant={"body12"} color={"#737E86"}>
+							* в том числе комиссия 7% ({(price * LOGISTIC_COMMISSION).toFixed(2)} ₸)
+						</Text>
 					</Box>
 
 					<Box p={4} variant={"gray_card"}>

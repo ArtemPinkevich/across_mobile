@@ -15,6 +15,9 @@ import { router } from "expo-router";
 import { setEditingTransportation } from "../../store/slices/buildTransportationSlice";
 import MapMarkerSvg from "../svg/MapMarkerSvg";
 import { MAP_MARKER_BLACK, GENERAL_BLUE_COLOR } from "../../constants/Colors";
+import { useGetProfileQuery } from "../../store/rtkQuery/profileApi";
+import { DRIVER_ROLE } from "../../api/profile/Profile";
+import { LOGISTIC_COMMISSION } from "../../constants/GlobalConstants";
 
 type TransportationItemProps = {
 	transportation: ITransportation;
@@ -25,6 +28,7 @@ type TransportationItemProps = {
 export const TransportationItem = (props: TransportationItemProps) => {
 	const { transportation, isMenuVisible = true, isStatusVisible = true } = props;
 	const dispatch = useDispatch();
+	const { data: profile } = useGetProfileQuery();
 	const [deleteTransportation] = useDeleteTransportationMutation();
 
 	const removeHandler = () => {
@@ -38,12 +42,19 @@ export const TransportationItem = (props: TransportationItemProps) => {
 		router.push("/CargoEditingModal");
 	};
 
+	// Для водителя показываем стоимость за вычетом комиссии
+	let adjustedPrice = transportation?.price ?? 0;
+	if (profile?.role === DRIVER_ROLE) {
+		adjustedPrice = adjustedPrice * (1 - LOGISTIC_COMMISSION);
+	}
+	const displyPrice = adjustedPrice.toLocaleString("ru-RU", { maximumFractionDigits: 2 });
+
 	return (
 		<Box variant={"gray_card"}>
 			<HStack my={4} pl={4}>
 				<VStack w="90%" space={1}>
 					<Text variant={"header17"}>{transportation.cargo.name}</Text>
-					{transportation.price && <Text mt={1} variant={"header15"}>{`${transportation.price?.toLocaleString()} ₸`}</Text>}
+					{transportation.price && <Text mt={1} variant={"header15"}>{`${displyPrice} ₸`}</Text>}
 					<HStack mt={1}>
 						<Text variant={"body15_gray"}>Вес</Text>
 						<Text variant={"body15_black"} ml={2}>
