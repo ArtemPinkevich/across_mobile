@@ -22,26 +22,6 @@ export default function Osm(props: Props) {
 	const cargoLatitude = cargoPoint?.latitude;
 	const cargoLongitude = cargoPoint?.longitude;
 
-	let centerLattitide = "";
-	if (cargoLatitude) {
-		centerLattitide = cargoLatitude;
-	} else if (sourceLattitide && destinationLattitide) {
-		centerLattitide = `${(+sourceLattitide + +destinationLattitide) / 2}`;
-	}
-
-	let centerLongtitude = "";
-	if (cargoLongitude) {
-		centerLongtitude = cargoLongitude;
-	} else if (sourceLongtitude && destinationLongtitude) {
-		centerLongtitude = `${(+sourceLongtitude + +destinationLongtitude) / 2}`;
-	}
-
-	const waypoints: string[] = [];
-	sourceLattitide && sourceLongtitude && waypoints.push(`L.latLng(${sourceLattitide}, ${sourceLongtitude})`);
-	routePoints && routePoints.map((o) => waypoints.push(`L.latLng(${o.latitude}, ${o.longitude})`));
-	destinationLattitide && destinationLongtitude && waypoints.push(`L.latLng(${destinationLattitide}, ${destinationLongtitude})`);
-	const waypointsAsString = waypoints.join(", ");
-
 	return (
 		<WebView
 			style={styles.container}
@@ -72,33 +52,39 @@ export default function Osm(props: Props) {
 
 	<script>
 
-		var map = L.map('map').setView([${centerLattitide}, ${centerLongtitude}], 8);
+		const sourceLattitide = ${sourceLattitide};
+		const sourceLongtitude = ${sourceLongtitude};
+		const destinationLattitide = ${destinationLattitide};
+		const destinationLongtitude = ${destinationLongtitude};
+		const cargoLattitide = ${cargoLatitude};
+		const cargoLongtitude = ${cargoLongitude};
+		const osrmServerAddress = "${OSRM_SERVER_ADDRESS}";
+	
+		var map = L.map('map').setView([cargoLattitide, cargoLongtitude], 8);
 		mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
 		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Leaflet &copy; ' + mapLink + ', contribution', maxZoom: 18 }).addTo(map);
 
         var cargoIcon = new L.Icon({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41]
+            iconSize: [40, 80]
         });
 
-        ${cargoLatitude && cargoLongitude && `L.marker([${cargoLatitude}, ${cargoLongitude}], {icon: cargoIcon}).addTo(map);`}
-        
-        ${sourceLattitide && sourceLongtitude && `L.marker([${sourceLattitide}, ${sourceLongtitude}]).addTo(map);`}
-        ${destinationLattitide && destinationLongtitude && `L.marker([${destinationLattitide}, ${destinationLongtitude}]).addTo(map);`}
-        
-        ${
-					waypointsAsString &&
-					`
+        var cargo = L.marker([cargoLattitide, cargoLongtitude], {icon: cargoIcon}).addTo(map);
+		//var source = L.marker([sourceLattitide, sourceLongtitude]).addTo(map);
+		//var dest = L.marker([destinationLattitide, destinationLongtitude]).addTo(map);
 		L.Routing.control({
-				waypoints: [${waypointsAsString}],
-				serviceUrl: ${OSRM_SERVER_ADDRESS},
+				waypoints: [
+					L.latLng(sourceLattitide, sourceLongtitude),
+					L.latLng(cargoLattitide, cargoLongtitude),
+					L.latLng(destinationLattitide, destinationLongtitude)
+				],
+				serviceUrl: osrmServerAddress,
                 lineOptions: {
-                        styles: [{color: 'green', opacity: 1, weight: 5}]
+                        styles: [{color: 'green', opacity: 1, weight: 5}, {color: 'red', opacity: 1, weight: 5}],
+						addWaypoints: false
                     }
 			}).addTo(map);
-            `
-				}
 
 
 	</script>
