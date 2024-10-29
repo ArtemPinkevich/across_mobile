@@ -22,15 +22,14 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
 });
 
 export const startBackgroundTracking = async () => {
-	 await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-	 	accuracy: Location.Accuracy.Balanced,
-	 	deferredUpdatesDistance: 1000, // метры
-	 	deferredUpdatesInterval: 30000, // миллисекунды
-	 });
+	await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+		accuracy: Location.Accuracy.Balanced,
+		deferredUpdatesDistance: 1000, // метры
+		deferredUpdatesInterval: 30000, // миллисекунды
+	});
 };
 
 export const sendLocationToBackend = async (location: Location.LocationObject) => {
-	console.log(location);
 	if (!location?.coords?.latitude || !location?.coords?.longitude) {
 		return;
 	}

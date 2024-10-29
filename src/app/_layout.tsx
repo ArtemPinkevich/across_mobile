@@ -96,6 +96,14 @@ function RootLayoutNav() {
 						),
 					}}
 				>
+					{/* <Stack.Screen name="debug" options={{ headerShown: false }} />
+					<Stack.Screen
+						name="UiMockUps"
+						options={{
+							title: "UiMockUps",
+							presentation: "modal",
+						}}
+					/> */}
 					<Stack.Screen name="(app)" options={{ headerShown: false }} />
 					<Stack.Screen name="location-permission" options={{ headerShown: false }} />
 					<Stack.Screen name="sign-in" options={{ headerShown: false }} />
