@@ -2,6 +2,10 @@ import { WebView } from "react-native-webview";
 import { StyleSheet } from "react-native";
 import { RoutePointDto } from "../../api/places/LocationModels";
 import { OSRM_SERVER_ADDRESS } from "../../constants/GlobalConstants";
+import { useEffect, useState } from "react";
+import { Asset } from "expo-asset";
+
+const truckMarkerUri = Asset.fromModule(require("../../../assets/images/truck-map-marker.png")).uri;
 
 type Props = {
 	departurePoint: RoutePointDto;
@@ -12,15 +16,44 @@ type Props = {
 export default function Osm(props: Props) {
 	const { departurePoint, destinationPoint, routePoints } = props;
 
+	const [osmServerAvailable, setOsmServerAvailable] = useState(true);
+
+	useEffect(() => {
+		(async () => {
+			try {
+				const response = await fetch(OSRM_SERVER_ADDRESS);
+				setOsmServerAvailable(response.ok);
+				alert(response.ok);
+			} catch (error) {
+				setOsmServerAvailable(false);
+			}
+		})();
+	}, []);
+
 	const sourceLattitide = departurePoint.latitude;
 	const sourceLongtitude = departurePoint.longitude;
 
 	const destinationLattitide = destinationPoint.latitude;
 	const destinationLongtitude = destinationPoint.longitude;
 
+	// Если нет ни одной геопозиции грузовика, то добавляем точку отправления, чтобы хоть так отрисовать маршрут
+	if (routePoints.length === 0) {
+		routePoints.push(departurePoint);
+	}
+
 	const cargoPoint = routePoints.at(-1);
 	const cargoLatitude = cargoPoint?.latitude;
 	const cargoLongitude = cargoPoint?.longitude;
+
+	const passedWaypoints: string[] = [];
+	sourceLattitide && sourceLongtitude && passedWaypoints.push(`L.latLng(${sourceLattitide}, ${sourceLongtitude})`);
+	routePoints && routePoints.map((o) => passedWaypoints.push(`L.latLng(${o.latitude}, ${o.longitude})`));
+	const passedWaypointsAsString = passedWaypoints.join(", ");
+
+	const remainingWaypoints: string[] = [];
+	cargoLatitude && cargoLongitude && remainingWaypoints.push(`L.latLng(${cargoLatitude}, ${cargoLongitude})`);
+	destinationLattitide && destinationLongtitude && remainingWaypoints.push(`L.latLng(${destinationLattitide}, ${destinationLongtitude})`);
+	const remainingWaypointsAsString = remainingWaypoints.join(", ");
 
 	return (
 		<WebView
@@ -52,10 +85,6 @@ export default function Osm(props: Props) {
 
 	<script>
 
-		const sourceLattitide = ${sourceLattitide};
-		const sourceLongtitude = ${sourceLongtitude};
-		const destinationLattitide = ${destinationLattitide};
-		const destinationLongtitude = ${destinationLongtitude};
 		const cargoLattitide = ${cargoLatitude};
 		const cargoLongtitude = ${cargoLongitude};
 		const osrmServerAddress = "${OSRM_SERVER_ADDRESS}";
@@ -65,33 +94,38 @@ export default function Osm(props: Props) {
 		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Leaflet &copy; ' + mapLink + ', contribution', maxZoom: 18 }).addTo(map);
 
         var cargoIcon = new L.Icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [40, 80]
+            iconUrl: '${truckMarkerUri}',
+            iconSize: [50, 50]
         });
 
-        var cargo = L.marker([cargoLattitide, cargoLongtitude], {icon: cargoIcon}).addTo(map);
-		//var source = L.marker([sourceLattitide, sourceLongtitude]).addTo(map);
-		//var dest = L.marker([destinationLattitide, destinationLongtitude]).addTo(map);
-		L.Routing.control({
-				waypoints: [
-					L.latLng(sourceLattitide, sourceLongtitude),
-					L.latLng(cargoLattitide, cargoLongtitude),
-					L.latLng(destinationLattitide, destinationLongtitude)
-				],
-				serviceUrl: osrmServerAddress,
-                lineOptions: {
-                        styles: [{color: 'green', opacity: 1, weight: 5}, {color: 'red', opacity: 1, weight: 5}],
-						addWaypoints: false
-                    }
-			}).addTo(map);
+        L.marker([cargoLattitide, cargoLongtitude], {icon: cargoIcon}).addTo(map);
 
-
+        ${
+					osmServerAvailable &&
+					passedWaypointsAsString &&
+					remainingWaypointsAsString &&
+					`
+            L.Routing.control({
+                    serviceUrl: osrmServerAddress,
+                    waypoints: [${passedWaypointsAsString}],
+                    createMarker: () => { return null; },
+                    lineOptions: {
+                            styles: [{color: 'green'}]
+                        }
+                }).addTo(map);
+                
+            L.Routing.control({
+                    serviceUrl: osrmServerAddress,
+                    waypoints: [${remainingWaypointsAsString}],
+                    createMarker: () => { return null; },
+                    lineOptions: {
+                            styles: [{color: 'gray'}]
+                        }
+                }).addTo(map);
+        `
+				}
 	</script>
-
-
 </body>
-
 </html>`,
 			}}
 		/>

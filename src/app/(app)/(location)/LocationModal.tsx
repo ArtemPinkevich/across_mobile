@@ -47,11 +47,9 @@ export default function LocationModal() {
 	const { data: geoRoute } = useGetTransportationRouteQuery(viewedTransportation.transportationOrderId);
 	//const geoRoute = geoRouteFake;
 
-	console.error(geoRoute);
-
-	if ((!geoRoute?.routePoints?.length || geoRoute?.routePoints?.length <= 1) && (!geoRoute?.departurePoint || !geoRoute?.destinationPoint)) {
+	if (!geoRoute?.departurePoint || !geoRoute?.destinationPoint) {
 		return errorContent;
 	}
 
-	return <Osm departurePoint={geoRoute?.departurePoint} destinationPoint={geoRoute?.destinationPoint} routePoints={geoRoute?.routePoints} />;
+	return <Osm departurePoint={geoRoute?.departurePoint} destinationPoint={geoRoute?.destinationPoint} routePoints={geoRoute?.routePoints ?? []} />;
 }
