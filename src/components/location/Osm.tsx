@@ -16,14 +16,16 @@ type Props = {
 export default function Osm(props: Props) {
 	const { departurePoint, destinationPoint, routePoints } = props;
 
+	// Флаг работоспособности OSRM сервиса
+	// нужен, чтобы в случае недоступности OSRM, карта все ровно рисовалась хоть и без маршрутов
 	const [osmServerAvailable, setOsmServerAvailable] = useState(true);
 
 	useEffect(() => {
 		(async () => {
+			// Если есть хоть какой-то ответ от OSRM сервиса, то считаем, что он работоспособен
 			try {
-				const response = await fetch(OSRM_SERVER_ADDRESS);
-				setOsmServerAvailable(response.ok);
-				alert(response.ok);
+				await fetch(`${OSRM_SERVER_ADDRESS}`);
+				setOsmServerAvailable(true);
 			} catch (error) {
 				setOsmServerAvailable(false);
 			}
@@ -110,7 +112,7 @@ export default function Osm(props: Props) {
                     waypoints: [${passedWaypointsAsString}],
                     createMarker: () => { return null; },
                     lineOptions: {
-                            styles: [{color: 'green'}]
+                            styles: [{color: 'green', weight: 10}]
                         }
                 }).addTo(map);
                 
@@ -119,7 +121,7 @@ export default function Osm(props: Props) {
                     waypoints: [${remainingWaypointsAsString}],
                     createMarker: () => { return null; },
                     lineOptions: {
-                            styles: [{color: 'gray'}]
+                            styles: [{color: 'gray', weight: 10}]
                         }
                 }).addTo(map);
         `
