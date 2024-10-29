@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View } from "react-native";
-import { Button } from "native-base";
+import { Box, Button } from "native-base";
 import PhoneNumberInput from "../components/common/PhoneNumberInput";
 import { AuthorizationService } from "../services/AuthorizationService";
 
@@ -16,7 +16,9 @@ export default function SignIn() {
 
 	return (
 		<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-			<PhoneNumberInput value={phoneNumber} onChange={setPhoneNumber} />
+			<Box w={200}>
+				<PhoneNumberInput value={phoneNumber} onChange={setPhoneNumber} />
+			</Box>
 			<Button mt={5} variant="outline" minW={200} size={"lg"} disabled={!phoneNumber} onPress={handleSignIn} isLoading={isLoading}>
 				Войти
 			</Button>
