@@ -5,7 +5,6 @@ import { useLocalSearchParams } from "expo-router";
 import { Button, Input, Text } from "native-base";
 import { AuthorizationService } from "../services/AuthorizationService";
 import { useLazyGetProfileQuery } from "../store/rtkQuery/profileApi";
-import { SHIPPER_ROLE } from "../api/profile/Profile";
 
 export default function SignInVerify() {
 	const { phoneNumber } = useLocalSearchParams<{ phoneNumber: string }>();
@@ -41,17 +40,17 @@ export default function SignInVerify() {
 	};
 
 	return (
-		<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+		<View style={{ flex: 1, justifyContent: "center", alignItems: "stretch", padding: 32 }}>
 			<Input
 				variant="underlined"
 				size="md"
-				w={200}
+				isFullWidth
 				placeholder="Код подтверждения"
 				value={verificationCode}
 				onChangeText={handleVerificationCodeChange}
 				keyboardType="number-pad"
 			/>
-			<Button mt={5} variant="outline" minW={200} size={"lg"} disabled={!verificationCode} onPress={handleSendVerifyCode} isLoading={isLoading}>
+			<Button mt={10} variant="blue_button" disabled={!verificationCode} onPress={handleSendVerifyCode} isLoading={isLoading}>
 				Отправить
 			</Button>
 			{errorText && (

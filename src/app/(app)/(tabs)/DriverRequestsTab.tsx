@@ -34,7 +34,9 @@ export default function DriverRequestsTab() {
 	if (filtred.length === 0) {
 		content = (
 			<Center h={"100%"}>
-				<Text fontSize={"lg"}>Заявок не найдено</Text>
+				<Text variant={"body17_black"} textAlign={"center"}>
+					Заявок не найдено
+				</Text>
 			</Center>
 		);
 	}

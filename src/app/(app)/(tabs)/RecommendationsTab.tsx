@@ -67,9 +67,11 @@ export default function RecommendationsTab() {
 				Обновить
 			</Button>
 			{(isError || transportations?.length === 0) && (
-				<Center flex={1}>
-					<Text textAlign={"center"}>На данный момент подходящих грузов не найдено. Попробуйте воспользоваться гибким поиском.</Text>
-					<Button mt={10} minW={200} onPress={() => router.replace("/SearchTab")}>
+				<Center flex={1} p={2}>
+					<Text textAlign={"center"} variant={"body15_black"}>
+						На данный момент подходящих грузов не найдено. Попробуйте воспользоваться гибким поиском.
+					</Text>
+					<Button mt={10} variant={"blue_button"} onPress={() => router.replace("/SearchTab")}>
 						Найти
 					</Button>
 				</Center>

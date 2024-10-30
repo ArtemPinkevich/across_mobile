@@ -84,8 +84,8 @@ export default function SelectList(props: SelectListProps) {
 		<View style={styles.container}>
 			{content}
 			{isMultiselect ? (
-				<Center my={"2"}>
-					<Button variant="solid" minW={200} onPress={saveHandler}>
+				<Center my={"2"} p={2}>
+					<Button variant="blue_button" onPress={saveHandler}>
 						Сохранить
 					</Button>
 				</Center>

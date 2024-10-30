@@ -38,8 +38,10 @@ export default function FreeTransportationsTab() {
 
 	if (filtred.length === 0) {
 		content = (
-			<Center h={"100%"}>
-				<Text fontSize={"lg"}>Заявок на перевозку груза не найдено</Text>
+			<Center h={"100%"} p={4}>
+				<Text textAlign={"center"} variant={"body15_black"}>
+					Заявок на перевозку груза не найдено
+				</Text>
 			</Center>
 		);
 	}

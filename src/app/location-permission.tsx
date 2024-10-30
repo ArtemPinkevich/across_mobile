@@ -55,7 +55,7 @@ export default function LocationPermission() {
 	};
 
 	return (
-		<View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#fff" }}>
+		<View style={{ flex: 1, justifyContent: "center", alignItems: "stretch", backgroundColor: "#fff" }}>
 			{gpsServicesEnabled ? (
 				<Box mx={5}>
 					<Box px={4} py={16} variant={"gray_card"}>

@@ -41,7 +41,9 @@ export default function ShipperOrdersInProgressTab() {
 	if (filtred.length === 0) {
 		content = (
 			<Center h={"100%"}>
-				<Text fontSize={"lg"}>Активных отправлений не найдено</Text>
+				<Text textAlign={"center"} variant={"body15_black"}>
+					Активных отправлений не найдено
+				</Text>
 			</Center>
 		);
 	}

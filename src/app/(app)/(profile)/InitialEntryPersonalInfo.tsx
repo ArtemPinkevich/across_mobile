@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Center, CheckIcon, Input, Text, Select, Spacer, VStack, Heading } from "native-base";
+import { Button, Center, CheckIcon, Input, Text, Select, Spacer, VStack, Heading, ScrollView } from "native-base";
 import { useChangeRoleMutation, useGetProfileQuery, useUpdateProfileMutation } from "../../../store/rtkQuery/profileApi";
 import { router } from "expo-router";
 import { View } from "../../../components/Themed";
@@ -38,41 +38,43 @@ export default function InitialEntryPersonalInfo() {
 
 	return (
 		<View style={{ flex: 1 }}>
-			<Center>
-				<Heading size="sm" my={10}>
-					Персональная информация
-				</Heading>
-			</Center>
+			<ScrollView px={4}>
+				<Center>
+					<Heading size="sm" my={10}>
+						Персональная информация
+					</Heading>
+				</Center>
 
-			<VStack my={10} mx={5}>
-				<Input variant="underlined" size="md" placeholder="Имя" value={name} onChangeText={setName} autoFocus />
-				<Input variant="underlined" size="md" placeholder="Фамилия" value={surname} onChangeText={setSurname} />
-				<Input variant="underlined" size="md" placeholder="Отчество" value={patronymic} onChangeText={setpatronymic} />
-				<Text bold mt={10} mb={2}>
-					Роль
-				</Text>
-				<Select
-					defaultValue={role}
-					accessibilityLabel="TrailerType"
-					onValueChange={(arg) => setRole(arg)}
-					_selectedItem={{
-						bg: "teal.600",
-						endIcon: <CheckIcon size={5} />,
-					}}
-				>
-					<Select.Item label="Перевозчик" value={DRIVER_ROLE} />
-					<Select.Item label="Отправитель" value={SHIPPER_ROLE} />
-				</Select>
-			</VStack>
+				<VStack my={10}>
+					<Input variant="underlined" size="md" placeholder="Имя" value={name} onChangeText={setName} autoFocus />
+					<Input variant="underlined" size="md" placeholder="Фамилия" value={surname} onChangeText={setSurname} />
+					<Input variant="underlined" size="md" placeholder="Отчество" value={patronymic} onChangeText={setpatronymic} />
+					<Text bold mt={10} mb={2}>
+						Роль
+					</Text>
+					<Select
+						defaultValue={role}
+						accessibilityLabel="TrailerType"
+						onValueChange={(arg) => setRole(arg)}
+						_selectedItem={{
+							bg: "teal.600",
+							endIcon: <CheckIcon size={5} />,
+						}}
+					>
+						<Select.Item label="Перевозчик" value={DRIVER_ROLE} />
+						<Select.Item label="Отправитель" value={SHIPPER_ROLE} />
+					</Select>
+				</VStack>
 
-			<Spacer />
-			<Center>
-				<Button variant="outline" mb={10} w={200} size={"lg"} isLoading={isLoading} onPress={() => setShowModal(true)}>
-					Далее
-				</Button>
-			</Center>
-			<Spacer />
-			<RoleConfirmationModal showModal={showModal} role={role} onCancel={() => setShowModal(false)} onOk={handleNext} />
+				<Spacer />
+				<Center>
+					<Button variant="blue_button" mb={10} isLoading={isLoading} onPress={() => setShowModal(true)}>
+						Далее
+					</Button>
+				</Center>
+				<Spacer />
+				<RoleConfirmationModal showModal={showModal} role={role} onCancel={() => setShowModal(false)} onOk={handleNext} />
+			</ScrollView>
 		</View>
 	);
 }

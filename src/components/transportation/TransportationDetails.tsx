@@ -11,6 +11,8 @@ import { ITransportation } from "../../api/transportation/Transportation";
 import { router } from "expo-router";
 import MapMarkerSvg from "../svg/MapMarkerSvg";
 import { MAP_MARKER_BLACK, GENERAL_BLUE_COLOR } from "../../constants/Colors";
+import { useGetProfileQuery } from "../../store/rtkQuery/profileApi";
+import { SHIPPER_ROLE } from "../../api/profile/Profile";
 
 type Props = {
 	transportation: ITransportation;
@@ -28,6 +30,8 @@ export default function TransportationDetailsModal(props: Props) {
 			</View>
 		);
 	}
+
+	const { data: profile } = useGetProfileQuery();
 
 	const loadingPlace = transportation.transferInfo.loadingPlace;
 	const unloadingPlace = transportation.transferInfo.unloadingPlace;
@@ -116,9 +120,12 @@ export default function TransportationDetailsModal(props: Props) {
 							</HStack>
 						</VStack>
 					</HStack>
-					<Button mt={2} variant="link" alignSelf={"flex-start"} onPress={() => router.navigate("/LocationModal")}>
-						Посмотреть на карте
-					</Button>
+
+					{profile?.role === SHIPPER_ROLE && (
+						<Button mt={2} variant="link" alignSelf={"flex-start"} onPress={() => router.navigate("/LocationModal")}>
+							Посмотреть на карте
+						</Button>
+					)}
 				</Box>
 
 				{transportation.contactInfoDto && (

@@ -87,7 +87,7 @@ export default function EditProfileModal() {
 					)}
 
 					<Center my={"10"}>
-						<Button variant="outline" minW={200} size={"lg"} isLoading={isLoading} onPress={saveHandler}>
+						<Button variant="blue_button" isLoading={isLoading} onPress={saveHandler}>
 							Сохранить
 						</Button>
 						{error && <Text color={"red.500"}>Не удалось выполнить операцию</Text>}

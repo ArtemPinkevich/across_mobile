@@ -45,7 +45,9 @@ export default function DriverOrdersTab() {
 	if (filtred.length === 0) {
 		content = (
 			<Center h={"100%"}>
-				<Text fontSize={"lg"}>Активных перевозок не найдено</Text>
+				<Text variant={"body17_black"} textAlign={"center"}>
+					Активных перевозок не найдено
+				</Text>
 			</Center>
 		);
 	}

@@ -34,7 +34,7 @@ export default function ProfileTab() {
 							<Pressable onPress={() => router.push("/EditProfileModal")}>
 								<ArrowToRightSectionHoc title="Имя">
 									<HStack space={2} flexWrap={"wrap"}>
-										<Text variant={"body17_black"}>{profile.surname ?? ""}</Text>
+										{profile?.surname && <Text variant={"body17_black"}>{profile.surname}</Text>}
 										<Text variant={"body17_black"}>{profile.name ?? ""}</Text>
 										<Text variant={"body17_black"}>{profile.patronymic ?? ""}</Text>
 									</HStack>
@@ -91,5 +91,5 @@ export default function ProfileTab() {
 		);
 	}
 
-	return <View style={{ flex: 1, alignItems: "center" }}>{content}</View>;
+	return <View style={{ flex: 1, alignItems: "stretch" }}>{content}</View>;
 }

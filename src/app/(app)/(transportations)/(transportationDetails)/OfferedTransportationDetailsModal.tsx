@@ -60,15 +60,10 @@ export default function OfferedTransportationDetailsModal() {
 	return (
 		<View style={{ flex: 1, alignItems: "stretch" }}>
 			<TransportationDetails transportation={viewedTransportation} />
-			<Center my={2}>
-				<HStack space={10}>
-					<Button minW={120} size={"md"} variant="outline" onPress={backHandler}>
-						Назад
-					</Button>
-					<Button minW={120} size={"md"} variant="outline" isLoading={isLoading} onPress={takeHandler}>
-						Взять груз
-					</Button>
-				</HStack>
+			<Center px={4} py={2}>
+				<Button variant="blue_button" isLoading={isLoading} onPress={takeHandler}>
+					Взять груз
+				</Button>
 				{error && <Text color={"red.500"}>Не удалось выполнить операцию</Text>}
 			</Center>
 		</View>
