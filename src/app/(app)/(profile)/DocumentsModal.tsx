@@ -43,8 +43,8 @@ export default function DocumentsModal() {
 		<View style={{ flex: 1 }}>
 			<Box my={7} mx={4} p={4} variant={"gray_card"}>
 				{profile.documentDtos.map((document, index) => (
-					<Pressable my={3} onPress={() => doucumentOnPress(document)}>
-						<DocumentCard key={index} document={document} />
+					<Pressable key={index} my={3} onPress={() => doucumentOnPress(document)}>
+						<DocumentCard document={document} />
 					</Pressable>
 				))}
 			</Box>
