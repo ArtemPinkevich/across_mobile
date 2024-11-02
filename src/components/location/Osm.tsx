@@ -1,11 +1,8 @@
 import { WebView } from "react-native-webview";
 import { StyleSheet } from "react-native";
 import { RoutePointDto } from "../../api/places/LocationModels";
-import { OSRM_SERVER_ADDRESS } from "../../constants/GlobalConstants";
+import { OSRM_SERVER_ADDRESS, SERVER_ADDRESS } from "../../constants/GlobalConstants";
 import { useEffect, useState } from "react";
-import { Asset } from "expo-asset";
-
-const truckMarkerUri = Asset.fromModule(require("../../../assets/images/truck-map-marker.png")).uri;
 
 type Props = {
 	departurePoint: RoutePointDto;
@@ -96,7 +93,7 @@ export default function Osm(props: Props) {
 		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Leaflet &copy; ' + mapLink + ', contribution', maxZoom: 18 }).addTo(map);
 
         var cargoIcon = new L.Icon({
-            iconUrl: '${truckMarkerUri}',
+            iconUrl: '${SERVER_ADDRESS}/File/get-truck-marker-icon',
             iconSize: [50, 50]
         });
 
