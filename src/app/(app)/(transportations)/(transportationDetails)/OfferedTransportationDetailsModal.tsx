@@ -29,6 +29,7 @@ export default function OfferedTransportationDetailsModal() {
 
 		// TODO Сделать механизм выбора грузовика
 		if (trucks.length === 0 || !trucks[0].truckId) {
+			alert("Чтобы взять груз необходимо добавить грузовик");
 			return;
 		}
 

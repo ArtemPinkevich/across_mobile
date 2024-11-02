@@ -93,7 +93,7 @@ export default function Osm(props: Props) {
 		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Leaflet &copy; ' + mapLink + ', contribution', maxZoom: 18 }).addTo(map);
 
         var cargoIcon = new L.Icon({
-            iconUrl: '${SERVER_ADDRESS}/File/get-truck-marker-icon',
+            iconUrl: "${SERVER_ADDRESS}/Public/GetTruckMarkerIcon",
             iconSize: [50, 50]
         });
 
