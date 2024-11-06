@@ -27,7 +27,7 @@ export default function ShipperApprovingTransportationDetailsModal() {
 
 		const responce: TransportationOrderResult = await assignTruck(request).unwrap();
 		if (responce?.result === ApiCommonResult.Ok) {
-			router.replace("/");
+			router.replace("/ShipperOrdersInProgressTab");
 		} else {
 			alert("Не удалось обработать запрос. Попробуйте снова или позже");
 			console.log(responce?.reasons);

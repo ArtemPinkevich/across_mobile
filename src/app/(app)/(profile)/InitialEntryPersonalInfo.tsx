@@ -33,7 +33,7 @@ export default function InitialEntryPersonalInfo() {
 			await сhangeRole(role);
 		}
 
-		router.replace("/");
+		role === DRIVER_ROLE ? router.replace("/location-permission") : router.replace("/FreeTransportationsTab");
 	};
 
 	return (

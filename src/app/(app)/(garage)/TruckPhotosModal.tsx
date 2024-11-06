@@ -111,7 +111,7 @@ export default function TruckPhotosModal() {
 				)}
 			</ScrollView>
 			<Center my={2} p={2}>
-				<Button variant="blue_button" onPress={() => router.replace("/")}>
+				<Button variant="blue_button" onPress={() => router.replace("/ProfileTab")}>
 					ОК
 				</Button>
 			</Center>

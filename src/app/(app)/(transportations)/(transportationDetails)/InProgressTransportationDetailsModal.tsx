@@ -40,7 +40,7 @@ export default function InProgressTransportationDetailsModal() {
 		}
 
 		if (responce?.result === ApiCommonResult.Ok) {
-			router.replace("/");
+			router.replace("/DriverOrdersTab");
 		} else {
 			alert("Не удалось обработать запрос. Попробуйте снова или позже");
 			console.log(responce?.reasons);
