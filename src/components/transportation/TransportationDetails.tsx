@@ -238,14 +238,14 @@ export default function TransportationDetailsModal(props: Props) {
 
 							<Box>
 								<Text variant={"body13"}>Кузов</Text>
-								<Text variant={"body17_black"}>{carBodiesDisplayName.length > 0 ? carBodiesDisplayName.join(", ") : "Не указано"}</Text>
+								<Text variant={"body17_black"}>{carBodiesDisplayName.length > 0 ? carBodiesDisplayName.join(",\n") : "Не указано"}</Text>
 							</Box>
 
 							{(loadingTypeDisplayNames.length > 0 || unloadingTypesDisplayNames.length > 0) && (
 								<Box>
 									<Text variant={"body13"}>Загрузка/выгрузка</Text>
-									<Text variant={"body17_black"}>{loadingTypeDisplayNames.join(", ")}</Text>
-									<Text variant={"body17_black"}>{unloadingTypesDisplayNames.join(", ")}</Text>
+									<Text variant={"body17_black"}>{loadingTypeDisplayNames.join(",\n")}</Text>
+									<Text variant={"body17_black"}>{unloadingTypesDisplayNames.join(",\n")}</Text>
 								</Box>
 							)}
 
@@ -259,7 +259,7 @@ export default function TransportationDetailsModal(props: Props) {
 							{additionalTruckRequirements.length > 0 && (
 								<Box>
 									<Text variant={"body13"}>Доп. требования</Text>
-									<Text variant={"body17_black"}>{additionalTruckRequirements.join(", ")}</Text>
+									<Text variant={"body17_black"}>{additionalTruckRequirements.join(",\n")}</Text>
 								</Box>
 							)}
 

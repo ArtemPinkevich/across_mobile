@@ -51,15 +51,10 @@ export default function ShipperApprovingTransportationDetailsModal() {
 				<TransportationDetails transportation={viewedCorrelation.transportationOrder} />
 				<PotentialDriverDetails correlation={viewedCorrelation} />
 			</ScrollView>
-			<Center my={2}>
-				<HStack space={10}>
-					<Button minW={120} size={"md"} variant="outline" onPress={() => router.back()}>
-						Назад
-					</Button>
-					<Button minW={120} size={"md"} variant="outline" isLoading={isLoading} onPress={assignTruckHandler}>
-						Согласовать перевозчика
-					</Button>
-				</HStack>
+			<Center my={2} px={4}>
+				<Button variant="blue_button" isLoading={isLoading} onPress={assignTruckHandler}>
+					Согласовать перевозчика
+				</Button>
 				{error && <Text color={"red.500"}>Не удалось выполнить операцию</Text>}
 			</Center>
 		</View>

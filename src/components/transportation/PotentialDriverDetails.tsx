@@ -43,57 +43,64 @@ export default function PotentialDriverDetails(props: Props) {
 	if (truck.ekmt) dangerousGoodsRequirements.push("EKMT");
 
 	return (
-		<View my={1}>
+		<View mb={1}>
 			<ScrollView px={4}>
-				<VStack>
-					{correlation.driver && (
-						<Box mt={4}>
-							<Heading size="sm">Переозчик</Heading>
-							<Box ml={4}>
-								<Text mt={2} fontWeight="500" color={"darkBlue.500"}>
-									ФИО
-								</Text>
-								<Text>{`${driver.surname || ""} ${driver.name || ""} ${driver.patronymic || ""}`}</Text>
+				{correlation.driver && (
+					<VStack space={3}>
+						<Box p={4} variant={"gray_card"}>
+							<VStack space={4}>
+								<Text variant={"header15_gray"}>Переозчик</Text>
 
-								<Text mt={2} fontWeight="500" color={"darkBlue.500"}>
-									Грузовик
-								</Text>
+								<Box>
+									<Text variant={"body13"}>ФИО</Text>
+									<Text>{`${driver.surname || ""} ${driver.name || ""} ${driver.patronymic || ""}`}</Text>
+								</Box>
+							</VStack>
+						</Box>
 
-								<Text>Тип прицепа - {trailerTypeDisplayName}</Text>
-								<Text>Кузов - {carBodyDisplayName}</Text>
-								<Text>Грузоподъемность - {truck.carryingCapacity} т</Text>
-								<Text>Объем кузова - {truck.bodyVolume} м³</Text>
+						<Box p={4} variant={"gray_card"}>
+							<VStack space={4}>
+								<Text variant={"header15_gray"}>Грузовик</Text>
+
+								<Box>
+									<Text variant={"body13"}>Тип прицепа</Text>
+									<Text variant={"body17_black"}>{trailerTypeDisplayName}</Text>
+								</Box>
+
+								<Box>
+									<Text variant={"body13"}>Грузоподъемность</Text>
+									<Text variant={"body17_black"}>{truck.carryingCapacity} т</Text>
+								</Box>
+
+								<Box>
+									<Text variant={"body13"}>Объем кузова</Text>
+									<Text variant={"body17_black"}>{truck.bodyVolume} м³</Text>
+								</Box>
 
 								{loadingTypeDisplayNames.length > 0 && (
 									<Box>
-										<Text mt={2} fontWeight="500" color={"darkBlue.500"}>
-											Способы загрузки
-										</Text>
-										<Text>{loadingTypeDisplayNames.join(", ")}</Text>
+										<Text variant={"body13"}>Способы загрузки</Text>
+										<Text variant={"body17_black"}>{loadingTypeDisplayNames.join(",\n")}</Text>
 									</Box>
 								)}
 
 								{additionalTruckRequirements.length > 0 && (
 									<Box>
-										<Text mt={2} fontWeight="500" color={"darkBlue.500"}>
-											Доп. возможности
-										</Text>
-										<Text>{additionalTruckRequirements.join(", ")}</Text>
+										<Text variant={"body13"}>Доп. возможности</Text>
+										<Text variant={"body17_black"}>{additionalTruckRequirements.join(",\n")}</Text>
 									</Box>
 								)}
 
 								{dangerousGoodsRequirements.length > 0 && (
 									<Box>
-										<Text mt={2} fontWeight="500" color={"darkBlue.500"}>
-											Разрешения
-										</Text>
-										<Text>{dangerousGoodsRequirements.join(", ")}</Text>
+										<Text variant={"body13"}>Разрешения</Text>
+										<Text variant={"body17_black"}>{dangerousGoodsRequirements.join(", ")}</Text>
 									</Box>
 								)}
-							</Box>
+							</VStack>
 						</Box>
-					)}
-				</VStack>
+					</VStack>
+				)}
 			</ScrollView>
 		</View>
 	);
