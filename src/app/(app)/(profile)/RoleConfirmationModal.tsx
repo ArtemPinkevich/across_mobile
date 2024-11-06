@@ -17,17 +17,19 @@ export default function RoleConfirmationModal(props: Props) {
 			<Modal.Content maxWidth="400px">
 				<Modal.Header>Внимание</Modal.Header>
 				<Modal.Body>
-					<Text>
+					<Text variant={"body15_black"}>
 						Выбрана роль <Text bold>{role === SHIPPER_ROLE ? "Грузоотправитель" : "Грузоперевозчик"}</Text>.
 					</Text>
-					<Text>При необходимости, изменить роль будет возможно через обращение в службу технической поддержки.</Text>
+					<Text mt={2} variant={"body15_black"}>
+						При необходимости, изменить роль будет возможно через обращение в службу технической поддержки.
+					</Text>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button minW={100} onPress={onCancel}>
+					<Button variant={"blue_button"} bg={"#7096ec"} m={1} onPress={onCancel}>
 						Отмена
 					</Button>
 					<Spacer />
-					<Button minW={100} onPress={onOk}>
+					<Button variant={"blue_button"} m={1} onPress={onOk}>
 						Продолжить
 					</Button>
 				</Modal.Footer>
