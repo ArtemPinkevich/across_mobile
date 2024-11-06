@@ -14,7 +14,9 @@ import { FAKE_TRANSPORTATION_LONG } from "../../../api/search/FakeTransportation
 export default function DriverRequestsTab() {
 	const dispatch = useDispatch();
 
-	const { data } = useGetRequestedOrdersQuery();
+	const { data } = useGetRequestedOrdersQuery(undefined, {
+		pollingInterval: 30000,
+	});
 	const filtred = data?.transportationOrderDtos?.filter((o) => o.transportationOrderStatus !== TransportationStatus.done) ?? [];
 	//const filtred = [TRANSPORTATION_FAKE, FAKE_TRANSPORTATION_LONG];
 
