@@ -74,7 +74,7 @@ export default function TruckRequirementsModal() {
 					<Box p={4} variant={"gray_card"}>
 						<Text variant={"header15_gray"}>Основные</Text>
 
-						<Pressable mt={4} onPress={() => router.push("/CarBodySelectListModal")}>
+						<Pressable mt={4} onPress={() => router.push("/CarBodiesSelectListModal")}>
 							<ArrowToRightSectionHoc title="Тип кузова">
 								<Text ml={2} variant={"body17_black"}>
 									{carBodiesDisplayName?.length > 0 ? carBodiesDisplayName.join(",\n") : "Не выбрано"}

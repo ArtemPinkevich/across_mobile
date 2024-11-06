@@ -28,7 +28,7 @@ export default function LoadLayout() {
 		>
 			<Stack.Screen name="CargoEditingModal" options={{ title: "Информация о грузе" }} />
 			<Stack.Screen name="(selectLists)/PackagingTypeSelectListModal" options={{ title: "Выбор типа упаковки" }} />
-			<Stack.Screen name="TruckRequirementsModal" options={{ title: "Требования к грузовику" }} />
+			<Stack.Screen name="TruckRequirementsModal" options={{ title: "Требования к транспорту" }} />
 			<Stack.Screen name="JournalModal" options={{ title: "История перевозок" }} />
 			<Stack.Screen name="(selectLists)/CarBodiesSelectListModal" options={{ title: "Выбор типа кузова" }} />
 			<Stack.Screen name="(selectLists)/LoadingTypesSelectListModal" options={{ title: "Выбор типа загрузки" }} />
