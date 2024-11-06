@@ -39,13 +39,13 @@ export default function JournalModal() {
 	);
 
 	return (
-		<View style={{ flex: 1, padding: 16 }}>
+		<View style={{ flex: 1 }}>
 			{orders.transportationOrderDtos.length === 0 ? (
 				<Center h={"100%"}>
 					<Text fontSize={"lg"}>Отправлений не найдено</Text>
 				</Center>
 			) : (
-				<FlatList data={orders.transportationOrderDtos} renderItem={renderItem} />
+				<FlatList p={4} data={orders.transportationOrderDtos} renderItem={renderItem} />
 			)}
 		</View>
 	);
