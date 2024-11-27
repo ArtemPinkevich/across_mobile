@@ -35,6 +35,9 @@ export default function AppLayout() {
 			<Stack.Screen name="(profile)/TakeDocumentPhotoModal" options={{ title: "Предпросмотр", presentation: "modal" }} />
 			<Stack.Screen name="(profile)/DocumentsModal" options={{ title: "Документы", presentation: "modal" }} />
 			<Stack.Screen name="(profile)/InitialEntryPersonalInfo" options={{ title: "Персональная информация", headerShown: false }} />
+			<Stack.Screen name="(payment)/PaymentModal" options={{ title: "Подписка", presentation: "modal" }} />
+			<Stack.Screen name="(payment)/PrivacyPolicyModal" options={{ title: "Политика конфиденциальности", presentation: "modal" }} />
+			<Stack.Screen name="(payment)/OfferAgreementsModal" options={{ title: "Договор оферты", presentation: "modal" }} />
 			<Stack.Screen name="(modals)/PlacesInputModal" options={{ title: "Поиск населенного пункта", presentation: "modal" }} />
 			<Stack.Screen name="(location)/LocationModal" options={{ title: "Маршрут", presentation: "modal" }} />
 		</Stack>

@@ -52,6 +52,9 @@ export default function TruckList(props: TruckListProps) {
 		content = (
 			<Center h={"100%"}>
 				<Text fontSize={"lg"}>Список автомобилей пуст</Text>
+				<Button my={6} variant="blue_button" onPress={addPressHandler}>
+					Добавить транспорт
+				</Button>
 			</Center>
 		);
 	}

@@ -18,11 +18,14 @@ import { TransportationItem } from "../../../components/transportation/Transport
 import LocationTextBlock from "../../../components/location/LocationTextBlock";
 import { FAKE_PLACE_FROM, searchResponseFake } from "../../../api/search/SearchResponceFake";
 import { FAKE_PLACE_TO_LONG } from "../../../api/search/FakeTransportationLong";
+import { useGetPayInfoQuery } from "../../../store/rtkQuery/payApi";
+import SubscriptionExpired from "../../../components/payment/SubscriptionExpired";
 
 export default function SearchTab() {
 	const dispatch = useDispatch();
 	const loadingPlace: IPlace | undefined = useSelector((state: RootState) => state.places.searchPlaceFrom);
 	const unloadingPlace: IPlace | undefined = useSelector((state: RootState) => state.places.searchPlaceTo);
+	const { data: payInfo } = useGetPayInfoQuery();
 
 	// const loadingPlace: IPlace | undefined = FAKE_PLACE_FROM;
 	// const unloadingPlace: IPlace | undefined = FAKE_PLACE_TO_LONG;
@@ -107,142 +110,146 @@ export default function SearchTab() {
 
 	return (
 		<View style={{ flex: 1, alignItems: "stretch" }}>
-			<ScrollView p={4}>
-				{/* На смартфоне (expo) почему-то снизу нет отступа. Пришлось сделать <VStack mb={6} */}
-				<VStack mb={6} space={4}>
-					<Box p={4} variant={"gray_card"}>
-						<Text variant={"header20"}>Откуда и куда</Text>
+			{payInfo?.isPaymentDateExpired ? (
+				<SubscriptionExpired />
+			) : (
+				<ScrollView p={4}>
+					{/* На смартфоне (expo) почему-то снизу нет отступа. Пришлось сделать <VStack mb={6} */}
+					<VStack mb={6} space={4}>
+						<Box p={4} variant={"gray_card"}>
+							<Text variant={"header20"}>Откуда и куда</Text>
 
-						<Pressable mt={6} onPress={loadingPlacePressHandler}>
-							<LocationTextBlock place={loadingPlace} MapMarkerColor={GENERAL_BLUE_COLOR} placeholder="Откуда" />
-						</Pressable>
+							<Pressable mt={6} onPress={loadingPlacePressHandler}>
+								<LocationTextBlock place={loadingPlace} MapMarkerColor={GENERAL_BLUE_COLOR} placeholder="Откуда" />
+							</Pressable>
 
-						<Divider my={6} />
+							<Divider my={6} />
 
-						<Pressable mb={2} onPress={unloadingPlacePressHandler}>
-							<LocationTextBlock place={unloadingPlace} MapMarkerColor={MAP_MARKER_BLACK} placeholder="Куда" />
-						</Pressable>
-					</Box>
-					{/* 
+							<Pressable mb={2} onPress={unloadingPlacePressHandler}>
+								<LocationTextBlock place={unloadingPlace} MapMarkerColor={MAP_MARKER_BLACK} placeholder="Куда" />
+							</Pressable>
+						</Box>
+						{/* 
 					<Box p={4} variant={"gray_card"}>
 						<Text variant={"header20"}>Когда</Text>
 						<DateTimePickerWrapper date={loadingDateFrom} placeholder="Дата загрузки" onChanged={(o) => setLoadingDateFrom(o)} />
 					</Box> */}
 
-					<Box p={4} variant={"gray_card"}>
-						<HStack>
-							<Center>
-								<Text variant={"header20"}>Фильтры</Text>
-							</Center>
-							<Spacer />
-							<Center>
-								<Button size={"sm"} variant="link" onPress={resetFiltersHandler}>
-									Сбросить фильтры
-								</Button>
-							</Center>
-						</HStack>
+						<Box p={4} variant={"gray_card"}>
+							<HStack>
+								<Center>
+									<Text variant={"header20"}>Фильтры</Text>
+								</Center>
+								<Spacer />
+								<Center>
+									<Button size={"sm"} variant="link" onPress={resetFiltersHandler}>
+										Сбросить фильтры
+									</Button>
+								</Center>
+							</HStack>
 
-						<Text mt={2} variant={"body16_gray"}>
-							Вес, т
-						</Text>
-						<HStack mt={1}>
-							<Input
-								inputMode="numeric"
-								w={"50%"}
-								bg={ELEMENTS_BG_COLOR}
-								mr={1}
-								maxLength={4}
-								variant="filled"
-								rounded={"xl"}
-								placeholder="0"
-								fontSize={17}
-								value={weightMin?.toString() ?? ""}
-								onBlur={applyFiltersHandler}
-								onChangeText={(o) => setWeightMin(+o)}
-								leftElement={
-									<Text variant={"body17_gray"} ml={3}>
-										от
-									</Text>
-								}
-							/>
-							<Input
-								inputMode="numeric"
-								w={"50%"}
-								bg={ELEMENTS_BG_COLOR}
-								ml={1}
-								maxLength={4}
-								variant="filled"
-								rounded={"xl"}
-								placeholder="9999"
-								fontSize={17}
-								value={weightMax?.toString() ?? ""}
-								onBlur={applyFiltersHandler}
-								onChangeText={(o) => setWeightMax(+o)}
-								leftElement={
-									<Text variant={"body17_gray"} ml={3}>
-										до
-									</Text>
-								}
-							/>
-						</HStack>
+							<Text mt={2} variant={"body16_gray"}>
+								Вес, т
+							</Text>
+							<HStack mt={1}>
+								<Input
+									inputMode="numeric"
+									w={"50%"}
+									bg={ELEMENTS_BG_COLOR}
+									mr={1}
+									maxLength={4}
+									variant="filled"
+									rounded={"xl"}
+									placeholder="0"
+									fontSize={17}
+									value={weightMin?.toString() ?? ""}
+									onBlur={applyFiltersHandler}
+									onChangeText={(o) => setWeightMin(+o)}
+									leftElement={
+										<Text variant={"body17_gray"} ml={3}>
+											от
+										</Text>
+									}
+								/>
+								<Input
+									inputMode="numeric"
+									w={"50%"}
+									bg={ELEMENTS_BG_COLOR}
+									ml={1}
+									maxLength={4}
+									variant="filled"
+									rounded={"xl"}
+									placeholder="9999"
+									fontSize={17}
+									value={weightMax?.toString() ?? ""}
+									onBlur={applyFiltersHandler}
+									onChangeText={(o) => setWeightMax(+o)}
+									leftElement={
+										<Text variant={"body17_gray"} ml={3}>
+											до
+										</Text>
+									}
+								/>
+							</HStack>
 
-						<Text mt={4} variant={"body16_gray"}>
-							Объем, м3
-						</Text>
-						<HStack mt={1}>
-							<Input
-								inputMode="numeric"
-								w={"50%"}
-								bg={ELEMENTS_BG_COLOR}
-								mr={1}
-								maxLength={4}
-								variant="filled"
-								rounded={"xl"}
-								placeholder="0"
-								fontSize={17}
-								value={volumeMin?.toString() ?? ""}
-								onBlur={applyFiltersHandler}
-								onChangeText={(o) => setVolumeMin(+o)}
-								leftElement={
-									<Text variant={"body17_gray"} ml={3}>
-										от
-									</Text>
-								}
-							/>
-							<Input
-								inputMode="numeric"
-								w={"50%"}
-								bg={ELEMENTS_BG_COLOR}
-								ml={1}
-								maxLength={4}
-								variant="filled"
-								rounded={"xl"}
-								placeholder="9999"
-								fontSize={17}
-								value={volumeMax?.toString() ?? ""}
-								onBlur={applyFiltersHandler}
-								onChangeText={(o) => setVolumeMax(+o)}
-								leftElement={
-									<Text variant={"body17_gray"} ml={3}>
-										до
-									</Text>
-								}
-							/>
-						</HStack>
-					</Box>
+							<Text mt={4} variant={"body16_gray"}>
+								Объем, м3
+							</Text>
+							<HStack mt={1}>
+								<Input
+									inputMode="numeric"
+									w={"50%"}
+									bg={ELEMENTS_BG_COLOR}
+									mr={1}
+									maxLength={4}
+									variant="filled"
+									rounded={"xl"}
+									placeholder="0"
+									fontSize={17}
+									value={volumeMin?.toString() ?? ""}
+									onBlur={applyFiltersHandler}
+									onChangeText={(o) => setVolumeMin(+o)}
+									leftElement={
+										<Text variant={"body17_gray"} ml={3}>
+											от
+										</Text>
+									}
+								/>
+								<Input
+									inputMode="numeric"
+									w={"50%"}
+									bg={ELEMENTS_BG_COLOR}
+									ml={1}
+									maxLength={4}
+									variant="filled"
+									rounded={"xl"}
+									placeholder="9999"
+									fontSize={17}
+									value={volumeMax?.toString() ?? ""}
+									onBlur={applyFiltersHandler}
+									onChangeText={(o) => setVolumeMax(+o)}
+									leftElement={
+										<Text variant={"body17_gray"} ml={3}>
+											до
+										</Text>
+									}
+								/>
+							</HStack>
+						</Box>
 
-					<Button variant="blue_button" onPress={searchHandler}>
-						Найти
-					</Button>
-					{!transportations ? null : transportations?.length > 0 ? (
-						<FlatList data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />
-					) : (
-						<Text textAlign={"center"} color={"red.500"}>
-							По данному запросу отправления не найдены.
-						</Text>
-					)}
-				</VStack>
-			</ScrollView>
+						<Button variant="blue_button" onPress={searchHandler}>
+							Найти
+						</Button>
+						{!transportations ? null : transportations?.length > 0 ? (
+							<FlatList data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />
+						) : (
+							<Text textAlign={"center"} color={"red.500"}>
+								По данному запросу отправления не найдены.
+							</Text>
+						)}
+					</VStack>
+				</ScrollView>
+			)}
 		</View>
 	);
 }

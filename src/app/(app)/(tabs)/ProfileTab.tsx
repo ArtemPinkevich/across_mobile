@@ -9,6 +9,7 @@ import UserAvatar from "../../../components/profile/Avatar";
 import { ArrowToRightSectionHoc } from "../../../components/screenItems/ArrowToRightSectionHoc";
 import { ArrowToRightBlackHeaderSectionHoc } from "../../../components/screenItems/ArrowToRightBlackHeaderSectionHoc";
 import { GENERAL_RED_COLOR } from "../../../constants/Colors";
+import { useGetPayInfoQuery } from "../../../store/rtkQuery/payApi";
 
 export default function ProfileTab() {
 	let content = (
@@ -18,6 +19,7 @@ export default function ProfileTab() {
 	);
 
 	const { data: profile } = useGetProfileQuery();
+	const { data: payInfo } = useGetPayInfoQuery();
 
 	if (profile) {
 		content = (
@@ -80,6 +82,24 @@ export default function ProfileTab() {
 							<ArrowToRightBlackHeaderSectionHoc title="История перевозок"></ArrowToRightBlackHeaderSectionHoc>
 						</Pressable>
 					</Box>
+
+					{profile.role === DRIVER_ROLE && (
+						<Box p={4} variant={"gray_card"}>
+							<Pressable onPress={() => router.push("/PaymentModal")}>
+								<ArrowToRightBlackHeaderSectionHoc title="Подписка">
+									{payInfo?.isPaymentDateExpired ? (
+										<Text variant={"body13"} color={GENERAL_RED_COLOR}>
+											Истекла
+										</Text>
+									) : (
+										<Text variant={"body13"} color={"green.500"}>
+											Активна
+										</Text>
+									)}
+								</ArrowToRightBlackHeaderSectionHoc>
+							</Pressable>
+						</Box>
+					)}
 
 					<Button my={6} variant="red_link_button" fontSize={17} onPress={() => AuthorizationService.signOut()}>
 						<Text variant={"header17"} color={GENERAL_RED_COLOR}>

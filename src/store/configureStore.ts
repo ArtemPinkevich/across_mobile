@@ -7,6 +7,7 @@ import { profileApi } from "./rtkQuery/profileApi";
 import { searchApi } from "./rtkQuery/searchApi";
 import { placesApi } from "./rtkQuery/placesApi";
 import { locationApi } from "./rtkQuery/locationApi";
+import { payApi } from "./rtkQuery/payApi";
 import { transportationsSlice } from "./slices/transportationsSlice";
 import { placesSlice } from "./slices/placesSlice";
 
@@ -22,6 +23,7 @@ export const store = configureStore({
 		[searchApi.reducerPath]: searchApi.reducer,
 		[placesApi.reducerPath]: placesApi.reducer,
 		[locationApi.reducerPath]: locationApi.reducer,
+		[payApi.reducerPath]: payApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat([
@@ -31,6 +33,7 @@ export const store = configureStore({
 			searchApi.middleware,
 			placesApi.middleware,
 			locationApi.middleware,
+			payApi.middleware,
 		]),
 });
 

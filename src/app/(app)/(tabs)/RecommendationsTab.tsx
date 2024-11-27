@@ -16,9 +16,13 @@ import { setViewedTransportation } from "../../../store/slices/transportationsSl
 import { FAKE_TRANSPORTATION_LONG } from "../../../api/search/FakeTransportationLong";
 import { TRANSPORTATION_FAKE } from "../../../api/search/SearchResponceFake";
 import { TransportationItem } from "../../../components/transportation/TransportationItem";
+import { useGetPayInfoQuery } from "../../../store/rtkQuery/payApi";
+import SubscriptionExpired from "../../../components/payment/SubscriptionExpired";
 
 export default function RecommendationsTab() {
 	const dispatch = useDispatch();
+
+	const { data: payInfo } = useGetPayInfoQuery();
 	const { data } = useGetTrucksQuery();
 	const trucks = data?.trucks ?? [];
 
@@ -56,29 +60,35 @@ export default function RecommendationsTab() {
 	);
 
 	return trucks?.length > 0 ? (
-		<View style={{ flex: 1, alignItems: "stretch", paddingHorizontal: 5 }}>
-			<Button
-				m={2}
-				variant={"ghost"}
-				isLoading={isLoading}
-				onPress={() => doSearch()}
-				startIcon={<MaterialCommunityIcons name="refresh" size={20} color={"#0891b2"} />}
-			>
-				Обновить
-			</Button>
-			{(isError || transportations?.length === 0) && (
-				<Center flex={1} p={2}>
-					<Text textAlign={"center"} variant={"body15_black"}>
-						На данный момент подходящих грузов не найдено. Попробуйте воспользоваться гибким поиском.
-					</Text>
-					<Button mt={10} variant={"blue_button"} onPress={() => router.replace("/SearchTab")}>
-						Найти
+		<View style={{ flex: 1, alignItems: "stretch" }}>
+			{payInfo?.isPaymentDateExpired ? (
+				<SubscriptionExpired />
+			) : (
+				<View style={{ paddingHorizontal: 5 }}>
+					<Button
+						m={2}
+						variant={"ghost"}
+						isLoading={isLoading}
+						onPress={() => doSearch()}
+						startIcon={<MaterialCommunityIcons name="refresh" size={20} color={"#0891b2"} />}
+					>
+						Обновить
 					</Button>
-				</Center>
+					{(isError || transportations?.length === 0) && (
+						<Center flex={1} p={2}>
+							<Text textAlign={"center"} variant={"body15_black"}>
+								На данный момент подходящих грузов не найдено. Попробуйте воспользоваться гибким поиском.
+							</Text>
+							<Button mt={10} variant={"blue_button"} onPress={() => router.replace("/SearchTab")}>
+								Найти
+							</Button>
+						</Center>
+					)}
+					{!transportations
+						? null
+						: transportations?.length > 0 && <FlatList px={4} data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />}
+				</View>
 			)}
-			{!transportations
-				? null
-				: transportations?.length > 0 && <FlatList px={4} data={transportations ?? []} renderItem={(o) => renderItem(o.item)} />}
 		</View>
 	) : (
 		<NeedAddTruck />
