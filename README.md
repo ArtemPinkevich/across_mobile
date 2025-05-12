@@ -8,3 +8,5 @@ Mobile app for cargo carriers and shippers
 
 Чтобы автоматизировать авторизацию, нужно захардкодить `profilePhoneNumber` в `sign-in.tsx`.
 Чтобы игнорировать авторизацию, нужно закомментить блок `if (!session... ` в `/(app)/_layout.tsx`
+
+**DeepWiki**: https://deepwiki.com/ArtemPinkevich/across_mobile
